@@ -1,0 +1,49 @@
+@font-default-sans: -apple-system, BlinkMacSystemFont, 'Inter var', 'Inter', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, Roboto, Ubuntu, sans-serif;
+@font-default-mono: 'SFMono-Regular', 'Jetbrains Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', 'Lucida Console', monospace;
+@font-default-serf: 'Iowan Old Style', 'Apple Garamond', Baskerville, 'Times New Roman', 'Droid Serif', Times, 'Source Serif Pro', Cambria, serif;
+
+html {
+	font-size: 10px;
+}
+
+html,
+body,
+button {
+	font-family: @font-default-mono;
+	font-weight: 400;
+	font-style: normal;
+}
+
+body {
+	font-size: 1.3rem;
+}
+
+/*
+// adaptative typography
+@font-size-min: 14;
+@font-size-max: 22;
+@font-range-min: 812;
+@font-range-max: 2800;
+
+@font-size-min-px: @font-size-min * 1px;
+@font-size-max-px: @font-size-max * 1px;
+@font-range-min-px: @font-range-min * 1px;
+@font-range-max-px: @font-range-max * 1px;
+@media screen and (max-width: @font-range-min-px) {
+	html {
+		font-size: 16px;
+	}
+}
+
+@media screen and (min-width: @font-range-min-px) {
+	html {
+		font-size: calc(@font-size-min-px + (@font-size-max - @font-size-min) * ((100vw - @font-range-min-px) / (@font-range-max - @font-range-min)));
+	}
+}
+
+@media screen and (min-width: @font-range-max-px) {
+	html {
+		font-size: @font-size-max-px;
+	}
+}
+*/

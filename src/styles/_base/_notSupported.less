@@ -1,0 +1,35 @@
+.not-supported--content {
+	display: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate3d(-50%, -50%, 0);
+}
+
+html #not-supported-container {
+	.template--fixed-full-screen;
+	display: none;
+}
+
+html.not-supported {
+	#canvas,
+	#ui {
+		display: none;
+	}
+
+	body,
+	#not-supported-container {
+		display: block;
+	}
+
+	&--device .not-supported--content#ns-device,
+	&--browser .not-supported--content#ns-browser,
+	&--webgl .not-supported--content#ns-webgl,
+	&--orientation .not-supported--content#ns-orientation {
+		padding: 10px;
+		border: 1px solid var(--color-error);
+
+		display: block;
+		z-index: 99999;
+	}
+}
