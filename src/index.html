@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<title>0000_TEMPLATE</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="description" content="" />
+
+		<script>
+			// check basic browser and js support
+			Object.assign || document.documentElement.classList.add('not-supported not-supported--browser');
+			document.documentElement.classList.remove('no-js');
+
+			// detect device
+			if (/(ipad|iphone|android)/i.test((navigator.userAgent || navigator.vendor).toLowerCase())) {
+				document.documentElement.classList.add('is-mobile');
+			} else {
+				document.documentElement.classList.add('is-desktop');
+			}
+
+			// disable pinch zoom
+			function preventZoom(e) {
+				e.preventDefault(), (document.body.style.zoom = 1);
+			}
+			window.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
+			document.addEventListener('gesturestart', (e) => preventZoom(e));
+			document.addEventListener('gesturechange', (e) => preventZoom(e));
+			document.addEventListener('gestureend', (e) => preventZoom(e));
+		</script>
+
+		<link rel="shortcut icon" href="https://via.placeholder.com/100/000000/000000/?text=." />
+
+		<!--
+		<meta name="robots" content="index,follow" />
+		<meta name="googlebot" content="index,follow" />
+		<meta name="google" content="notranslate" />
+
+		<link rel="apple-touch-icon" sizes="180x180" href="./assets/meta/apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="./assets/meta/favicon-16x16.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="./assets/meta/favicon-32x32.png" />
+		<link rel="manifest" href="./assets/meta/site.webmanifest" />
+		<link rel="mask-icon" href="./assets/meta/safari-pinned-tab.svg" color="#000000" />
+		<link rel="shortcut icon" href="./favicon.ico" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="msapplication-config" content="./assets/meta/browserconfig.xml" />
+		<meta name="application-name" content="Template" />
+		<meta name="msapplication-TileColor" content="#000000" />
+		<meta name="theme-color" content="#000000" />
+
+		<meta property="og:description" content="Lorem ipsum dolor sit amet" />
+		<meta property="og:image:alt" content="Template" />
+		<meta property="og:image" content="https://project.lusion.dev/assets/meta/cover.png" />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:site_name" content="Template" />
+		<meta property="og:title" content="Template" />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://lusion.dev/" />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:description" content="Lorem ipsum dolor sit amet" />
+		<meta name="twitter:dnt" content="on" />
+		<meta name="twitter:image:alt" content="Template" />
+		<meta name="twitter:image" content="https://project.lusion.dev/assets/meta/cover.png" />
+		<meta name="twitter:title" content="Template" />
+		<meta name="twitter:url" content="https://lusion.dev/" />
+		-->
+		<script src="./assets/js/dat.gui.min.js"></script>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+		<div id="ui">
+			<div id="sections-container">
+				<div id="home-section" class="section">
+					<div class="hero">
+						<h2 class="hero-title">Home Section</h2>
+						<div class="hero-desc">home section description</div>
+						<div class="hero-test-box"></div>
+					</div>
+				</div>
+				<div id="end-section" class="section">
+					<div class="hero">
+						<h2 class="hero-title">End Section</h2>
+						<div class="hero-desc">end section description</div>
+						<div class="hero-test-box"></div>
+					</div>
+				</div>
+			</div>
+			<div id="scroll-indicator">
+				<div id="scroll-indicator-bar"></div>
+			</div>
+
+			<div id="preloader">
+				<div id="preloader-content">
+					<div id="preloader-bar"></div>
+					<div id="preloader-text"></div>
+				</div>
+			</div>
+		</div>
+
+		<!-- =============================================================================== -->
+		<!-- NOT SUPPORTED -->
+		<!-- =============================================================================== -->
+
+		<div id="not-supported-container">
+			<div class="not-supported--content" id="ns-device">
+				<span>Not supported device</span>
+			</div>
+			<div class="not-supported--content" id="ns-browser">
+				<span>Not supported browser</span>
+			</div>
+			<div class="not-supported--content" id="ns-webgl">
+				<span>Not supported WebGL</span>
+			</div>
+			<div class="not-supported--content" id="ns-orientation">
+				<span>Not supported orientation</span>
+			</div>
+		</div>
+
+		<script type="module" src="./index.js"></script>
+		<!-- <script type="module" id="___demo___">
+			// move App creation logic from index.js to here for API mode
+		</script> -->
+	</body>
+</html>

@@ -1,0 +1,6 @@
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+/*
+  Access-Control-Allow-Origin: *
+  Content-Security-Policy: frame-ancestors 'self' https://*;

@@ -1,0 +1,69 @@
+.dg.ac input,
+.dg.ac select,
+.dg.ac .property-name,
+.dg.ac .close-button {
+	font-family: @font-default-mono;
+	// font-size: 1.1em;
+}
+
+.dg .dg.main {
+	margin-right: 0;
+	margin-left: 10px;
+}
+
+.dg.main .property-name {
+	padding-right: 5px;
+}
+
+.dg.main li.title {
+	background-image: none;
+	position: relative;
+	&:before {
+		position: absolute;
+		content: '-';
+		left: 5px;
+	}
+}
+
+.dg.main .closed li.title {
+	background-image: none;
+	&:before {
+		content: '+';
+	}
+}
+
+.dg.main .c .slider {
+	position: relative;
+	background: transparent;
+	&:hover {
+		background: transparent;
+		.slider-fg {
+			background: #0ff;
+		}
+	}
+	&:before {
+		position: absolute;
+		content: '';
+		display: block;
+		top: 25%;
+		height: 50%;
+		width: 100%;
+		background-color: #111;
+	}
+}
+
+.dg.main .c .slider-fg {
+	background: #0cc;
+	position: absolute;
+	top: 25%;
+	height: 50%;
+	// border-radius: 5px;
+}
+
+.dg.main .cr.number {
+	border-left: 3px solid #0ff;
+}
+
+.dg.main .cr.number input[type='text'] {
+	color: #0ff;
+}

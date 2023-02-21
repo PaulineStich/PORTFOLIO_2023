@@ -1,0 +1,59 @@
+html,
+body {
+	.template--no-select;
+	.template--fixed-full-screen;
+
+	background-color: var(--color-black);
+	color: var(--color-white);
+}
+
+html.no-js {
+	body {
+		display: none;
+	}
+}
+
+#canvas,
+#ui {
+	.template--fixed-full-screen;
+	background-color: transparent;
+}
+
+#canvas {
+	pointer-events: auto;
+	display: none;
+
+	.is-ready & {
+		display: block;
+	}
+}
+
+#ui {
+	pointer-events: none;
+}
+
+// test only
+.section {
+	position: absolute;
+	width: 100%;
+	height: calc(var(--vh, 1vh) * 100);
+}
+
+// test only
+.hero {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+
+// test only
+.hero-test-box {
+	position: absolute;
+	left: 100%;
+	top: 0%;
+	width: 200px;
+	height: 200px;
+	border: 2px solid #f00;
+}
