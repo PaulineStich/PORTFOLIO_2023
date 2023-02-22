@@ -8,8 +8,6 @@ export default class PostEffect {
 	sharedUniforms = {};
 	enabled = true;
 	material = null;
-
-	renderOrder = 0;
 	_hasShownWarning = false;
 
 	init(cfg) {

@@ -38,11 +38,10 @@ class Properties {
 	camera = null;
 	postprocessing = null;
 	resolution = null;
-	viewportResolution = null;
 	canvas = null;
 	gl = null;
 	webglOpts = { antialias: false, alpha: false, xrCompatible: true };
-	sharedUniforms = { u_time: { value: 0 }, u_deltaTime: { value: 1 }, u_resolution: { value: null }, u_viewportResolution: { value: null }, u_bgColor: { value: null } };
+	sharedUniforms = { u_time: { value: 0 }, u_deltaTime: { value: 1 }, u_resolution: { value: null }, u_bgColor: { value: null } };
 
 	initCompileList = [];
 
@@ -111,24 +110,19 @@ class Properties {
 	screenPaintMaxRadius = 100; // in pixel based on the viewport size
 	screenPaintRadiusDistanceRange = 100; // in pixel
 	screenPaintPushStrength = 25;
-	screenPaintVelocityDissipation = 0.975;
-	screenPaintWeight1Dissipation = 0.95;
-	screenPaintWeight2Dissipation = 0.8;
+	screenPaintVelocityDissipation = 0.985;
+	screenPaintWeight1Dissipation = 0.985;
+	screenPaintWeight2Dissipation = 0.75;
 
 	screenPaintUseNoise = true;
-	screenPaintCurlScale = 0.03;
-	screenPaintCurlStrength = 3;
+	screenPaintCurlScale = 0.15;
+	screenPaintCurlStrength = 2;
 
 	screenPaintDistortionAmount = 20;
-	screenPaintDistortionRGBShift = 0.5;
-	screenPaintDistortionColorMultiplier = 10.0;
-	screenPaintDistortionMultiplier = 5.0;
+	screenPaintDistortionRGBShift = 1;
+	screenPaintDistortionMultiplier = 1.25;
 
 	upscalerSharpness = 1;
-
-	// ###########################################
-	// Tools
-	exporterSignal = new MinSignal();
 
 	// ###########################################
 

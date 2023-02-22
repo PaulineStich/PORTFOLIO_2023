@@ -85,13 +85,13 @@ class DeviceOrientationControls {
 		let device = this.deviceOrientation;
 
 		if (device) {
-			let alpha = device.alpha ? THREE.MathUtils.degToRad(device.alpha) + this.alphaOffset : 0; // Z
+			let alpha = device.alpha ? THREE.Math.degToRad(device.alpha) + this.alphaOffset : 0; // Z
 
-			let beta = device.beta ? THREE.MathUtils.degToRad(device.beta) : 0; // X'
+			let beta = device.beta ? THREE.Math.degToRad(device.beta) : 0; // X'
 
-			let gamma = device.gamma ? THREE.MathUtils.degToRad(device.gamma) : 0; // Y''
+			let gamma = device.gamma ? THREE.Math.degToRad(device.gamma) : 0; // Y''
 
-			let orient = this.screenOrientation ? THREE.MathUtils.degToRad(this.screenOrientation) : 0; // O
+			let orient = this.screenOrientation ? THREE.Math.degToRad(this.screenOrientation) : 0; // O
 
 			this.setObjectQuaternion(this.object.quaternion, alpha, beta, gamma, orient);
 

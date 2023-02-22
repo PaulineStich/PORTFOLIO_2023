@@ -12,7 +12,14 @@ class Support {
 
 		browser.isMobile && this.checkSupportMobileOrientation();
 
-		let isSupported = properties._isSupportedDevice && properties._isSupportedBrowser && properties._isSupportedWebGL;
+		let isSupported;
+		if (settings.IS_API_MODE === true) {
+			// we only care about webgl in API mode
+			isSupported = properties._isSupportedWebGL;
+		} else {
+			// check for additional device/browser support
+			isSupported = properties._isSupportedDevice && properties._isSupportedBrowser && properties._isSupportedWebGL;
+		}
 
 		if (isSupported === false) {
 			this.notSupported();
@@ -106,10 +113,17 @@ class Support {
 	}
 
 	_addNotSupported(_type) {
-		// also add html classes to deal with ui overlay
-		document.documentElement.classList.add(`not-supported`);
-		_type && document.documentElement.classList.add(`not-supported--${_type}`);
-		return;
+		console.error(new Error(`[${settings.GLOBAL_ID}]: NOT SUPPORTED (${_type.toUpperCase()})`));
+
+		if (settings.IS_API_MODE === true) {
+			// only throw error in API mode
+			return;
+		} else {
+			// also add html classes to deal with ui overlay
+			document.documentElement.classList.add(`not-supported`);
+			_type && document.documentElement.classList.add(`not-supported--${_type}`);
+			return;
+		}
 	}
 }
 

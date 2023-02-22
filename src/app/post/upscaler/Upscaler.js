@@ -7,7 +7,6 @@ import FSR from '@effects/fsr/FSR';
 export default class Fsr extends PostEffect {
 	sharpness = 1;
 	fsr;
-	renderOrder = 100;
 
 	init(cfg) {
 		Object.assign(this, cfg);

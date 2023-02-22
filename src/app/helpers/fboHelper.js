@@ -41,7 +41,7 @@ class FboHelper {
 
 		this.triGeom = new THREE.BufferGeometry();
 		this.triGeom.setAttribute('position', new THREE.BufferAttribute(new Float32Array([-1, -1, 0, 4, -1, 0, -1, 4, 0]), 3));
-		this.quadGeom = new THREE.PlaneGeometry(2, 2);
+		this.quadGeom = new THREE.PlaneBufferGeometry(2, 2);
 
 		this._tri = new THREE.Mesh(this.triGeom);
 		this._tri.frustumCulled = false;
@@ -119,7 +119,7 @@ class FboHelper {
 			blending: THREE.NoBlending,
 		});
 
-		const debugGeometry = new THREE.PlaneGeometry(1, 1);
+		const debugGeometry = new THREE.PlaneBufferGeometry(1, 1);
 		debugGeometry.translate(0.5, -0.5, 0);
 
 		this._debugMaterial = new THREE.RawShaderMaterial({
@@ -324,23 +324,60 @@ class FboHelper {
 	clearMultisampleRenderTargetState(renderTarget) {
 		renderTarget = renderTarget || this.renderer.getRenderTarget();
 		if (renderTarget && renderTarget.samples > 0) {
-			const renderTargetProperties = this.renderer.properties.get(renderTarget);
-
-			// https://github.com/mrdoob/three.js/blob/r118/src/renderers/webgl/WebGLTextures.js#L1167-L1181
-			let gl = this.renderer.getContext();
-			gl.bindFramebuffer(gl.READ_FRAMEBUFFER, renderTargetProperties.__webglMultisampledFramebuffer);
-			gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, renderTargetProperties.__webglFramebuffer);
+			let _gl = this.renderer.getContext();
+			let state = this.renderer.state;
 
 			const width = renderTarget.width;
 			const height = renderTarget.height;
-			let mask = gl.COLOR_BUFFER_BIT;
+			let mask = _gl.COLOR_BUFFER_BIT;
+			const invalidationArray = [_gl.COLOR_ATTACHMENT0];
+			const depthStyle = renderTarget.stencilBuffer ? _gl.DEPTH_STENCIL_ATTACHMENT : _gl.DEPTH_ATTACHMENT;
 
-			if (renderTarget.depthBuffer) mask |= gl.DEPTH_BUFFER_BIT;
-			if (renderTarget.stencilBuffer) mask |= gl.STENCIL_BUFFER_BIT;
+			if (renderTarget.depthBuffer) {
+				invalidationArray.push(depthStyle);
+			}
 
-			gl.blitFramebuffer(0, 0, width, height, 0, 0, width, height, mask, gl.NEAREST);
+			const renderTargetProperties = this.renderer.properties.get(renderTarget);
+			const ignoreDepthValues = renderTargetProperties.__ignoreDepthValues !== undefined ? renderTargetProperties.__ignoreDepthValues : false;
 
-			gl.bindFramebuffer(gl.FRAMEBUFFER, renderTargetProperties.__webglMultisampledFramebuffer); // see #18905
+			if (ignoreDepthValues === false) {
+				if (renderTarget.depthBuffer) mask |= _gl.DEPTH_BUFFER_BIT;
+				if (renderTarget.stencilBuffer) mask |= _gl.STENCIL_BUFFER_BIT;
+			}
+
+			state.bindFramebuffer(_gl.READ_FRAMEBUFFER, renderTargetProperties.__webglMultisampledFramebuffer);
+			state.bindFramebuffer(_gl.DRAW_FRAMEBUFFER, renderTargetProperties.__webglFramebuffer);
+
+			if (ignoreDepthValues === true) {
+				_gl.invalidateFramebuffer(_gl.READ_FRAMEBUFFER, [depthStyle]);
+				_gl.invalidateFramebuffer(_gl.DRAW_FRAMEBUFFER, [depthStyle]);
+			}
+
+			_gl.blitFramebuffer(0, 0, width, height, 0, 0, width, height, mask, _gl.NEAREST);
+
+			// if (/OculusBrowser/g.test(navigator.userAgent)) {
+			_gl.invalidateFramebuffer(_gl.READ_FRAMEBUFFER, invalidationArray);
+			// }
+			state.bindFramebuffer(_gl.READ_FRAMEBUFFER, null);
+			state.bindFramebuffer(_gl.DRAW_FRAMEBUFFER, renderTargetProperties.__webglMultisampledFramebuffer);
+
+			// const renderTargetProperties = this.renderer.properties.get(renderTarget);
+
+			// https://github.com/mrdoob/three.js/blob/r118/src/renderers/webgl/WebGLTextures.js#L1167-L1181
+			// let gl = this.renderer.getContext();
+			// gl.bindFramebuffer(gl.READ_FRAMEBUFFER, renderTargetProperties.__webglMultisampledFramebuffer);
+			// gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, renderTargetProperties.__webglFramebuffer);
+
+			// const width = renderTarget.width;
+			// const height = renderTarget.height;
+			// let mask = gl.COLOR_BUFFER_BIT;
+
+			// if (renderTarget.depthBuffer) mask |= gl.DEPTH_BUFFER_BIT;
+			// if (renderTarget.stencilBuffer) mask |= gl.STENCIL_BUFFER_BIT;
+
+			// gl.blitFramebuffer(0, 0, width, height, 0, 0, width, height, mask, gl.NEAREST);
+
+			// gl.bindFramebuffer(gl.FRAMEBUFFER, renderTargetProperties.__webglMultisampledFramebuffer); // see #18905
 		}
 	}
 }

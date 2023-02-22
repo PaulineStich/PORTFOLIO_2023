@@ -60,8 +60,6 @@ export class Postprocessing {
 
 		this.sharedUniforms = Object.assign(this.sharedUniforms, {
 			u_sceneTexture: { value: this.sceneRenderTarget.texture },
-			u_fromTexture: { value: null },
-			u_toTexture: { value: null },
 			u_sceneDepthTexture: { value: null },
 			u_cameraNear: { value: 0 },
 			u_cameraFar: { value: 1 },
@@ -95,9 +93,6 @@ export class Postprocessing {
 		this.toRenderTarget = tmp;
 		this.fromTexture = this.fromRenderTarget.texture;
 		this.toTexture = this.toRenderTarget.texture;
-
-		this.sharedUniforms.u_fromTexture.value = this.fromTexture;
-		this.sharedUniforms.u_toTexture.value = this.toTexture;
 	}
 
 	setSize(width, height) {
@@ -146,8 +141,6 @@ export class Postprocessing {
 		this.mesh.geometry = this.geom;
 		const renderableQueue = this.queue.filter(this._filterQueue);
 		const sharedUniforms = this.sharedUniforms;
-
-		renderableQueue.sort((a, b) => (a.renderOrder == b.renderOrder ? 0 : a.renderOrder - b.renderOrder));
 
 		sharedUniforms.u_sceneTexture.value = this.sceneRenderTarget.texture;
 

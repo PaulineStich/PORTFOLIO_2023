@@ -26,7 +26,6 @@ import textureHelper from '@helpers/textureHelper';
 
 import BufItem from '@loaders/BufItem';
 import TextureItem from '@loaders/TextureItem';
-import FontItem from '@loaders/FontItem';
 import ThreeLoaderItem from '@loaders/ThreeLoaderItem';
 
 import blueNoise from '@effects/blueNoise/blueNoise';
@@ -34,12 +33,8 @@ import glPositionOffset from '@effects/glPositionOffset/glPositionOffset';
 import screenPaint from '@effects/screenPaint/screenPaint';
 
 import cameraControls from '@controls/cameraControls';
-
 // utils
 import support from '@utils/support';
-
-// tools
-import imageExporter from './utils/imageExporter';
 
 import ease from '@utils/ease';
 import math from '@utils/math';
@@ -57,8 +52,8 @@ class App {
 		if (properties.isSupported) {
 			properties.loader.register(BufItem);
 			properties.loader.register(TextureItem);
-			properties.loader.register(FontItem);
 			properties.loader.register(ThreeLoaderItem);
+			properties.loader.register(BufItem);
 
 			// stage
 			properties.renderer = new THREE.WebGLRenderer({ canvas: properties.canvas, context: properties.gl });
@@ -67,7 +62,6 @@ class App {
 			properties.scene.add(properties.camera);
 
 			properties.sharedUniforms.u_resolution.value = properties.resolution = new THREE.Vector2();
-			properties.sharedUniforms.u_viewportResolution.value = properties.viewportResolution = new THREE.Vector2();
 			properties.sharedUniforms.u_bgColor.value = properties.bgColor = new THREE.Color();
 
 			// postprocessing
@@ -141,7 +135,6 @@ class App {
 	preInit() {
 		cameraControls.preInit();
 		visuals.preInit();
-		imageExporter.preInit();
 	}
 
 	init() {
@@ -151,11 +144,10 @@ class App {
 
 		cameraControls.init();
 		visuals.init();
-		imageExporter.init();
 
 		properties.scene.add(visuals.container);
 
-		if (settings.IS_DEV === false) {
+		if (settings.IS_DEV === false && settings.IS_API_MODE !== true) {
 			console.log(
 				// credit
 				'%c Created by Lusion: https://lusion.co',
@@ -180,7 +172,6 @@ class App {
 		properties.width = Math.ceil(dprWidth / upscalerUpScale);
 		properties.height = Math.ceil(dprHeight / upscalerUpScale);
 		properties.resolution.set(properties.width, properties.height);
-		properties.viewportResolution.set(viewportWidth, viewportHeight);
 
 		properties.renderer.setSize(dprWidth, dprHeight);
 		properties.canvas.style.width = `${properties.viewportWidth}px`;
@@ -247,7 +238,6 @@ class App {
 
 		properties.screenPaintDistortion.amount = properties.screenPaintDistortionAmount;
 		properties.screenPaintDistortion.rgbShift = properties.screenPaintDistortionRGBShift;
-		properties.screenPaintDistortion.colorMultiplier = properties.screenPaintDistortionColorMultiplier;
 		properties.screenPaintDistortion.multiplier = properties.screenPaintDistortionMultiplier;
 
 		// properties.cameraMotionBlur.amount = properties.cameraMotionBlurAmount;
@@ -268,9 +258,6 @@ class App {
 		}
 
 		properties.postprocessing.render(properties.scene, properties.camera, true);
-
-		imageExporter.update();
-
 		if (window.__debugTexture) {
 			fboHelper.debugTo(window.__debugTexture);
 		}

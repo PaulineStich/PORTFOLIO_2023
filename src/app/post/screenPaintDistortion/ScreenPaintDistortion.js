@@ -2,7 +2,6 @@ import * as THREE from 'three';
 
 import fboHelper from '@helpers/fboHelper';
 import PostEffect from '@post/PostEffect';
-import blueNoise from '@effects/blueNoise/blueNoise';
 
 import frag from './screenPaintDistortion.frag';
 
@@ -11,7 +10,6 @@ export default class ScreenPaintDistortion extends PostEffect {
 	amount = 20;
 	rgbShift = 1;
 	multiplier = 1.25;
-	colorMultiplier = 1;
 	shade = 1.25;
 
 	init(cfg) {
@@ -20,19 +18,15 @@ export default class ScreenPaintDistortion extends PostEffect {
 		if (!this.screenPaint) throw new Error('screenPaint is required');
 
 		this.material = fboHelper.createRawShaderMaterial({
-			uniforms: Object.assign(
-				{
-					u_texture: { value: null },
-					u_screenPaintTexture: this.screenPaint.sharedUniforms.u_currPaintTexture,
-					u_screenPaintTexelSize: this.screenPaint.sharedUniforms.u_paintTexelSize,
-					u_amount: { value: 0 },
-					u_rgbShift: { value: 0 },
-					u_multiplier: { value: 0 },
-					u_colorMultiplier: { value: 0 },
-					u_shade: { value: 0 },
-				},
-				blueNoise.sharedUniforms,
-			),
+			uniforms: {
+				u_texture: { value: null },
+				u_screenPaintTexture: this.screenPaint.sharedUniforms.u_currPaintTexture,
+				u_screenPaintTexelSize: this.screenPaint.sharedUniforms.u_paintTexelSize,
+				u_amount: { value: 0 },
+				u_rgbShift: { value: 0 },
+				u_multiplier: { value: 0 },
+				u_shade: { value: 0 },
+			},
 			fragmentShader: frag,
 		});
 	}
@@ -56,7 +50,6 @@ export default class ScreenPaintDistortion extends PostEffect {
 		this.material.uniforms.u_amount.value = this.amount;
 		this.material.uniforms.u_rgbShift.value = this.rgbShift;
 		this.material.uniforms.u_multiplier.value = this.multiplier;
-		this.material.uniforms.u_colorMultiplier.value = this.colorMultiplier;
 		this.material.uniforms.u_shade.value = this.shade;
 		super.render(postprocessing, toScreen);
 	}

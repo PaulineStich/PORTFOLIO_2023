@@ -1,6 +1,9 @@
 import browser from '@core/browser';
 
 class Settings {
+	GLOBAL_ID = 'LUSION_APP';
+	IS_API_MODE = false;
+
 	MODEL_PATH = 'assets/models/';
 	IMAGE_PATH = 'assets/images/';
 	TEXTURE_PATH = 'assets/textures/';
@@ -14,8 +17,6 @@ class Settings {
 	USE_PIXEL_LIMIT = true;
 	MAX_PIXEL_COUNT = 2560 * 1440;
 	UP_SCALE = 1;
-
-	JUMP_SECTION = '';
 
 	CROSS_ORIGINS = {
 		'https://example.com/': 'anonymous',

@@ -9,20 +9,13 @@ import math from '@utils/math';
 import ease from '@utils/ease';
 
 import preloader from '@app/ui/widgets/preloader';
-import homeSection from '@app/ui/sections/homeSection/homeSection';
-import endSection from '@app/ui/sections/endSection/endSection';
-import ufx from './ufx/ufx';
 
 export class UI {
+	components = [preloader];
+
 	preInit() {
 		document.documentElement.classList.add('is-ready');
-		ufx.init();
-		properties.postprocessing.queue.push(ufx);
-
-		preloader.preInit();
-
-		homeSection.preInit();
-		endSection.preInit();
+		this.components.forEach((component) => component.preInit());
 	}
 
 	preload(initCallback, startCallback) {
@@ -30,8 +23,7 @@ export class UI {
 	}
 
 	init() {
-		homeSection.init();
-		endSection.init();
+		this.components.forEach((component) => component.init());
 	}
 
 	start() {
@@ -40,15 +32,11 @@ export class UI {
 
 	resize(width, height) {
 		document.documentElement.style.setProperty('--vh', properties.viewportHeight * 0.01 + 'px');
-		preloader.resize(width, height);
-		homeSection.resize(width, height);
-		endSection.resize(width, height);
+		this.components.forEach((component) => component.resize(width, height));
 	}
 
 	update(dt) {
-		preloader.update(dt);
-		homeSection.update(dt);
-		endSection.update(dt);
+		this.components.forEach((component) => component.update(dt));
 	}
 }
 

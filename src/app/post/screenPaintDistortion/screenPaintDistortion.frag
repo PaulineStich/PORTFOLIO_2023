@@ -4,30 +4,22 @@ uniform vec2 u_screenPaintTexelSize;
 uniform float u_amount;
 uniform float u_rgbShift;
 uniform float u_multiplier;
-uniform float u_colorMultiplier;
 uniform float u_shade;
 
 varying vec2 v_uv;
 
-#include <getBlueNoise>
-
 void main () {
-	vec3 bnoise = getBlueNoise(gl_FragCoord.xy + vec2(17., 29.));
 
 	vec4 data = texture2D(u_screenPaintTexture, v_uv);
 	float weight = (data.z + data.w) * 0.5;
-	vec2 vel = (0.5 - data.xy - 0.001) * 2. * weight;
+	vec2 vel = (0.5 - data.xy - 0.001) * -2. * weight;
 
-	vec4 color = vec4(0.0);
-	vec2 velocity = vel * u_amount / 4.0 * u_screenPaintTexelSize * u_multiplier;
-	vec2 uv = v_uv + bnoise.xy * velocity;
-	for (int i = 0; i < 4; i++) {
-		color += texture2D(u_texture, uv);
-		uv += velocity;
-	}
-	color /= 4.;
+	vec4 color = vec4(
+		texture2D(u_texture, v_uv + (vel * (u_amount)) * u_screenPaintTexelSize).ra,
+		texture2D(u_texture, v_uv + (vel * (u_amount + u_rgbShift)) * u_screenPaintTexelSize).g,
+		texture2D(u_texture, v_uv + (vel * (u_amount + u_rgbShift * 2.)) * u_screenPaintTexelSize).b
+	).rbag;
 
-	color.rgb += sin(vec3(vel.x + vel.y) * 40.0 + vec3(0.0, 2.0, 4.0) * u_rgbShift) * smoothstep(0.4, -0.9, weight) * u_shade * max(abs(vel.x), abs(vel.y))  * u_colorMultiplier;
-
+	color.rgb += sin(vec3(vel.x + vel.y) * 20.0 + vec3(0.0, 2.09439, 4.188792)) * smoothstep(0.1, 0.3, weight) * smoothstep(0.4, -0.3, weight) * u_shade * max(abs(vel.x), abs(vel.y)) * 10.0;
     gl_FragColor = color;
 }

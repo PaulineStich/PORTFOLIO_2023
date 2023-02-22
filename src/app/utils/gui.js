@@ -78,8 +78,7 @@ class GUI {
 			const folderScreenPaintDistortion = postGui.addFolder('screenPaintDistortion');
 			folderScreenPaintDistortion.add(properties, 'screenPaintDistortionAmount', 0, 100, 0.00001).listen();
 			folderScreenPaintDistortion.add(properties, 'screenPaintDistortionRGBShift', 0, 3, 0.00001).listen();
-			folderScreenPaintDistortion.add(properties, 'screenPaintDistortionColorMultiplier', 0, 50, 0.00001).listen();
-			folderScreenPaintDistortion.add(properties, 'screenPaintDistortionMultiplier', 0, 20, 0.00001).listen();
+			folderScreenPaintDistortion.add(properties, 'screenPaintDistortionMultiplier', 0, 3, 0.00001).listen();
 			// folderMotion.open();
 		}
 
@@ -103,15 +102,6 @@ class GUI {
 		folderUpscaler.add(properties, 'upscalerSharpness', 0, 1, 0.00001).listen();
 		// folderUpscaler.open();
 		// }
-
-		postGui.add(
-			{
-				exportImage: function () {
-					properties.exporterSignal.dispatch();
-				},
-			},
-			'exportImage',
-		);
 	}
 	_addTextureHelper() {
 		let addFunc = dat.GUI.prototype.add;

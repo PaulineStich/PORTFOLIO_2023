@@ -75,7 +75,7 @@ class Floor {
 		this.target = new THREE.Vector3();
 		this.q = new THREE.Vector4();
 
-		this.geometry = new THREE.PlaneGeometry(50, 50);
+		this.geometry = new THREE.PlaneBufferGeometry(50, 50);
 		this.geometry.rotateX(Math.PI * -0.5);
 
 		this.mesh = new THREE.Mesh(

@@ -8,7 +8,6 @@ export default class TextureItem extends ImageItem {
 		let texture = cfg.content || new THREE.Texture(new Image());
 		cfg.content = texture.image;
 		texture.minFilter = cfg.minFilter || THREE.LinearMipMapLinearFilter;
-		texture.magFilter = cfg.magFilter || THREE.LinearFilter;
 		switch (texture.minFilter) {
 			case THREE.NearestMipMapNearestFilter:
 			case THREE.NearestMipMapLinearFilter:

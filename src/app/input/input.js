@@ -7,15 +7,12 @@ import math from '@utils/math';
 import * as THREE from 'three';
 import MinSignal from 'min-signal';
 
-import normalizeWheel from 'normalize-wheel';
-
 class Input {
 	onDowned = new MinSignal();
 	onMoved = new MinSignal();
 	onUped = new MinSignal();
 	onClicked = new MinSignal();
 	onWheeled = new MinSignal();
-	onScrolled = new MinSignal();
 
 	wasDown = false;
 	isDown = false;
@@ -40,11 +37,9 @@ class Input {
 	deltaDownPixelXY = new THREE.Vector2();
 	deltaDownPixelDistance = 0;
 
-	deltaWheel = 0;
-	deltaDragScroll = 0;
-	deltaScroll = 0;
-
-	canDesktopDragScroll = false;
+	wheel = 0;
+	wheelDelta = 0;
+	lastWheelTime = 0;
 
 	downThroughElems = [];
 	currThroughElems = [];
@@ -55,16 +50,17 @@ class Input {
 		const target = document;
 
 		target.addEventListener('mousedown', this._onDown.bind(this));
-		target.addEventListener('touchstart', this._getTouchBound(this, this._onDown, false));
+		target.addEventListener('touchstart', this._getTouchBound(this, this._onDown, true));
 
 		target.addEventListener('mousemove', this._onMove.bind(this));
-		target.addEventListener('touchmove', this._getTouchBound(this, this._onMove, false));
+		target.addEventListener('touchmove', this._getTouchBound(this, this._onMove, true));
 
 		target.addEventListener('mouseup', this._onUp.bind(this));
-		target.addEventListener('touchend', this._getTouchBound(this, this._onUp, false));
+		target.addEventListener('touchend', this._getTouchBound(this, this._onUp, true));
 
 		target.addEventListener('wheel', this._onWheel.bind(this));
 		target.addEventListener('mousewheel', this._onWheel.bind(this));
+		target.addEventListener('DOMMouseScroll', this._onWheel.bind(this));
 	}
 
 	init() {
@@ -78,9 +74,7 @@ class Input {
 	postUpdate(dt) {
 		this.prevThroughElems.length = 0;
 		this.prevThroughElems.concat(this.currThroughElems);
-		this.deltaWheel = 0;
-		this.deltaDragScroll = 0;
-		this.deltaScroll = 0;
+		this.wheelDelta = 0;
 
 		this.prevMouseXY.copy(this.mouseXY);
 		this.prevMousePixelXY.copy(this.mousePixelXY);
@@ -88,12 +82,14 @@ class Input {
 		this.wasDown = this.isDown;
 	}
 
+	// ###########################################
+
 	_onWheel(event) {
-		let deltaWheel = normalizeWheel(event).pixelY;
-		this.deltaWheel += deltaWheel;
-		this.deltaScroll = this.deltaDragScroll + this.deltaWheel;
-		this.onWheeled.dispatch(event.target);
-		this.onScrolled.dispatch(event.target);
+		const newTime = +new Date();
+		this.lastWheelTime = newTime;
+
+		const wheelData = this._normalizeWheel(event);
+		this._updateWheelData(event, wheelData.spinY);
 	}
 
 	_onDown(event) {
@@ -105,8 +101,6 @@ class Input {
 
 		this._getInputXY(event, this.downXY);
 		this._getInputPixelXY(event, this.downPixelXY);
-		this.prevMouseXY.copy(this.downXY);
-		this.prevMousePixelXY.copy(this.downPixelXY);
 		this.deltaXY.set(0, 0);
 		this.deltaPixelXY.set(0, 0);
 		this._getInputXY(event, this.mouseXY);
@@ -122,17 +116,16 @@ class Input {
 		this.deltaPixelXY.copy(this.mousePixelXY).sub(this.prevMousePixelXY);
 		this.hasMoved = true;
 
-		if (this.isDown) {
+		if (this.isDown === true) {
 			this.deltaDownXY.copy(this.mouseXY).sub(this.downXY);
 			this.deltaDownPixelXY.copy(this.mousePixelXY).sub(this.downPixelXY);
 			this.deltaDownPixelDistance = this.deltaDownPixelXY.length();
 
-			if (browser.isMobile || this.canDesktopDragScroll) {
+			if (browser.isMobile === true) {
 				this.isMobileScrollingY = Math.abs(this.deltaPixelXY.y) > 0.1;
 				if (this.isMobileScrollingY) {
-					this.deltaDragScroll = -this.deltaPixelXY.y;
-					this.deltaScroll = this.deltaDragScroll + this.deltaWheel;
-					this.onScrolled.dispatch(event.target);
+					const { pixelY } = this._normalizeWheel({ deltaX: this.deltaXY.x, deltaY: this.deltaXY.y });
+					this._updateWheelData(event, pixelY);
 				}
 			}
 		}
@@ -166,6 +159,18 @@ class Input {
 
 		this.onUped.dispatch(event);
 	}
+
+	_updateWheelData(event, wheel) {
+		const _wheel = wheel * (browser.isMobile === true ? -100 : 1);
+		this.wheelDelta += _wheel < 0 ? Math.floor(_wheel) : Math.ceil(_wheel);
+		this.wheel += this.wheelDelta;
+
+		// settings.LOG && console.log(this.wheelDelta, this.wheel);
+
+		this.onWheeled.dispatch(event.target, this.wheelDelta);
+	}
+
+	// ###########################################
 
 	_getTouchBound(context, fn, usePreventDefault) {
 		return function (event) {
@@ -215,6 +220,60 @@ class Input {
 			}
 		}
 		return null;
+	}
+
+	// ###########################################
+
+	_normalizeWheel(event) {
+		// reasonable defaults
+		const PIXEL_STEP = 10;
+		const LINE_HEIGHT = 40;
+		const PAGE_HEIGHT = window.innerHeight;
+
+		let // spinX, spinY
+			sX = 0,
+			sY = 0,
+			// pixelX, pixelY
+			pX = 0,
+			pY = 0;
+
+		// legacy
+		if ('detail' in event) sY = event.detail;
+		if ('wheelDelta' in event) sY = -event.wheelDelta / 120;
+		if ('wheelDeltaY' in event) sY = -event.wheelDeltaY / 120;
+		if ('wheelDeltaX' in event) sX = -event.wheelDeltaX / 120;
+
+		// side scrolling on FF with DOMMouseScroll
+		if ('axis' in event && event.axis === event.HORIZONTAL_AXIS) {
+			sX = sY;
+			sY = 0;
+		}
+
+		pX = sX * PIXEL_STEP;
+		pY = sY * PIXEL_STEP;
+
+		if ('deltaY' in event) pY = event.deltaY;
+		if ('deltaX' in event) pX = event.deltaX;
+
+		if ((pX || pY) && event.deltaMode) {
+			if (event.deltaMode === 1) {
+				// delta in LINE units
+				pX *= LINE_HEIGHT;
+				pY *= LINE_HEIGHT;
+			} else {
+				// delta in PAGE units
+				pX *= PAGE_HEIGHT;
+				pY *= PAGE_HEIGHT;
+			}
+		}
+
+		// fall-back if spin cannot be determined
+		if (pX && !sX) sX = pX < 1 ? -1 : 1;
+		if (pY && !sY) sY = pY < 1 ? -1 : 1;
+
+		const normalizedWheel = { spinX: sX, spinY: sY, pixelX: pX, pixelY: pY };
+
+		return normalizedWheel;
 	}
 }
 

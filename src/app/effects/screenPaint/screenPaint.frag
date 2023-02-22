@@ -6,7 +6,6 @@ uniform vec4 u_drawTo;
 
 uniform float u_pushStrength;
 uniform vec3 u_dissipations;
-uniform vec2 u_vel;
 
 varying vec2 v_uv;
 
@@ -58,8 +57,8 @@ void main () {
 	vec2 velInv = (0.5 - lowData.xy) * u_pushStrength;
 
 	#ifdef USE_NOISE
-	vec3 noise3 = noised(gl_FragCoord.xy * u_curlScale * (1.0 - lowData.xy));
-	vec2 noise = noised(gl_FragCoord.xy * u_curlScale * (2.0 - lowData.xy * (0.5 + noise3.x) + noise3.yz *0.1)).yz;
+	vec2 noise = noised(gl_FragCoord.xy * u_curlScale * 0.25).yz;
+	noise = noised(gl_FragCoord.xy * u_curlScale + noise * 3.0 + 2.0).yz;
 	velInv += noise * (lowData.z + lowData.w) * u_curlStrength;
 	#endif
 
@@ -67,10 +66,9 @@ void main () {
 	data.xy -= 0.5;
 	vec4 delta = (u_dissipations.xxyz - 1.0) * data;
 
-	vec2 newVel = u_vel * d;
+	vec2 newVel = clamp((u_drawTo.xy - u_drawFrom.xy) * 0.2, vec2(-0.5), vec2(0.5)) * d;
 	delta += vec4(newVel, radiusWeight.yy * d);
-	// delta = sign(delta) * max(vec4(0.004), abs(delta)); // make sure at least +-1/255 is applied to reduce ghosting
-	delta.zw = sign(delta.zw) * max(vec2(0.004), abs(delta.zw));
+	delta = sign(delta) * max(vec4(0.004), abs(delta)); // make sure at least +-1/255 is applied to reduce ghosting
 	data += delta;
 	data.xy += 0.5;
     gl_FragColor = clamp(data, vec4(0.0), vec4(1.0));

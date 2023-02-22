@@ -1,6 +1,6 @@
 import './index.less';
 import * as THREE from 'three';
-import scrollManager from '@scroll/scrollManager';
+// import scrollManager from '@scroll/scrollManager';
 
 import settings from '@core/settings';
 import properties from '@core/properties';
@@ -26,10 +26,8 @@ function run() {
 	settings.LOOK_DEV_MODE && gui.preInit();
 
 	input.preInit();
-	scrollManager.init();
+	// scrollManager.init();
 
-	// preload the font if we need to use the font in canvas
-	// properties.loader.add('Roboto:400,Roboto:400:italic', { type: 'font' });
 	ui.preInit();
 	app.preInit();
 
@@ -51,7 +49,6 @@ function init() {
 }
 
 function start() {
-	scrollManager.isActive = true;
 	ui.start();
 	app.start();
 
@@ -64,16 +61,17 @@ function onResize() {
 	let viewportWidth = (properties.viewportWidth = properties.viewportResolution.x);
 	let viewportHeight = (properties.viewportHeight = properties.viewportResolution.y);
 
-	scrollManager.resize(viewportWidth, viewportHeight);
-	ui.resize(viewportWidth, viewportHeight);
+	// scrollManager.resize(viewportWidth, viewportHeight);
 	app.resize(viewportWidth, viewportHeight);
+	ui.resize(viewportWidth, viewportHeight);
 }
 
 function update(dt) {
 	input.update(dt);
-	scrollManager.update(dt);
-	ui.update(dt);
+	// scrollManager.update(dt);
 	app.update(dt);
+	ui.update(dt);
+
 	input.postUpdate(dt);
 }
 

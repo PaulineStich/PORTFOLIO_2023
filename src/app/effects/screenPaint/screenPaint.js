@@ -9,8 +9,6 @@ import math from '@utils/math';
 import * as THREE from 'three';
 import browser from '@app/core/browser';
 
-let _v = new THREE.Vector2();
-
 class ScreenPaint {
 	_lowRenderTarget;
 	_lowBlurRenderTarget;
@@ -29,7 +27,6 @@ class ScreenPaint {
 	maxRadius = 100; // in pixel based on the viewport size
 	radiusDistanceRange = 100; // in pixel
 	pushStrength = 25;
-	accelerationDissipation = 0.8;
 	velocityDissipation = 0.985;
 	weight1Dissipation = 0.985;
 	weight2Dissipation = 0.5;
@@ -64,7 +61,6 @@ class ScreenPaint {
 				u_pushStrength: { value: 0 },
 				u_curlScale: { value: 0 },
 				u_curlStrength: { value: 0 },
-				u_vel: { value: new THREE.Vector2() },
 				u_dissipations: { value: new THREE.Vector3() },
 			},
 			vertexShader: fboHelper.vertexShader,
@@ -92,7 +88,6 @@ class ScreenPaint {
 		fboHelper.clearColor(0.5, 0.5, 0, 0, this._lowRenderTarget);
 		fboHelper.clearColor(0.5, 0.5, 0, 0, this._lowBlurRenderTarget);
 		fboHelper.clearColor(0.5, 0.5, 0, 0, this._currPaintRenderTarget);
-		this._material.uniforms.u_vel.value.set(0, 0);
 	};
 
 	update(dt) {
@@ -132,9 +127,6 @@ class ScreenPaint {
 
 		this._fromDrawData.copy(this._toDrawData);
 		this._toDrawData.set(((input.mouseXY.x + 1) * paintWidth) / 2, ((input.mouseXY.y + 1) * paintHeight) / 2, radius, 1);
-
-		_v.set(this._toDrawData.x - this._fromDrawData.x, this._toDrawData.y - this._fromDrawData.y).multiplyScalar(dt * 0.8);
-		this._material.uniforms.u_vel.value.multiplyScalar(this.accelerationDissipation).add(_v);
 
 		fboHelper.render(this._material, this._currPaintRenderTarget);
 

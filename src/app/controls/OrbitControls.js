@@ -55,7 +55,7 @@ class OrbitControls extends EventDispatcher {
 
 		// This option actually enables dollying in and out; left as "zoom" for backwards compatibility.
 		// Set to false to disable zooming
-		this.enableZoom = false;
+		this.enableZoom = true;
 		this.zoomSpeed = 1.0;
 
 		// Set to false to disable rotating

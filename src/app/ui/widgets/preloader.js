@@ -25,6 +25,10 @@ class Preloader {
 		this.domBar = document.querySelector('#preloader-bar');
 	}
 
+	init() {
+		return;
+	}
+
 	show(initCallback, startCallback) {
 		this._initCallback = initCallback;
 		this._startCallback = startCallback;
