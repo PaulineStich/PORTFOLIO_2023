@@ -3,6 +3,7 @@ import settings from '@core/settings';
 import * as THREE from 'three';
 import MinSignal from 'min-signal';
 import quickLoader from 'quick-loader';
+import {STATUS} from '../ui/constants';
 
 class Properties {
 	win = window;
@@ -130,6 +131,11 @@ class Properties {
 	isPreloaderFinished = false;
 
 	// ###########################################
+
+	// managers
+	status = STATUS.PRELOAD;
+	statusSignal = new MinSignal();
+	onStarted = new MinSignal();
 
 	constructor() {
 		// console.log(this);

@@ -1,9 +1,11 @@
-import browser from '@core/browser';
 import properties from '@core/properties';
 import settings from '@core/settings';
+import {STATUS} from '../constants';
 
-import math from '@utils/math';
+import {gsap, Power3, Expo} from 'gsap';
+
 import * as THREE from 'three';
+
 
 class Preloader {
 	percentTarget = 0;
@@ -18,15 +20,20 @@ class Preloader {
 	PERCENT_BETWEEN_INIT_AND_START = 0.15;
 	MIN_DURATION_BETWEEN_INIT_AND_START = 0.25;
 	HIDE_DURATION = 0.5;
+	tlLoaded = gsap.timeline({paused: true});
+
 
 	preInit() {
 		this.domContainer = document.querySelector('#preloader');
 		this.domPercentage = document.querySelector('#preloader-percentage');
+		this.domTitle = document.querySelector('#preloader-title');
 		this.domText = document.querySelector('#preloader-text');
 		this.domBar = document.querySelector('#preloader-bar');
+		this.domCircle = document.querySelector('#preloader-circle');
 	}
 
 	init() {
+		this.fadeOutAnimation();
 		return;
 	}
 
@@ -34,18 +41,46 @@ class Preloader {
 		this._initCallback = initCallback;
 		this._startCallback = startCallback;
 		this.isActive = true;
+
 		properties.loader.start((percent) => {
 			this.percentTarget = percent;
 		});
 	}
 
 	hide() {
-		this.domContainer.style.display = 'none';
+		// this.domContainer.style.display = 'none';
+		properties.statusSignal.dispatch(STATUS.GALLERY);
+		this.tlLoaded.play()
+	
+		console.log('going to gallery')
 		return;
 	}
 
 	resize(width, height) {
 		return;
+	}
+
+	fadeOutAnimation() {
+		this.tlLoaded
+			.fromTo(this.domCircle, {
+				x: 0,
+				y: 0,
+			}, {
+				x: '-50%',
+				y: '-50%',
+				left: '50%',
+    			top: '50%',
+				ease: Expo.easeInOut,
+				duration: 1.5,
+			})
+			.to(this.domCircle, {
+				scale: 10,
+				ease: Power3.easeInOut,
+				duration: 3,
+				delay: 1
+			})
+
+		console.log('fade out animation: init')
 	}
 
 	update(dt) {
@@ -69,11 +104,15 @@ class Preloader {
 			}
 
 			if (!properties.hasStarted && this.percentToStart == 1) {
-				// this._startCallback();
+				this.domText.innerText = 'loaded';
+				
+				this._startCallback();
+				
+				properties.statusSignal.dispatch(STATUS.GALLERY);
 			}
 		}
 		let displayPercent = this.percentToStart * this.PERCENT_BETWEEN_INIT_AND_START + this.percent * (1 - this.PERCENT_BETWEEN_INIT_AND_START);
-
+		
 		this.domPercentage.innerHTML = `${Number((displayPercent * 100).toFixed(0))}%`;
 		this.domBar.style.transform = `scale3d(${displayPercent.toFixed(4)}, 1, 1)`;
 	}
