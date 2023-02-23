@@ -8,7 +8,7 @@ import input from '@input/input';
 import math from '@utils/math';
 import ease from '@utils/ease';
 
-import preloader from '@app/ui/widgets/preloader';
+import preloader from '@app/ui/pages/Preloader';
 
 export class UI {
 	components = [preloader];

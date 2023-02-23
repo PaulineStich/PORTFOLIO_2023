@@ -1,6 +1,22 @@
+.create-font-face(@font-family, @file-name, @font-weight, @font-style) {
+	@font-face {
+		font-family: @font-family;
+		src: url('../../assets/fonts/@{file-name}.eot?#iefix') format('embedded-opentype'),
+			url('../../assets/fonts/@{file-name}.woff2') format('woff2'), url('../../assets/fonts/@{file-name}.woff') format('woff'),
+			url('../../assets/fonts/@{file-name}.ttf') format('truetype');
+		font-weight: @font-weight;
+		font-style: @font-style;
+		font-display: swap;
+	}
+}
+
 @font-default-sans: -apple-system, BlinkMacSystemFont, 'Inter var', 'Inter', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, Roboto, Ubuntu, sans-serif;
 @font-default-mono: 'SFMono-Regular', 'Jetbrains Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', 'Lucida Console', monospace;
 @font-default-serf: 'Iowan Old Style', 'Apple Garamond', Baskerville, 'Times New Roman', 'Droid Serif', Times, 'Source Serif Pro', Cambria, serif;
+
+// preloader
+.create-font-face('krona_oneregular', 'kronaone-regular-webfont', 400, normal);
+.create-font-face('lustriaregular', 'lustria-regular-webfont', 400, normal);
 
 html {
 	font-size: 10px;
@@ -15,7 +31,20 @@ button {
 }
 
 body {
-	font-size: 1.3rem;
+	font-size: 14px;
+}
+
+h3 {
+	font-size: 1.8em;
+	letter-spacing: 2px;
+	font-family: 'lustriaregular';
+	font-weight: lighter;
+}
+
+h4 {
+	font-size: 1.2rem;
+	font-family: 'krona_oneregular';
+	text-transform: uppercase;
 }
 
 /*

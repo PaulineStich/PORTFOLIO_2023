@@ -21,6 +21,7 @@ class Preloader {
 
 	preInit() {
 		this.domContainer = document.querySelector('#preloader');
+		this.domPercentage = document.querySelector('#preloader-percentage');
 		this.domText = document.querySelector('#preloader-text');
 		this.domBar = document.querySelector('#preloader-bar');
 	}
@@ -68,12 +69,12 @@ class Preloader {
 			}
 
 			if (!properties.hasStarted && this.percentToStart == 1) {
-				this._startCallback();
+				// this._startCallback();
 			}
 		}
 		let displayPercent = this.percentToStart * this.PERCENT_BETWEEN_INIT_AND_START + this.percent * (1 - this.PERCENT_BETWEEN_INIT_AND_START);
 
-		this.domText.innerHTML = `${Number((displayPercent * 100).toFixed(0))}%`;
+		this.domPercentage.innerHTML = `${Number((displayPercent * 100).toFixed(0))}%`;
 		this.domBar.style.transform = `scale3d(${displayPercent.toFixed(4)}, 1, 1)`;
 	}
 }

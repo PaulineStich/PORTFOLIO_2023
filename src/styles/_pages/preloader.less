@@ -1,0 +1,50 @@
+#preloader {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 200;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	background: rgba(137, 174, 220, 0.2);
+	background: linear-gradient(180deg, rgb(8,6,11) 0%, rgb(27,27,27) 100%);
+
+	#preloader-title {
+		// opacity: 0;
+		z-index: 1;
+		color: black;
+	}
+
+	#preloader-content {
+		position: absolute;
+		bottom: 30px;
+		left: 50%;
+		transform: translateX(-50%);
+
+		#preloader-bar {
+			width: 100%;
+			height: 3px;
+			background-color: #555555;
+			transform-origin: left center;
+		}
+		
+		h4 {
+			margin-bottom: 10px;
+
+			#preloader-text {
+				margin-top: 1em;
+				padding-left: 5px;
+			}
+		}
+	}
+
+	#preloader-circle {
+		position: absolute;
+		width: 450px;
+		height: 450px;
+		background-color: white;
+		border-radius: 100%;
+	}
+}
+
