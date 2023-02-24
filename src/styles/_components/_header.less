@@ -1,0 +1,25 @@
+header {
+    color: rgb(41, 41, 41);
+    position: absolute;
+    top: 0;
+    right: 0px;
+    padding: 30px 50px;
+
+    ul {
+        margin: 0;
+        li {
+            float: left;
+            &:first-of-type {
+                padding-right: 25px;
+            }
+            &::after {
+                content: '';
+                width: 100%;
+                height: 3px;
+                background-color: white;
+                display: block;
+                margin-top: 1px;
+            }
+        }
+    }
+}

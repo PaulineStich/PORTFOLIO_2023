@@ -77,10 +77,27 @@ class Preloader {
 				scale: 10,
 				ease: Power3.easeInOut,
 				duration: 3,
-				delay: 1
+				delay: 0.5
+			})
+			.to(this.domContainer, {
+				opacity: 0,
+				duration: 1,
+				onComplete: () => {
+					this.delete()
+					document.getElementById('ui').classList.add('is-ready')
+				}
 			})
 
 		console.log('fade out animation: init')
+	}
+
+	delete() {
+		setTimeout(
+			() => {
+				this.domContainer.remove();
+			},
+			3000
+		);
 	}
 
 	update(dt) {

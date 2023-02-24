@@ -18,6 +18,10 @@
 .create-font-face('krona_oneregular', 'kronaone-regular-webfont', 400, normal);
 .create-font-face('lustriaregular', 'lustria-regular-webfont', 400, normal);
 
+// home
+.create-font-face('senbold', 'sen-bold-webfont', 400, normal);
+.create-font-face('senregular', 'sen-regular-webfont', 400, normal);
+
 html {
 	font-size: 10px;
 }
@@ -34,6 +38,18 @@ body {
 	font-size: 14px;
 }
 
+h1,h2,h3,h4, h5 {
+	margin: 0;
+}
+
+h2 {
+	font-size: 3.5em;
+	letter-spacing: 2px;
+	font-family: 'lustriaregular';
+	font-weight: lighter;
+	text-transform: uppercase;
+}
+
 h3 {
 	font-size: 1.8em;
 	letter-spacing: 2px;
@@ -42,9 +58,15 @@ h3 {
 }
 
 h4 {
+	font-size: 1.2em;
+	font-family: 'senregular';
+}
+
+h5 {
 	font-size: 1.2rem;
 	font-family: 'krona_oneregular';
 	text-transform: uppercase;
+	font-weight: lighter;
 }
 
 /*
