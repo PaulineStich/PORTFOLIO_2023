@@ -9,9 +9,11 @@ import math from '@utils/math';
 import ease from '@utils/ease';
 
 import preloader from '@app/ui/pages/Preloader';
+import home from '@app/ui/pages/Home';
+import about from '@app/ui/pages/About';
 
 export class UI {
-	components = [preloader];
+	components = [preloader, home, about];
 
 	preInit() {
 		document.documentElement.classList.add('is-ready');
