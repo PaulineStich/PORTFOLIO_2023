@@ -2,10 +2,10 @@ import properties from '@core/properties';
 import settings from '@core/settings';
 import {STATUS} from '../constants';
 
-class About {
+class Home {
 
 	preInit() {
-		this.domContainer = document.querySelector('#about');
+		this.domContainer = document.querySelector('#home');
 	}
 
 	init() {
@@ -19,7 +19,7 @@ class About {
 	}
 
 	hide() {
-		console.log('hide about')
+		console.log('hide home')
 		return;
 	}
 
@@ -36,4 +36,4 @@ class About {
 	update(dt) {}
 }
 
-export default new About();
+export default new Home();
