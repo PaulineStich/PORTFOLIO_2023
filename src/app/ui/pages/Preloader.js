@@ -22,7 +22,6 @@ class Preloader {
 	HIDE_DURATION = 0.5;
 	tlLoaded = gsap.timeline({paused: true});
 
-
 	preInit() {
 		this.domContainer = document.querySelector('#preloader');
 		this.domPercentage = document.querySelector('#preloader-percentage');

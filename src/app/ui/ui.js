@@ -30,6 +30,7 @@ export class UI {
 
 	start() {
 		preloader.hide();
+		home.show();
 	}
 
 	resize(width, height) {

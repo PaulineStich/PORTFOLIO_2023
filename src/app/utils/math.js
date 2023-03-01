@@ -5,6 +5,14 @@ class MathUtils {
 	DEG2RAD = this.PI / 180.0;
 	RAD2DEG = 180.0 / this.PI;
 
+	map(x, a, b, c, d) {
+		return (x - a) * (d - c) / (b - a) + c;
+	}
+
+	lerp(a, b, n) {
+		return (1 - n) * a + n * b;
+	} 
+
 	step(edge, val) {
 		return val < edge ? 0 : 1;
 	}

@@ -22,11 +22,47 @@
             flex-direction: column;
             position: relative;
             text-align: center;
-            a {
-                span {
 
-                }
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            counter-reset: menucounter;
+
+            .gallery-list_menu_item {
+                color: black;
+                position: relative;
             }
         }
     }
+}
+
+.hover-reveal {
+	position: absolute;
+	z-index: -1;
+	width: 200px;
+	height: 280px;
+	top: 0;
+	left: 0;
+	pointer-events: none;
+	opacity: 0;
+	will-change: transform, filter;
+    background-color: red;
+}
+
+.hover-reveal_inner {
+	overflow: hidden;
+}
+
+.hover-reveal_inner,
+.hover-reveal_img {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+.hover-reveal_img {
+	background-size: cover;
+	background-position: 50% 50%;
 }
