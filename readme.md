@@ -1,9 +1,18 @@
-# 0000_TEMPLATE
+# Portfolio
 
----
+> 🍃 Je veux donner à ces graines la possibilité d'évoluer
 
-[![Lusion](https://img.shields.io/badge/Lusion--f5f5f5?style=flat&colorA=f5f5f5)](https://lusion.co)
-[![Twitter](https://img.shields.io/badge/Twitter--f5f5f5?style=flat&colorA=f5f5f5)](https://twitter.com/lusionltd)
-[![Instagram](https://img.shields.io/badge/Instagram--f5f5f5?style=flat&colorA=f5f5f5)](https://instagram.com/lusionltd)
-[![Facebook](https://img.shields.io/badge/Facebook--f5f5f5?style=flat&colorA=f5f5f5)](https://facebook.com/lusionltd)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn--f5f5f5?style=flat&colorA=f5f5f5)](https://linkedin.com/company/lusionltd)
+> Gallerie & projets
+
+![GitHub Preview](\public\assets\images\github_preview.png)
+
+### Dev mode
+
+    npm run dev
+
+    npm run build
+
+### Dev list
+
+Javascript, Html, Less
+Vite.js
