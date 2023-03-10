@@ -21,14 +21,13 @@ class Home {
 	
 	show() {
 		this.isActive = true;
-		console.log("show home page")
+		// console.log("show home page")
 		// this.fadeInAnimation();
 	}
 	
 	hide() {
-		console.log("hide home page")
+		// console.log("hide home page")
 		// this.fadeOutAnimation();
-		console.log('hide home')
 		return;
 	}
 

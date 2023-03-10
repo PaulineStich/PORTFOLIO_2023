@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import settings from '@core/settings';
 import properties from '@core/properties';
 
-import app from '@app/app';
+// import app from '@app/app';
 import ui from '@ui/ui';
 import input from '@input/input';
 import gui from '@utils/gui';
@@ -22,14 +22,14 @@ function run() {
 	properties.width = properties.viewportResolution.x;
 	properties.height = properties.viewportResolution.y;
 
-	app.initEngine();
+	// app.initEngine();
 	settings.LOOK_DEV_MODE && gui.preInit();
 
 	input.preInit();
 	// scrollManager.init();
 
 	ui.preInit();
-	app.preInit();
+	// app.preInit();
 
 	window.addEventListener('resize', onResize);
 	onResize();
@@ -43,14 +43,14 @@ function init() {
 	input.init();
 
 	ui.init();
-	app.init();
+	// app.init();
 
 	properties.hasInitialized = true;
 }
 
 function start() {
 	ui.start();
-	app.start();
+	// app.start();
 
 	properties.hasStarted = true;
 	onResize();
@@ -62,14 +62,14 @@ function onResize() {
 	let viewportHeight = (properties.viewportHeight = properties.viewportResolution.y);
 
 	// scrollManager.resize(viewportWidth, viewportHeight);
-	app.resize(viewportWidth, viewportHeight);
+	// app.resize(viewportWidth, viewportHeight);
 	ui.resize(viewportWidth, viewportHeight);
 }
 
 function update(dt) {
 	input.update(dt);
 	// scrollManager.update(dt);
-	app.update(dt);
+	// app.update(dt);
 	ui.update(dt);
 
 	input.postUpdate(dt);

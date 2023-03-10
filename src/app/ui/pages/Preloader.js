@@ -33,7 +33,6 @@ class Preloader {
 
 	init() {
 		this.fadeOutAnimation();
-		return;
 	}
 
 	show(initCallback, startCallback) {
@@ -47,17 +46,11 @@ class Preloader {
 	}
 
 	hide() {
-		// this.domContainer.style.display = 'none';
 		properties.statusSignal.dispatch(STATUS.GALLERY);
 		this.tlLoaded.play()
-	
-		console.log('going to gallery')
-		return;
 	}
 
-	resize(width, height) {
-		return;
-	}
+	resize(width, height) {}
 
 	fadeOutAnimation() {
 		this.tlLoaded
@@ -86,17 +79,10 @@ class Preloader {
 					document.getElementById('ui').classList.add('is-ready')
 				}
 			})
-
-		console.log('fade out animation: init')
 	}
 
 	delete() {
-		setTimeout(
-			() => {
-				this.domContainer.remove();
-			},
-			3000
-		);
+		this.domContainer.remove();
 	}
 
 	update(dt) {
