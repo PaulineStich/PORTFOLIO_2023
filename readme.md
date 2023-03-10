@@ -4,7 +4,7 @@
 
 > Gallerie & projets
 
-![GitHub Preview](\public\assets\images\github_preview.png)
+![GitHub Preview](public/assets/images/github_preview.png)
 
 ### Dev mode
 
@@ -14,5 +14,5 @@
 
 ### Dev list
 
-Javascript, Html, Less
-Vite.js
+Javascript, Html, Less  
+Vite.js  
