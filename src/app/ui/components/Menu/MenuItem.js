@@ -11,6 +11,7 @@ export default class MenuItem {
         this.DOM = {el:el}
         this.index = index
         this.animateProperties = animateProperties
+        this.direction = {x: 0, y:0}
 
         this.init()
     }
@@ -127,26 +128,28 @@ export default class MenuItem {
 
         const mouseDistanceX = math.clamp(Math.abs(input.prevMousePixelXY.x - input.mousePixelXY.x), 0, 100)
 
+        this.direction = {x: input.prevMousePixelXY.x-input.mousePixelXY.x, y: input.prevMousePixelXY.y-input.mousePixelXY.y};
+
+
         // new translation values
         this.animateProperties.tx.current = Math.abs(input.mousePixelXY.x - this.bounds.el.left) - this.bounds.reveal.width/2;
         this.animateProperties.ty.current = Math.abs(input.mousePixelXY.y - this.bounds.el.top) - this.bounds.reveal.height/2;
-
-        console.log(this.animateProperties.ty.current)
     
-        // new filter value
+        // 
+        this.animateProperties.rotation.current = this.firstRAFCycle ? 0 : math.map(mouseDistanceX,0,200,0,this.direction.x < 0 ? 60 : -60);
         this.animateProperties.opacity.current = this.firstRAFCycle ? 1 : math.map(mouseDistanceX,0,100,1,3);
 
         // set up the interpolated values
         this.animateProperties.tx.previous =  this.firstRAFCycle ? this.animateProperties.tx.current : math.lerp(this.animateProperties.tx.previous, this.animateProperties.tx.current, this.animateProperties.tx.amt);
         this.animateProperties.ty.previous = this.firstRAFCycle ? this.animateProperties.ty.current : math.lerp(this.animateProperties.ty.previous, this.animateProperties.ty.current, this.animateProperties.ty.amt);
+        this.animateProperties.rotation.previous = this.firstRAFCycle ? this.animateProperties.rotation.current : math.lerp(this.animateProperties.rotation.previous, this.animateProperties.rotation.current, this.animateProperties.rotation.amt);
         this.animateProperties.opacity.previous = this.firstRAFCycle ? this.animateProperties.brightness.current : math.lerp(this.animateProperties.opacity.previous, this.animateProperties.opacity.current, this.animateProperties.opacity.amt);
-        
-        // console.log(this.animateProperties.ty.current)
 
         // set styles
         gsap.set(this.DOM.reveal, {
             x: this.animateProperties.tx.previous,
             y: this.animateProperties.ty.previous,
+            rotation: this.animateProperties.rotation.previous,
             filter: `brightness(${this.animateProperties.opacity.previous})`
         });
 
