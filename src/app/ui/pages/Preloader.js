@@ -32,7 +32,6 @@ class Preloader {
 	}
 
 	init() {
-		this.fadeOutAnimation();
 	}
 
 	show(initCallback, startCallback) {
@@ -46,7 +45,7 @@ class Preloader {
 	}
 
 	hide() {
-		properties.statusSignal.dispatch(STATUS.GALLERY);
+		this.fadeOutAnimation();
 		this.tlLoaded.play()
 	}
 

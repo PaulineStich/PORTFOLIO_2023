@@ -2,34 +2,64 @@ import properties from '@core/properties';
 import settings from '@core/settings';
 import {STATUS} from '../constants';
 
+import {gsap} from 'gsap';
+
 class About {
+
+	tlFadeOut = gsap.timeline({paused: true});
+	tlFadeIn = gsap.timeline({paused: true})
 
 	preInit() {
 		this.domContainer = document.querySelector('#about');
+
+		properties.statusSignal.add((status) => {
+			if (status === STATUS.ABOUT) {
+				this.show();
+			} else {
+				this.hide();
+			}
+		});
 	}
 
 	init() {
-        // this.fadeInAnimation();
-		// this.fadeOutAnimation();
 		return;
 	}
+
+	resize(width, height) {}
 
 	show() {
 		this.isActive = true;
+		this.fadeInAnimation();
+		this.tlFadeIn.play()
 	}
-
+	
 	hide() {
-		console.log('hide about')
-		return;
+		this.isActive = false;
+		this.fadeOutAnimation();
+		this.tlFadeOut.play()
+	}
+    
+	fadeInAnimation() {
+		this.tlFadeIn
+			.to(this.domContainer, {
+				opacity: 1,
+				duration: 1,
+				onComplete: () => {
+					
+				}
+			})
 	}
 
-	resize(width, height) {
-		return;
+	fadeOutAnimation() {
+		this.tlFadeOut
+			.to(this.domContainer, {
+				opacity: 0,
+				duration: 1,
+				onComplete: () => {
+					
+				}
+			})
 	}
-
-    fadeInAnimation() {}
-
-	fadeOutAnimation() {}
 
 	delete() {}
 
