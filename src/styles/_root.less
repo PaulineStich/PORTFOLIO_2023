@@ -1,10 +1,14 @@
 html,
 body {
 	.template--no-select;
-	.template--fixed-full-screen;
+	// .template--fixed-full-screen;
 
-	background-color: var(--color-black);
+	overflow: hidden;
+	overscroll-behavior: none;
+	touch-action: none;
+
 	color: var(--color-white);
+	margin: 0;
 }
 
 html.no-js {
@@ -13,8 +17,7 @@ html.no-js {
 	}
 }
 
-#canvas,
-#ui {
+#canvas {
 	.template--fixed-full-screen;
 	background-color: transparent;
 }
@@ -29,6 +32,14 @@ html.no-js {
 }
 
 #ui {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	display: flex;
+	flex-direction: column;
+	top: 0;
+	left: 0;
 	pointer-events: none;
 	.is-ready & {
 		pointer-events: auto;

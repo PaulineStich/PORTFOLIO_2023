@@ -7,14 +7,15 @@ import {gsap} from 'gsap';
 import menu from '@app/ui/components/Menu/Menu';
 
 class Home {
-
-	galleryListMenu;
+	_home;
+	_galleryListMenu;
 	components = [menu];
-	tlFadeOut = gsap.timeline({paused: true});
-	tlFadeIn = gsap.timeline({paused: true})
+
+	_tlFadeOut = gsap.timeline({paused: true});
+	_tlFadeIn = gsap.timeline({paused: true})
 
 	preInit() {
-		this.domContainer = document.querySelector('#home');
+		this._home = document.querySelector('#home');
 		this.components.forEach((component) => component.preInit());
 	
 		properties.statusSignal.add((status) => {
@@ -27,20 +28,31 @@ class Home {
 	}
 	
 	init() {
-		this.galleryListMenu = menu;
+		this._galleryListMenu = menu;
 		this.components.forEach((component) => component.init());
 	}
 	
 	show() {
+		clearTimeout(this._hiddenTimeout);
+		this._home.style.display = 'block';
+		this._home.style.pointerEvents = 'auto';
+
 		this.isActive = true;
 		this.fadeInAnimation();
-		this.tlFadeIn.play()
+		this._tlFadeIn.play()
 	}
 	
 	hide() {
+		clearTimeout(this._hiddenTimeout);
+		this._home.style.pointerEvents = 'none';
+
 		this.isActive = false;
 		this.fadeOutAnimation();
-		this.tlFadeOut.play()
+		this._tlFadeOut.play()
+
+		this._hiddenTimeout = setTimeout(() => {
+			this._home.style.display = 'none';
+		}, 2000);
 	}
 
 	resize(width, height) {
@@ -48,24 +60,16 @@ class Home {
 	}
 
     fadeInAnimation() {
-		this.tlFadeIn
-			.to(this.domContainer, {
-				opacity: 1,
-				duration: 1,
-				onComplete: () => {
-					
-				}
+		this._tlFadeIn
+			.to(this._home, {
+				opacity: 1
 			})
 	}
 
 	fadeOutAnimation() {
-		this.tlFadeOut
-			.to(this.domContainer, {
-				opacity: 0,
-				duration: 1,
-				onComplete: () => {
-					
-				}
+		this._tlFadeOut
+			.to(this._home, {
+				opacity: 0
 			})
 	}
 

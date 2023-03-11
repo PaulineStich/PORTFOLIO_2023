@@ -4,7 +4,7 @@ import {STATUS} from '../constants';
 
 import {gsap, Power3, Expo} from 'gsap';
 
-import * as THREE from 'three';
+// import * as THREE from 'three';
 
 
 class Preloader {
@@ -14,7 +14,7 @@ class Preloader {
 	hideRatio = 0;
 	_compileList = [];
 	_compileCount = 0;
-	_tmpCamera = new THREE.Camera();
+	// _tmpCamera = new THREE.Camera();
 
 	MIN_PRELOAD_DURATION = 1;
 	PERCENT_BETWEEN_INIT_AND_START = 0.15;
@@ -23,12 +23,12 @@ class Preloader {
 	tlLoaded = gsap.timeline({paused: true});
 
 	preInit() {
-		this.domContainer = document.querySelector('#preloader');
-		this.domPercentage = document.querySelector('#preloader-percentage');
-		this.domTitle = document.querySelector('#preloader-title');
-		this.domText = document.querySelector('#preloader-text');
-		this.domBar = document.querySelector('#preloader-bar');
-		this.domCircle = document.querySelector('#preloader-circle');
+		this._preloader = document.querySelector('#preloader');
+		this._percetage = document.querySelector('#preloader-percentage');
+		this._title = document.querySelector('#preloader-title');
+		this._text = document.querySelector('#preloader-text');
+		this._bar = document.querySelector('#preloader-bar');
+		this._circle = document.querySelector('#preloader-circle');
 	}
 
 	init() {
@@ -52,8 +52,10 @@ class Preloader {
 	resize(width, height) {}
 
 	fadeOutAnimation() {
+		this._preloader.style.pointerEvents = 'none';
+
 		this.tlLoaded
-			.fromTo(this.domCircle, {
+			.fromTo(this._circle, {
 				x: 0,
 				y: 0,
 			}, {
@@ -64,16 +66,17 @@ class Preloader {
 				ease: Expo.easeInOut,
 				duration: 1.5,
 			})
-			.to(this.domCircle, {
+			.to(this._circle, {
 				scale: 10,
 				ease: Power3.easeInOut,
 				duration: 3,
 				delay: 0.5
 			})
-			.to(this.domContainer, {
+			.to(this._preloader, {
 				opacity: 0,
 				duration: 1,
 				onComplete: () => {
+					this._preloader.style.display = 'none';
 					this.delete()
 					document.getElementById('ui').classList.add('is-ready')
 				}
@@ -81,7 +84,7 @@ class Preloader {
 	}
 
 	delete() {
-		this.domContainer.remove();
+		this._preloader.remove();
 	}
 
 	update(dt) {
@@ -101,11 +104,11 @@ class Preloader {
 
 			if (this._compileList.length) {
 				let compileItem = this._compileList.shift();
-				properties.renderer.compile(compileItem, this._tmpCamera);
+				// properties.renderer.compile(compileItem, this._tmpCamera);
 			}
 
 			if (!properties.hasStarted && this.percentToStart == 1) {
-				this.domText.innerText = 'loaded';
+				this._text.innerText = 'loaded';
 				
 				this._startCallback();
 				
@@ -114,8 +117,8 @@ class Preloader {
 		}
 		let displayPercent = this.percentToStart * this.PERCENT_BETWEEN_INIT_AND_START + this.percent * (1 - this.PERCENT_BETWEEN_INIT_AND_START);
 		
-		this.domPercentage.innerHTML = `${Number((displayPercent * 100).toFixed(0))}%`;
-		this.domBar.style.transform = `scale3d(${displayPercent.toFixed(4)}, 1, 1)`;
+		this._percetage.innerHTML = `${Number((displayPercent * 100).toFixed(0))}%`;
+		this._bar.style.transform = `scale3d(${displayPercent.toFixed(4)}, 1, 1)`;
 	}
 }
 
