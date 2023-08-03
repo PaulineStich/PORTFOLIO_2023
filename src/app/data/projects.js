@@ -33,7 +33,7 @@ const data = [
 	},
 	{
 		id: 'FEUX DE FOREST',
-		title: 'feux de forest',
+		title: 'Feux de forest',
 		description: 'A study of forest fires.',
 		imgHero: plantsImage,
 		imgLeft: dinosaurImage,
@@ -42,7 +42,7 @@ const data = [
 	},
 	{
 		id: 'DJELI',
-		title: 'djeli',
+		title: 'Djeli',
 		description: 'Exploration of Djeli, a traditional storytelling.',
 		imgHero: testImage,
 		imgLeft: dinosaurImage,
@@ -51,7 +51,7 @@ const data = [
 	},
 	{
 		id: 'LIBRE',
-		title: 'libre',
+		title: 'Libre',
 		description: 'A project about freedom and expression.',
 		imgHero: testImage,
 		imgLeft: dinosaurImage,

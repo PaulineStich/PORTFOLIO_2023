@@ -34,11 +34,6 @@ class Project {
 	show() {
 		console.log('show project');
 
-		// create the page content
-		// this.listItems.forEach((ProjectItem) => {
-		// 	ProjectItem.refreshPageContent();
-		// });
-
 		this.domProject.style.display = 'block';
 		this.tlFadeIn = gsap.timeline().to(this.domProject, {
 			autoAlpha: 1,

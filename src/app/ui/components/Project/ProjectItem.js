@@ -58,7 +58,6 @@ class ProjectItem {
 
 	show() {
 		console.log('show project item');
-
 		// properties.statusSignal.dispatch(STATUS.PROJECT);
 	}
 
