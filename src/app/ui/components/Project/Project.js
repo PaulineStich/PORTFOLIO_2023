@@ -4,15 +4,23 @@ import { gsap, Power3, Expo } from 'gsap';
 
 import ProjectItem from './ProjectItem';
 
+// Project.js is responsible for handling project-level tasks
+
 class Project {
+	domProject;
+	listItems = [];
 	state = {
 		isOpen: false,
 		currentProject: null,
 	};
 	closeBtnDOM;
 
-	preInit() {
+	constructor(items) {
+		this.listItems = items.map((item) => new ProjectItem(item));
 		this.closeBtnDOM = document.querySelector('.project-close-btn');
+		this.domProject = document.getElementById('project');
+
+		this.init();
 	}
 
 	init() {
@@ -25,11 +33,35 @@ class Project {
 
 	show() {
 		console.log('show project');
+
+		// create the page content
+		// this.listItems.forEach((ProjectItem) => {
+		// 	ProjectItem.refreshPageContent();
+		// });
+
+		this.domProject.style.display = 'block';
+		this.tlFadeIn = gsap.timeline().to(this.domProject, {
+			autoAlpha: 1,
+			ease: 'Power2.out',
+			duration: 1,
+		});
+
+		this.tlFadeIn.play();
 	}
 
 	hide() {
 		console.log('hide project');
-		return;
+
+		this.tlFadeOut = gsap.timeline().to(this.domProject, {
+			autoAlpha: 0,
+			ease: 'Power2.out',
+			duration: 1,
+			onComplete: () => {
+				this.domProject.style.display = 'none';
+			},
+		});
+
+		this.tlFadeOut.play();
 	}
 
 	resize(width, height) {}
@@ -39,4 +71,4 @@ class Project {
 	update(dt) {}
 }
 
-export default new Project();
+export default Project;

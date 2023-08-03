@@ -9,7 +9,7 @@ import input from '@input/input';
 import data from '../../../data/projects';
 
 export default class MenuItem {
-	constructor(el, index, animateProperties) {
+	constructor(el, index, animateProperties, project, projectItem) {
 		this.DOM = {
 			el: el,
 			title: el.querySelector('h2').innerText,
@@ -18,6 +18,8 @@ export default class MenuItem {
 		this.index = index;
 		this.animateProperties = animateProperties;
 		this.direction = { x: 0, y: 0 };
+		this.projectPage = project;
+		this.projectPageItem = projectItem;
 
 		this.init();
 	}
@@ -65,10 +67,8 @@ export default class MenuItem {
 
 		this.mouseOnClick = () => {
 			console.log('clicked');
-			console.log('Project title: ', this.DOM.title);
-			console.log('Project id: ', this.data.id);
-			console.log('Project description: ', this.data.description);
-			// properties.statusSignal.dispatch(STATUS.PROJECT);
+			this.projectPage.show();
+			this.projectPageItem.refreshPageContent();
 		};
 
 		this.DOM.el.addEventListener('mouseenter', this.mouseenterFn);

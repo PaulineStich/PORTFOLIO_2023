@@ -5,12 +5,10 @@ import { STATUS } from '../constants';
 import { gsap } from 'gsap';
 
 import menu from '@app/ui/components/Menu/Menu';
-import Project from '../components/Project/Project';
 
 class Home {
 	_home;
 	_galleryListMenu;
-	_projectPage;
 	components = [menu];
 
 	_tlFadeOut = gsap.timeline({ paused: true });
@@ -31,7 +29,6 @@ class Home {
 
 	init() {
 		this._galleryListMenu = menu;
-		this._projectPage = Project;
 		this.components.forEach((component) => component.init());
 	}
 

@@ -4,6 +4,7 @@ import { gsap, Power3, Expo } from 'gsap';
 
 import MenuItem from './MenuItem';
 import data from '../../../data/projects';
+import Project from '../Project/Project';
 
 class Menu {
 	domMenu;
@@ -18,9 +19,10 @@ class Menu {
 
 	preInit() {
 		this._generateMenuItems();
+		let project = new Project(data);
 		this.domMenuItems = document.querySelectorAll('.gallery-list_menu_item');
 		[...this.domMenuItems].forEach((el, i) => {
-			this.menuItems.push(new MenuItem(el, i, this.animateProperties));
+			this.menuItems.push(new MenuItem(el, i, this.animateProperties, project, project.listItems[i]));
 		});
 	}
 
