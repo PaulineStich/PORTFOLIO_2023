@@ -1,93 +1,93 @@
 #project {
-    position: absolute;
+	position: absolute;
 	width: 100vw;
 	height: 100vh;
 	left: 0;
 	top: 0;
 	display: flex;
 	flex-direction: column;
-    background-color: #E8E8E8;
-    overflow-y: scroll !important;
-    scroll-behavior: smooth;
-    color: black;
-    z-index: 3;
+	background-color: #e8e8e8;
+	overflow-y: scroll !important;
+	scroll-behavior: smooth;
+	color: black;
+	z-index: 3;
 
-    // opacity: 0;
-	// display: none;
+	opacity: 0;
+	display: none;
 
 	transition: opacity 1s cubic-bezier(0.09, 1.17, 0.7, 1.01);
 
-    .close-btn {
-        position: fixed;
-        top: 35px;
-        right: 60px;
-        cursor: pointer;
-    }
-    .project-container {
-        // max-width: 90vw;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        gap: 30px;
-        position: relative;
-        padding: 200px 0;
+	.project-close-btn {
+		position: fixed;
+		top: 35px;
+		right: 60px;
+		cursor: pointer;
+	}
+	.project-container {
+		// max-width: 90vw;
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		gap: 30px;
+		position: relative;
+		padding: 200px 0;
 
-        .project-container_title {
-            width: fit-content;
-            &::after {
-                content: '';
-                width: 100%;
-                height: 3px;
-                background-color: white;
-                display: block;
-                margin-top: 1px;
-            }
-        }
-        .project-container_description {
-        }
-        .project-container__images {
-            width: 90vw;
-            margin: 0 auto;
-            padding-top: 50px;
-            display: grid;
-            grid-template-areas:
-            'hero hero hero hero'
-            'left left right right';
-            gap: 10px;
-            padding: 10px;
+		.project-container_title {
+			width: fit-content;
+			&::after {
+				content: '';
+				width: 100%;
+				height: 3px;
+				background-color: white;
+				display: block;
+				margin-top: 1px;
+			}
+		}
+		.project-container_description {
+		}
+		.project-container__images {
+			width: 90vw;
+			margin: 0 auto;
+			padding-top: 50px;
+			display: grid;
+			grid-template-areas:
+				'hero hero hero hero'
+				'left left right right';
+			gap: 10px;
+			padding: 10px;
 
-            .project-container__image {
-                &.hero {
-                    height: 700px;
-                    width: 100%;
-                    grid-area: hero;
-                    background-color: red;
-                    background-image: url('../../../public/assets/images/test.png');
-                    background-size: cover;
-                    background-position: center; 
-                    background-repeat: no-repeat;
-                }
-                &.left {
-                    height: 430px;
-                    width: 100%;
-                    grid-area: left;
-                    background-color: red;
-                    background-image: url('../../../public/assets/images/test.png');
-                    background-size: cover;
-                    background-position: center; 
-                    background-repeat: no-repeat;
-                }
-                &.right {
-                    height: 430px;
-                    width: 100%;
-                    grid-area: right;
-                    background-color: red;
-                    background-image: url('../../../public/assets/images/test.png');
-                    background-size: cover;
-                    background-position: center; 
-                    background-repeat: no-repeat;
-                }
-            }
-        }
-    }
+			.project-container__image {
+				&.hero {
+					height: 700px;
+					width: 100%;
+					grid-area: hero;
+					background-color: red;
+					background-image: url('../../../public/assets/images/test.png');
+					background-size: cover;
+					background-position: center;
+					background-repeat: no-repeat;
+				}
+				&.left {
+					height: 430px;
+					width: 100%;
+					grid-area: left;
+					background-color: red;
+					background-image: url('../../../public/assets/images/test.png');
+					background-size: cover;
+					background-position: center;
+					background-repeat: no-repeat;
+				}
+				&.right {
+					height: 430px;
+					width: 100%;
+					grid-area: right;
+					background-color: red;
+					background-image: url('../../../public/assets/images/test.png');
+					background-size: cover;
+					background-position: center;
+					background-repeat: no-repeat;
+				}
+			}
+		}
+	}
 }
