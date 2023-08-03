@@ -40,7 +40,7 @@ export default class MenuItem {
 
 		this.DOM.reveal = document.createElement('div');
 		this.DOM.reveal.className = 'hover-reveal';
-		this.DOM.reveal.style.transformOrigin = '0% 0%';
+		this.DOM.reveal.style.transformOrigin = '50% 50%';
 
 		this.DOM.revealInner = document.createElement('div');
 		this.DOM.revealInner.className = 'hover-reveal_inner';
@@ -148,8 +148,8 @@ export default class MenuItem {
 		this.direction = { x: input.prevMousePixelXY.x - input.mousePixelXY.x, y: input.prevMousePixelXY.y - input.mousePixelXY.y };
 
 		// new translation values
-		this.animateProperties.tx.current = Math.abs(input.mousePixelXY.x - this.bounds.el.left) - this.bounds.reveal.width / 2;
-		this.animateProperties.ty.current = Math.abs(input.mousePixelXY.y - this.bounds.el.top) - this.bounds.reveal.height / 2;
+		this.animateProperties.tx.current = input.mousePixelXY.x - this.bounds.el.left - this.DOM.reveal.offsetWidth / 2;
+		this.animateProperties.ty.current = input.mousePixelXY.y - this.bounds.el.top - this.DOM.reveal.offsetHeight / 2;
 
 		//
 		this.animateProperties.rotation.current = this.firstRAFCycle ? 0 : math.map(mouseDistanceX, 0, 200, 0, this.direction.x < 0 ? 60 : -60);

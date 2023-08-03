@@ -1,41 +1,40 @@
 #gallery {
-    #gallery-view {
-        display: none;
-        nav {
-            figure {
-                img {
+	#gallery-view {
+		display: none;
+		nav {
+			figure {
+				img {
+				}
+				figcaption {
+				}
+			}
+		}
+	}
+	#gallery-list {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		nav {
+			display: flex;
+			flex-direction: column;
+			position: relative;
+			text-align: center;
 
-                }
-                figcaption {
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			counter-reset: menucounter;
 
-                }
-            }
-        }
-    }
-    #gallery-list {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        nav {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            text-align: center;
-
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            counter-reset: menucounter;
-
-            .gallery-list_menu_item {
-                color: black;
-                position: relative;
-            }
-        }
-    }
+			.gallery-list_menu_item {
+				position: relative;
+				color: black;
+				position: relative;
+			}
+		}
+	}
 }
 
 .hover-reveal {
@@ -48,7 +47,7 @@
 	pointer-events: none;
 	opacity: 0;
 	will-change: transform, filter;
-    background-color: red;
+	background-color: red;
 }
 
 .hover-reveal_inner {
