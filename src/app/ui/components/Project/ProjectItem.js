@@ -9,6 +9,9 @@ class ProjectItem {
 		title: null,
 		description: null,
 		tags: [],
+		imgHero: 'null',
+		imgLeft: 'null',
+		imgRight: 'null',
 	};
 
 	domTitle;
@@ -22,12 +25,15 @@ class ProjectItem {
 		this.project.title = itemData.title;
 		this.project.description = itemData.description;
 		this.project.tags = itemData.tags;
+		this.project.imgHero = itemData.imgHero;
+		this.project.imgLeft = itemData.imgLeft;
+		this.project.imgRight = itemData.imgRight;
 
 		this.domTitle = document.getElementById('project-title');
 		this.domDescription = document.getElementById('project-description');
-		// this.domHeroImage = document.getElementById('project-hero');
-		// this.domLeftImage = document.getElementById('project-left');
-		// this.domRightImage = document.getElementById('project-right');
+		this.domHeroImage = document.getElementById('project-hero');
+		this.domLeftImage = document.getElementById('project-left');
+		this.domRightImage = document.getElementById('project-right');
 	}
 
 	preInit() {}
@@ -41,6 +47,10 @@ class ProjectItem {
 	refreshPageContent() {
 		this.domTitle.textContent = this.project.title;
 		this.domDescription.textContent = this.project.description;
+		this.domHeroImage.style.backgroundImage = `url(${this.project.imgHero})`;
+		this.domLeftImage.style.backgroundImage = `url(${this.project.imgLeft})`;
+		this.domRightImage.style.backgroundImage = `url(${this.project.imgRight})`;
+
 		// console.log('Title: ', this.project.title);
 		// console.log('Description: ', this.project.description);
 		// console.log('Tags: ', this.project.tags);
