@@ -23,6 +23,11 @@
 		right: 60px;
 		cursor: pointer;
 		z-index: 500;
+		transform: rotate(0);
+		transition: all 1.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+		&:hover {
+			transform: rotate(180deg);
+		}
 	}
 	.project-container {
 		// max-width: 90vw;

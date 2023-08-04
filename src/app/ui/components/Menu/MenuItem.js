@@ -103,10 +103,10 @@ export default class MenuItem {
 				},
 			})
 			.to(this.DOM.reveal, {
-				ease: 'Power3.easeOut',
-				scale: 0.3,
+				ease: 'Expo.easeOut',
+				scale: 0.4,
 				opacity: 0,
-				duration: 1.8,
+				duration: 1.2,
 			});
 	}
 
