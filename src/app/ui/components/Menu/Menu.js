@@ -33,9 +33,11 @@ class Menu {
 	_generateMenuItems() {
 		this.domMenu = document.getElementById('gallery-list_menu');
 		data.forEach((item, index) => {
+			//<a class="gallery-list_menu_item" data-text="Your text here">Your text here</a>
 			let menuItem = document.createElement('a');
 			menuItem.className = 'gallery-list_menu_item';
 			menuItem.dataset.img = item.img;
+			menuItem.dataset.text = item.id;
 
 			let h2 = document.createElement('h2');
 			h2.textContent = item.id;

@@ -30,8 +30,30 @@
 
 			.gallery-list_menu_item {
 				position: relative;
-				color: black;
-				position: relative;
+				color: rgba(255, 255, 255, 0.5);
+				transition: all 0.2s ease;
+
+				&::after {
+					content: attr(data-text);
+					position: absolute;
+					top: 0;
+					left: 50%;
+					transform: translateX(-50%);
+					color: #505050;
+					mix-blend-mode: color-dodge;
+					transition: opacity 0.2s ease;
+					opacity: 0;
+					width: 100%;
+
+					font-size: 3.5em;
+					letter-spacing: 2px;
+					font-family: 'lustriaregular';
+					text-transform: uppercase;
+				}
+
+				&:hover::after {
+					opacity: 1;
+				}
 			}
 		}
 	}
@@ -47,7 +69,7 @@
 	pointer-events: none;
 	opacity: 0;
 	will-change: transform, filter;
-	background-color: red;
+	border: 15px solid white;
 }
 
 .hover-reveal_inner {
@@ -64,4 +86,5 @@
 .hover-reveal_img {
 	background-size: cover;
 	background-position: 50% 50%;
+	background-color: red;
 }
