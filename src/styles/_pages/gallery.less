@@ -1,8 +1,7 @@
 #gallery {
 	#gallery-view {
-		// display: none;
+		display: block;
 		position: absolute;
-		// background-color: red;
 		width: 100%;
 		text-align: center;
 		height: 100%;
@@ -28,6 +27,10 @@
 				transform: translate(-50%, -50%);
 				max-width: 50%;
 				border: 15px solid white;
+				&:nth-of-type(2) {
+					top: 52%;
+					left: 52%;
+				}
 			}
 			.gallery-view-counter {
 				position: absolute;

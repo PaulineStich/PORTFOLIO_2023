@@ -1,11 +1,10 @@
 import properties from '@core/properties';
 import settings from '@core/settings';
-import {STATUS} from '../constants';
+import { STATUS } from '../constants';
 
-import {gsap, Power3, Expo} from 'gsap';
+import { gsap, Power3, Expo } from 'gsap';
 
 // import * as THREE from 'three';
-
 
 class Preloader {
 	percentTarget = 0;
@@ -20,7 +19,7 @@ class Preloader {
 	PERCENT_BETWEEN_INIT_AND_START = 0.15;
 	MIN_DURATION_BETWEEN_INIT_AND_START = 0.25;
 	HIDE_DURATION = 0.5;
-	tlLoaded = gsap.timeline({paused: true});
+	tlLoaded = gsap.timeline({ paused: true });
 
 	preInit() {
 		this._preloader = document.querySelector('#preloader');
@@ -31,8 +30,7 @@ class Preloader {
 		this._circle = document.querySelector('#preloader-circle');
 	}
 
-	init() {
-	}
+	init() {}
 
 	show(initCallback, startCallback) {
 		this._initCallback = initCallback;
@@ -46,7 +44,7 @@ class Preloader {
 
 	hide() {
 		this.fadeOutAnimation();
-		this.tlLoaded.play()
+		this.tlLoaded.play();
 	}
 
 	resize(width, height) {}
@@ -55,32 +53,36 @@ class Preloader {
 		this._preloader.style.pointerEvents = 'none';
 
 		this.tlLoaded
-			.fromTo(this._circle, {
-				x: 0,
-				y: 0,
-			}, {
-				x: '-50%',
-				y: '-50%',
-				left: '50%',
-    			top: '50%',
-				ease: Expo.easeInOut,
-				duration: 1.5,
-			})
+			.fromTo(
+				this._circle,
+				{
+					x: 0,
+					y: 0,
+				},
+				{
+					x: '-50%',
+					y: '-50%',
+					left: '50%',
+					top: '50%',
+					ease: Expo.easeInOut,
+					duration: 1.5,
+				},
+			)
 			.to(this._circle, {
 				scale: 10,
 				ease: Power3.easeInOut,
 				duration: 3,
-				delay: 0.5
+				delay: 0.5,
 			})
 			.to(this._preloader, {
 				opacity: 0,
 				duration: 1,
 				onComplete: () => {
 					this._preloader.style.display = 'none';
-					this.delete()
-					document.getElementById('ui').classList.add('is-ready')
-				}
-			})
+					this.delete();
+					document.getElementById('ui').classList.add('is-ready');
+				},
+			});
 	}
 
 	delete() {
@@ -109,14 +111,14 @@ class Preloader {
 
 			if (!properties.hasStarted && this.percentToStart == 1) {
 				this._text.innerText = 'loaded';
-				
+
 				this._startCallback();
-				
+
 				properties.statusSignal.dispatch(STATUS.GALLERY);
 			}
 		}
 		let displayPercent = this.percentToStart * this.PERCENT_BETWEEN_INIT_AND_START + this.percent * (1 - this.PERCENT_BETWEEN_INIT_AND_START);
-		
+
 		this._percetage.innerHTML = `${Number((displayPercent * 100).toFixed(0))}%`;
 		this._bar.style.transform = `scale3d(${displayPercent.toFixed(4)}, 1, 1)`;
 	}

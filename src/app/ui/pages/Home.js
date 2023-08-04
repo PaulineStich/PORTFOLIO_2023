@@ -8,7 +8,9 @@ import menu from '@app/ui/components/Menu/Menu';
 
 class Home {
 	_home;
-	_galleryListMenu;
+	_galleryView;
+	_galleryList;
+	_toggleMenuBtn;
 	components = [menu];
 
 	_tlFadeOut = gsap.timeline({ paused: true });
@@ -16,6 +18,10 @@ class Home {
 
 	preInit() {
 		this._home = document.querySelector('#home');
+		this._toggleMenuBtn = document.querySelector('#gallery-toggle_button');
+		this._galleryView = document.querySelector('#gallery-view');
+		this._galleryList = document.querySelector('#gallery-list');
+
 		this.components.forEach((component) => component.preInit());
 
 		properties.statusSignal.add((status) => {
@@ -28,8 +34,25 @@ class Home {
 	}
 
 	init() {
-		this._galleryListMenu = menu;
 		this.components.forEach((component) => component.init());
+		this.toggleToListView();
+	}
+
+	toggleToListView() {
+		this._galleryView.style.display = 'block';
+		this._galleryList.style.display = 'none';
+
+		this._toggleMenuBtn.addEventListener('change', (e) => {
+			if (e.target.checked) {
+				this._galleryView.style.display = 'none';
+				this._galleryList.style.display = 'block';
+				// properties.statusSignal.dispatch(STATUS.MENU);
+			} else {
+				this._galleryView.style.display = 'block';
+				this._galleryList.style.display = 'none';
+				properties.statusSignal.dispatch(STATUS.GALLERY);
+			}
+		});
 	}
 
 	show() {
