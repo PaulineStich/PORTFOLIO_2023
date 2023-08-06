@@ -4,14 +4,15 @@ import { STATUS } from '../constants';
 
 import { gsap } from 'gsap';
 
-import menu from '@app/ui/components/Menu/Menu';
+import Menu from '@app/ui/components/Menu/Menu';
+import Gallery from '../components/Gallery/Gallery';
 
 class Home {
 	_home;
 	_galleryView;
 	_galleryList;
 	_toggleMenuBtn;
-	components = [menu];
+	components = [Menu, Gallery];
 
 	_tlFadeOut = gsap.timeline({ paused: true });
 	_tlFadeIn = gsap.timeline({ paused: true });
