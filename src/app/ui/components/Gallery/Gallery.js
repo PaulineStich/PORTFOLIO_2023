@@ -18,7 +18,7 @@ class Gallery {
 		let project = new Project(data);
 		this.domGalleryItems = document.querySelectorAll('.gallery-view_menuImage');
 		[...this.domGalleryItems].forEach((el, i) => {
-			// this.galleryItems.push(new GalleryItem(el, i, this.animateProperties, project, project.listItems[i]));
+			this.galleryItems.push(new GalleryItem(el, i, this));
 		});
 	}
 
