@@ -19,6 +19,7 @@ class Gallery {
 		this.domGalleryItems = document.querySelectorAll('.gallery-view_menuImage');
 		[...this.domGalleryItems].forEach((el, i) => {
 			this.galleryItems.push(new GalleryItem(el, i, this));
+			this.index = i;
 		});
 	}
 

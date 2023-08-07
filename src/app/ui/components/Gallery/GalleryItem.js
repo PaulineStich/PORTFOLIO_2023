@@ -2,6 +2,8 @@ import { gsap, Power3, Expo } from 'gsap';
 import data from '../../../data/projects';
 
 export default class GalleryItem {
+	static counter = 1; // Add this static variable
+
 	constructor(el, index, gallery) {
 		this.DOM = {
 			el: el,
@@ -24,7 +26,7 @@ export default class GalleryItem {
 	init() {
 		const delayStep = 3000;
 		const delay = (this.totalImages - 1 - this.index) * delayStep;
-		this.updateCounter();
+		this.DOM.galleryCounterTotal.textContent = this.totalImages.toString().padStart(2, '0');
 
 		setTimeout(() => {
 			this.startGallery();
@@ -41,19 +43,18 @@ export default class GalleryItem {
 	fadeOut() {
 		gsap.to(this.DOM.el, {
 			opacity: 0,
-			duration: 2,
+			duration: 0.2,
 			onComplete: () => {
 				this.DOM.el.style.opacity = 1; // Reset opacity
 				this.DOM.gallery.domGallery.insertBefore(this.DOM.el, this.DOM.gallery.domGallery.firstChild); // Move to the front of the queue
+				this.updateCounter();
+				GalleryItem.counter = (GalleryItem.counter % this.totalImages) + 1; // Increment and reset when reaching the total number of images
 			},
 		});
 	}
 
 	updateCounter() {
-		this.DOM.galleryCounterTotal.textContent = this.totalImages.toString().padStart(2, '0');
-		const currentIndex = (this.index + 1) % this.totalImages;
+		const currentIndex = GalleryItem.counter;
 		this.DOM.galleryCounterIndex.textContent = currentIndex.toString().padStart(2, '0');
 	}
-
-	update(dt) {}
 }
