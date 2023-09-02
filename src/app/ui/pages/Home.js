@@ -20,6 +20,7 @@ class Home {
 	preInit() {
 		this._home = document.querySelector('#home');
 		this._toggleMenuBtn = document.querySelector('#gallery-toggle_button');
+		this._toggleMenuBtnText = document.getElementById('gallery-toggle_text');
 		this._galleryView = document.querySelector('#gallery-view');
 		this._galleryList = document.querySelector('#gallery-list');
 
@@ -47,10 +48,12 @@ class Home {
 			if (e.target.checked) {
 				this._galleryView.style.display = 'none';
 				this._galleryList.style.display = 'block';
+				this._toggleMenuBtnText.style.opacity = 1;
 				// properties.statusSignal.dispatch(STATUS.MENU);
 			} else {
 				this._galleryView.style.display = 'block';
 				this._galleryList.style.display = 'none';
+				this._toggleMenuBtnText.style.opacity = 0.2;
 				properties.statusSignal.dispatch(STATUS.GALLERY);
 			}
 		});
