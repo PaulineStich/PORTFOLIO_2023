@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import browser from '@core/browser';
 import properties from '@core/properties';
 import settings from '@core/settings';
-import {STATUS} from './constants';
+import { STATUS } from './constants';
 
 import input from '@input/input';
 import math from '@utils/math';
@@ -31,13 +31,14 @@ export class UI {
 	init() {
 		this.components.forEach((component) => component.init());
 
-		this.headerAbout.addEventListener('mousedown', () => this.showPage(STATUS.ABOUT))
-		this.headerHome.addEventListener('mousedown', () => this.showPage(STATUS.GALLERY))
+		this.headerAbout.addEventListener('mousedown', () => this.showPage(STATUS.ABOUT));
+		this.headerHome.addEventListener('mousedown', () => this.showPage(STATUS.GALLERY));
 	}
 
 	start() {
 		preloader.hide();
 		this.showPage(STATUS.GALLERY);
+		this.headerHome.classList.add('active');
 	}
 
 	showPage(pageName) {
