@@ -1,6 +1,6 @@
 import properties from '@core/properties';
 import settings from '@core/settings';
-import { STATUS } from '../constants';
+import { STATUS, TRANSITIONS } from '../constants';
 
 import { gsap } from 'gsap';
 
@@ -28,19 +28,23 @@ class Home {
 
 		properties.statusSignal.add((status) => {
 			if (status === STATUS.GALLERY) {
-				this.show();
+				// console.log('show gallery page');
+				this._show();
 			} else {
-				this.hide();
+				// add a fade out transition of the gallery
+				properties.onTransition.dispatch(TRANSITIONS.HIDE_GALLERY);
+				// console.log('hide gallery page');
+				this._hide();
 			}
 		});
 	}
 
 	init() {
 		this.components.forEach((component) => component.init());
-		this.toggleToListView();
+		this._toggleToListView();
 	}
 
-	toggleToListView() {
+	_toggleToListView() {
 		this._galleryView.style.display = 'block';
 		this._galleryList.style.display = 'none';
 
@@ -54,27 +58,41 @@ class Home {
 				this._galleryView.style.display = 'block';
 				this._galleryList.style.display = 'none';
 				this._toggleMenuBtnText.style.opacity = 0.2;
-				properties.statusSignal.dispatch(STATUS.GALLERY);
+				// properties.statusSignal.dispatch(STATUS.GALLERY);
 			}
 		});
 	}
 
-	show() {
+	_show() {
+		// is used when changing pages (menu)
 		clearTimeout(this._hiddenTimeout);
-		this._home.style.display = 'block';
-		this._home.style.pointerEvents = 'auto';
-
 		this.isActive = true;
-		this.fadeInAnimation();
+		this._fadeInAnimation();
 		this._tlFadeIn.play();
+
+		// when preloader is finished, start gallery animations
+		properties.onTransition.add((transition) => {
+			if (transition === TRANSITIONS.SHOW_GALLERY) {
+				// start the fade in animation of the gallery here
+				this.components.forEach((component) => component.show());
+			}
+		});
 	}
 
-	hide() {
-		clearTimeout(this._hiddenTimeout);
-		this._home.style.pointerEvents = 'none';
+	_hide() {
+		// don't forget to stop the animation of the gallery
+		properties.onTransition.add((transition) => {
+			if (transition === TRANSITIONS.HIDE_GALLERY) {
+				// start the fade out animation of the gallery here
+				this.components.forEach((component) => component.hide());
+			}
+		});
 
+		// then we change the pages (menu)
+		clearTimeout(this._hiddenTimeout);
 		this.isActive = false;
-		this.fadeOutAnimation();
+
+		this._fadeOutAnimation();
 		this._tlFadeOut.play();
 
 		this._hiddenTimeout = setTimeout(() => {
@@ -82,23 +100,28 @@ class Home {
 		}, 2000);
 	}
 
-	resize(width, height) {
-		this.components.forEach((component) => component.resize(width, height));
-	}
-
-	fadeInAnimation() {
+	_fadeInAnimation() {
+		this._home.style.display = 'block';
+		this._home.style.pointerEvents = 'auto';
 		this._tlFadeIn.to(this._home, {
 			opacity: 1,
 		});
 	}
 
-	fadeOutAnimation() {
+	_fadeOutAnimation() {
+		this._home.style.pointerEvents = 'none';
 		this._tlFadeOut.to(this._home, {
 			opacity: 0,
 		});
 	}
 
-	delete() {}
+	resize(width, height) {
+		this.components.forEach((component) => component.resize(width, height));
+	}
+
+	delete() {
+		this.components.forEach((component) => component.delete());
+	}
 
 	update(dt) {
 		this.components.forEach((component) => component.update(dt));

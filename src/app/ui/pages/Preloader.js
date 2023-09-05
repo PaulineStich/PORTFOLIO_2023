@@ -1,6 +1,6 @@
 import properties from '@core/properties';
 import settings from '@core/settings';
-import { STATUS } from '../constants';
+import { TRANSITIONS, STATUS } from '../constants';
 
 import { gsap, Power3, Expo } from 'gsap';
 
@@ -79,6 +79,7 @@ class Preloader {
 				duration: 1,
 				onComplete: () => {
 					this._preloader.style.display = 'none';
+					properties.onTransition.dispatch(TRANSITIONS.SHOW_GALLERY);
 					this.delete();
 					document.getElementById('ui').classList.add('is-ready');
 				},
@@ -113,8 +114,6 @@ class Preloader {
 				this._text.innerText = 'loaded';
 
 				this._startCallback();
-
-				properties.statusSignal.dispatch(STATUS.GALLERY);
 			}
 		}
 		let displayPercent = this.percentToStart * this.PERCENT_BETWEEN_INIT_AND_START + this.percent * (1 - this.PERCENT_BETWEEN_INIT_AND_START);

@@ -3,7 +3,7 @@ import settings from '@core/settings';
 import * as THREE from 'three';
 import MinSignal from 'min-signal';
 import quickLoader from 'quick-loader';
-import {STATUS} from '../ui/constants';
+import { STATUS } from '../ui/constants';
 
 class Properties {
 	win = window;
@@ -128,7 +128,7 @@ class Properties {
 	// ###########################################
 
 	onFirstClicked = new MinSignal();
-	isPreloaderFinished = false;
+	onTransition = new MinSignal();
 
 	// ###########################################
 

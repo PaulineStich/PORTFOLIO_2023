@@ -38,10 +38,17 @@ class Gallery {
 
 	show() {
 		this.isActive = true;
+		console.log('show the gallery component now');
+
+		this.galleryItems.forEach((galleryItem) => galleryItem.show());
+		return;
 	}
 
 	hide() {
-		console.log('hide gallery');
+		this.isActive = false;
+		console.log('hide gallery now');
+
+		this.galleryItems.forEach((galleryItem) => galleryItem.hide());
 		return;
 	}
 
