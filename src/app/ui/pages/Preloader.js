@@ -32,7 +32,7 @@ class Preloader {
 
 	init() {}
 
-	show(initCallback, startCallback) {
+	start(initCallback, startCallback) {
 		this._initCallback = initCallback;
 		this._startCallback = startCallback;
 		this.isActive = true;
@@ -40,11 +40,6 @@ class Preloader {
 		properties.loader.start((percent) => {
 			this.percentTarget = percent;
 		});
-	}
-
-	hide() {
-		this.fadeOutAnimation();
-		this.tlLoaded.play();
 	}
 
 	resize(width, height) {}
@@ -78,16 +73,22 @@ class Preloader {
 				opacity: 0,
 				duration: 1,
 				onComplete: () => {
-					this._preloader.style.display = 'none';
 					properties.onTransition.dispatch(TRANSITIONS.SHOW_GALLERY);
-					this.delete();
-					document.getElementById('ui').classList.add('is-ready');
+					this.skip();
 				},
 			});
+
+		this.tlLoaded.play();
 	}
 
 	delete() {
+		this._preloader.style.display = 'none';
 		this._preloader.remove();
+	}
+
+	skip() {
+		this.delete();
+		document.getElementById('ui').classList.add('is-ready');
 	}
 
 	update(dt) {
@@ -114,8 +115,13 @@ class Preloader {
 				this._text.innerText = 'loaded';
 
 				this._startCallback();
+
+				if (settings.SKIP_ANIMATION) {
+					properties.onTransition.dispatch(TRANSITIONS.SHOW_GALLERY);
+				}
 			}
 		}
+
 		let displayPercent = this.percentToStart * this.PERCENT_BETWEEN_INIT_AND_START + this.percent * (1 - this.PERCENT_BETWEEN_INIT_AND_START);
 
 		this._percetage.innerHTML = `${Number((displayPercent * 100).toFixed(0))}%`;

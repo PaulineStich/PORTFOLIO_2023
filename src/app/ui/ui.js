@@ -25,7 +25,7 @@ export class UI {
 	}
 
 	preload(initCallback, startCallback) {
-		preloader.show(initCallback, startCallback);
+		preloader.start(initCallback, startCallback);
 	}
 
 	init() {
@@ -36,7 +36,11 @@ export class UI {
 	}
 
 	start() {
-		preloader.hide();
+		if (settings.SKIP_ANIMATION) {
+			preloader.skip();
+		} else {
+			preloader.fadeOutAnimation();
+		}
 		this.showPage(STATUS.GALLERY);
 		this.headerHome.classList.add('active');
 	}
