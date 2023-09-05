@@ -15,19 +15,13 @@ export default class GalleryItem {
 		this.index = index;
 		this.totalImages = data.length;
 
-		// this.animateProperties = animateProperties;
-		// this.data = data[index];
-		// this.direction = { x: 0, y: 0 };
-		// this.projectPage = project;
-		// this.projectPageItem = projectItem;
-
 		this.init();
 	}
 
 	init() {
 		// hide gallery at the bottom of the page
 		gsap.set(this.DOM.el, {
-			y: window.innerHeight, // Start position from the bottom of the page
+			y: window.innerHeight,
 			opacity: 0,
 		});
 	}
@@ -40,7 +34,7 @@ export default class GalleryItem {
 
 	_fadeIn() {
 		gsap.to(this.DOM.el, {
-			y: 0, // Move to the center of the page
+			y: 0,
 			opacity: 1,
 			duration: 1.5,
 			ease: Power3.easeInOut,
