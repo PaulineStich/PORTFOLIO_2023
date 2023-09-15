@@ -10,17 +10,41 @@ header {
 		margin: 0;
 		li {
 			float: left;
+			overflow: hidden;
 			&:first-of-type {
-				padding-right: 25px;
+				position: relative;
+				right: 25px;
 			}
 			.active::after {
 				content: '';
 				width: 100%;
 				height: 3px;
-				background-color: white;
 				display: block;
 				margin-top: 1px;
+				background-color: rgba(rgb(255, 255, 255), 0.8);
+				transform: translateX(0%);
+				transform-origin: bottom left;
+				transition: all 0.3s ease-in-out;
+			}
+			&:hover .active::after {
+				animation: 0.75s animateLine cubic-bezier(0.165, 0.84, 0.44, 1);
+				animation-fill-mode: both;
 			}
 		}
+	}
+}
+
+@keyframes animateLine {
+	0% {
+		transform: translateX(0%);
+	}
+	50% {
+		transform: translateX(100%);
+	}
+	51% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(0%);
 	}
 }
