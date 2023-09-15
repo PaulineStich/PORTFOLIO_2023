@@ -57,12 +57,12 @@ class ProjectItem {
 	}
 
 	show() {
-		console.log('show project item');
+		// console.log('show project item');
 		// properties.statusSignal.dispatch(STATUS.PROJECT);
 	}
 
 	hide() {
-		console.log('hide project item');
+		// console.log('hide project item');
 	}
 
 	resize(width, height) {}

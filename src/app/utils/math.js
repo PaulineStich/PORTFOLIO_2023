@@ -6,12 +6,12 @@ class MathUtils {
 	RAD2DEG = 180.0 / this.PI;
 
 	map(x, a, b, c, d) {
-		return (x - a) * (d - c) / (b - a) + c;
+		return ((x - a) * (d - c)) / (b - a) + c;
 	}
 
 	lerp(a, b, n) {
 		return (1 - n) * a + n * b;
-	} 
+	}
 
 	step(edge, val) {
 		return val < edge ? 0 : 1;
@@ -104,6 +104,13 @@ class MathUtils {
 		let y = Math.sin(lng2 - lng1) * Math.cos(lat2);
 		let x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lng2 - lng1);
 		return Math.atan2(y, x);
+	}
+
+	distance(x1, y1, x2, y2) {
+		let dX = x1 - x2;
+		let dY = y1 - y2;
+
+		return Math.hypot(dX, dY);
 	}
 
 	distanceTo(dX, dY) {

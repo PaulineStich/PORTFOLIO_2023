@@ -66,7 +66,7 @@ export default class MenuItem {
 		};
 
 		this.mouseOnClick = () => {
-			console.log('clicked');
+			// console.log('clicked');
 			this.projectPage.show();
 			this.projectPageItem.refreshPageContent();
 		};

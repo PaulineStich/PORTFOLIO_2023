@@ -7,8 +7,8 @@ class Gallery {
 	domGalleryItems;
 	galleryItems = [];
 	animateProperties = {
-		tx: { previous: 0, current: 0, amt: 0.05 },
-		ty: { previous: 0, current: 0, amt: 0.05 },
+		tx: { previous: 0, current: 0, amt: 0.015 },
+		ty: { previous: 0, current: 0, amt: 0.015 },
 		rotation: { previous: 0, current: 0, amt: 0.04 },
 		opacity: { previous: 0, current: 0, amt: 0.05 },
 	};
@@ -38,7 +38,7 @@ class Gallery {
 
 	show() {
 		this.isActive = true;
-		console.log('show the gallery component now');
+		// console.log('show the gallery component now');
 
 		this.galleryItems.forEach((galleryItem) => galleryItem.show());
 		return;
@@ -46,7 +46,7 @@ class Gallery {
 
 	hide() {
 		this.isActive = false;
-		console.log('hide gallery now');
+		// console.log('hide gallery now');
 
 		this.galleryItems.forEach((galleryItem) => galleryItem.hide());
 		return;
@@ -58,6 +58,7 @@ class Gallery {
 
 	update(dt) {
 		// Update gallery items
+		this.galleryItems.forEach((galleryItem) => galleryItem.update());
 	}
 }
 

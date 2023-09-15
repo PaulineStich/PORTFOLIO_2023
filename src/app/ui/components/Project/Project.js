@@ -33,7 +33,7 @@ class Project {
 	}
 
 	show() {
-		console.log('show project');
+		// console.log('show project');
 
 		this.domProject.style.display = 'block';
 		this.domHeader.style.pointerEvents = 'none';
@@ -59,7 +59,7 @@ class Project {
 	}
 
 	hide() {
-		console.log('hide project');
+		// console.log('hide project');
 
 		this.tlFadeOut = gsap
 			.timeline()

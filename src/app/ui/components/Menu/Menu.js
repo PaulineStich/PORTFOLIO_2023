@@ -52,7 +52,7 @@ class Menu {
 	}
 
 	hide() {
-		console.log('hide menu');
+		// console.log('hide menu');
 		return;
 	}
 
