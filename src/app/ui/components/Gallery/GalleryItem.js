@@ -1,4 +1,4 @@
-import { gsap, Power3, Expo } from 'gsap';
+import { gsap, Power1, Power3, Expo } from 'gsap';
 import data from '../../../data/projects';
 import properties from '@app/core/properties';
 import input from '@input/input';
@@ -20,13 +20,6 @@ export default class GalleryItem {
 		this.animateProperties = gallery.animateProperties;
 		this.positions;
 		this.triggerDistance;
-
-		// animateProperties = {
-		// 	tx: { previous: 0, current: 0, amt: 0.05 },
-		// 	ty: { previous: 0, current: 0, amt: 0.05 },
-		// 	rotation: { previous: 0, current: 0, amt: 0.04 },
-		// 	opacity: { previous: 0, current: 0, amt: 0.05 },
-		// };
 
 		this.init();
 	}
@@ -110,7 +103,7 @@ export default class GalleryItem {
 
 	_getPosition() {
 		this.positions = this.DOM.el.getBoundingClientRect();
-		this.triggerDistance = (window.innerWidth / 2) * 0.7;
+		this.triggerDistance = (window.innerWidth / 2) * 0.6;
 	}
 
 	_calculatePosition(left, top, width, height) {
@@ -130,8 +123,8 @@ export default class GalleryItem {
 		if (this.distanceMouseToTrigger < this.triggerDistance) {
 			// console.log('im in');
 			// I want the magnetic effect here, following the cursor movement
-			x = (input.mousePixelXY.x + window.scrollX - (this.positions.left + this.positions.width / 2)) * 0.8;
-			y = (input.mousePixelXY.y + window.scrollY - (this.positions.top + this.positions.height / 2)) * 0.8;
+			x = (input.mousePixelXY.x + window.scrollX - (this.positions.left + this.positions.width / 2)) * 0.6;
+			y = (input.mousePixelXY.y + window.scrollY - (this.positions.top + this.positions.height / 2)) * 0.6;
 		} else {
 			// console.log('im out');
 			// go back to where your position was
@@ -147,7 +140,7 @@ export default class GalleryItem {
 			gsap.set('.gallery-view_menuImage', {
 				x: this.animateProperties.tx.previous,
 				y: this.animateProperties.ty.previous,
-				ease: Power3.easeInOut,
+				ease: Power1.easeInOut,
 				duration: 0.8,
 				stagger: {
 					amount: 0.5,
@@ -155,7 +148,7 @@ export default class GalleryItem {
 				},
 			});
 
-			// this.DOM.el.style.transform = `translate3d(${this.animateProperties['tx'].previous}px, ${this.animateProperties['ty'].previous}px, 0)`;
+			// this.DOM.el.style.transform = `translate(-50%, -50%) translate3d(${this.animateProperties['tx'].previous}px, ${this.animateProperties['ty'].previous}px, 0)`;
 		}
 	}
 }
