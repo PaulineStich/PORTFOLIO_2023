@@ -130,8 +130,8 @@ export default class GalleryItem {
 		if (this.distanceMouseToTrigger < this.triggerDistance) {
 			// console.log('im in');
 			// I want the magnetic effect here, following the cursor movement
-			x = (input.mousePixelXY.x + window.scrollX - window.innerWidth / 2 - (this.positions.left + this.positions.width / 2)) * 0.3;
-			y = (input.mousePixelXY.y + window.scrollY - window.innerHeight / 2 - (this.positions.top + this.positions.height / 2)) * 0.3;
+			x = (input.mousePixelXY.x + window.scrollX - (this.positions.left + this.positions.width / 2)) * 0.8;
+			y = (input.mousePixelXY.y + window.scrollY - (this.positions.top + this.positions.height / 2)) * 0.8;
 		} else {
 			// console.log('im out');
 			// go back to where your position was
@@ -144,27 +144,18 @@ export default class GalleryItem {
 			this.animateProperties.tx.previous = math.lerp(this.animateProperties.tx.previous, this.animateProperties.tx.current, this.animateProperties.tx.amt);
 			this.animateProperties.ty.previous = math.lerp(this.animateProperties.ty.previous, this.animateProperties.ty.current, this.animateProperties.ty.amt);
 
-			this.DOM.el.style.transform = `translate3d(${this.animateProperties['tx'].previous}px, ${this.animateProperties['ty'].previous}px, 0)`;
+			gsap.set('.gallery-view_menuImage', {
+				x: this.animateProperties.tx.previous,
+				y: this.animateProperties.ty.previous,
+				ease: Power3.easeInOut,
+				duration: 0.8,
+				stagger: {
+					amount: 0.5,
+					from: 'end',
+				},
+			});
+
+			// this.DOM.el.style.transform = `translate3d(${this.animateProperties['tx'].previous}px, ${this.animateProperties['ty'].previous}px, 0)`;
 		}
-
-		// if (this.hasFinishedIntroAnimation) {
-		// 	// new translation values
-		// 	this.animateProperties.tx.current = input.mousePixelXY.x - window.innerWidth / 2;
-		// 	this.animateProperties.ty.current = input.mousePixelXY.y - window.innerHeight / 2;
-
-		// 	this.animateProperties.tx.previous = math.lerp(this.animateProperties.tx.previous, this.animateProperties.tx.current, this.animateProperties.tx.amt);
-		// 	this.animateProperties.ty.previous = math.lerp(this.animateProperties.ty.previous, this.animateProperties.ty.current, this.animateProperties.ty.amt);
-
-		// 	// Set styles using lerped values
-		// 	gsap.set('.gallery-view_menuImage', {
-		// 		// x: this.animateProperties.tx.previous,
-		// 		// y: this.animateProperties.ty.previous,
-		// 		// stagger: {
-		// 		// 	amount: 0.5,
-		// 		// 	// grid: [Math.floor(window.innerWidth / 200), Math.floor(window.innerHeight / 200)],
-		// 		// 	// from: 'start',
-		// 		// },
-		// 	});
-		// }
 	}
 }
