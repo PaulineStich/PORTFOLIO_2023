@@ -1,9 +1,7 @@
 .create-font-face(@font-family, @file-name, @font-weight, @font-style) {
 	@font-face {
 		font-family: @font-family;
-		src: url('../../assets/fonts/@{file-name}.eot?#iefix') format('embedded-opentype'),
-			url('../../assets/fonts/@{file-name}.woff2') format('woff2'), url('../../assets/fonts/@{file-name}.woff') format('woff'),
-			url('../../assets/fonts/@{file-name}.ttf') format('truetype');
+		src: url('../../assets/fonts/@{file-name}.eot?#iefix') format('embedded-opentype'), url('../../assets/fonts/@{file-name}.woff2') format('woff2'), url('../../assets/fonts/@{file-name}.woff') format('woff'), url('../../assets/fonts/@{file-name}.ttf') format('truetype');
 		font-weight: @font-weight;
 		font-style: @font-style;
 		font-display: swap;
@@ -41,7 +39,11 @@ body {
 	font-size: 14px;
 }
 
-h1,h2,h3,h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
 	margin: 0;
 }
 
@@ -61,7 +63,7 @@ h3 {
 }
 
 h4 {
-	font-size: 1.2em;
+	font-size: 1.1em;
 	font-family: 'senregular';
 }
 
@@ -76,7 +78,7 @@ h6 {
 	font-size: 2rem;
 	font-family: 'senregular';
 	font-weight: lighter;
-	color: #A4A4A4;
+	color: #a4a4a4;
 	margin: 15px 0;
 }
 

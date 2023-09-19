@@ -11,8 +11,10 @@ export default class GalleryItem {
 		this.DOM = {
 			el: el,
 			gallery: gallery,
+			galleryCounter: document.querySelector('.gallery-view-counter'),
 			galleryCounterIndex: document.querySelector('.gallery-view-counter_currentIndex'),
 			galleryCounterTotal: document.querySelector('.gallery-view-counter_totalIndex'),
+			galleryTitle: document.querySelector('.gallery-view_menuTitle'),
 		};
 		this.index = index;
 		this.totalImages = data.length;
@@ -20,6 +22,16 @@ export default class GalleryItem {
 		this.animateProperties = gallery.animateProperties;
 		this.positions;
 		this.triggerDistance;
+
+		// parrallax effect for title and gallery
+		this.state = {
+			aimX: 0,
+			aimY: 0,
+			current: {
+				title: { x: 0, y: 0 },
+				galleryCounter: { x: 0, y: 0 },
+			},
+		};
 
 		this.init();
 	}
@@ -111,6 +123,21 @@ export default class GalleryItem {
 		this.distanceMouseToTrigger = math.distance(input.mousePixelXY.x + window.scrollX, input.mousePixelXY.y + window.scrollY, left + width / 2, top + height / 2);
 	}
 
+	_ease = (target, current, factor) => (target - current) * factor;
+
+	_normalize = () => {
+		// normalize from -1.-1 / 0.0 / 1.1
+		this.state.aimX = (input.mousePixelXY.x * 2) / window.innerWidth - 1;
+		this.state.aimY = (input.mousePixelXY.y * 2) / window.innerHeight - 1;
+	};
+
+	_animateElement = (element, factorX, factorY) => {
+		this._normalize();
+		const { aimX, aimY, current } = this.state;
+		current[element].x += this._ease(aimX, current[element].x, factorX);
+		current[element].y += this._ease(aimY, current[element].y, factorY);
+	};
+
 	update(dt) {
 		// get position of elements
 		this._getPosition();
@@ -120,6 +147,15 @@ export default class GalleryItem {
 		let x = 0;
 		let y = 0;
 
+		// animate the title + galleryCounter
+
+		this._animateElement('title', 0.15, 0.15);
+		this._animateElement('galleryCounter', 0.1, 0.1);
+
+		this.DOM.galleryTitle.style.transform = `translate(-50%, -50%) translate(${2 * this.state.current.title.x}rem, ${2 * this.state.current.title.y}rem)`;
+		this.DOM.galleryCounter.style.transform = `translate(-50%, -50%) translate(${1 * this.state.current.title.x}rem, ${1 * this.state.current.title.y}rem)`;
+
+		// animate the Gallery
 		if (this.distanceMouseToTrigger < this.triggerDistance) {
 			// console.log('im in');
 			// I want the magnetic effect here, following the cursor movement
