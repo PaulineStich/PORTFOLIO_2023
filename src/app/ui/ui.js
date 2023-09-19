@@ -13,12 +13,15 @@ import preloader from '@app/ui/pages/Preloader';
 import home from '@app/ui/pages/Home';
 import about from '@app/ui/pages/About';
 
+import { splitText } from '../utils/splitting';
+
 export class UI {
 	components = [preloader, home, about];
 
 	preInit() {
 		this.headerAbout = document.getElementById('header-about');
 		this.headerHome = document.getElementById('header-projects');
+		splitText();
 
 		document.documentElement.classList.add('is-ready');
 		this.components.forEach((component) => component.preInit());
