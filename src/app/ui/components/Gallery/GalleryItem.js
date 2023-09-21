@@ -22,6 +22,7 @@ export default class GalleryItem {
 		this.animateProperties = gallery.animateProperties;
 		this.positions;
 		this.triggerDistance;
+		this.active = false;
 
 		// parrallax effect for title and gallery
 		this.state = {
@@ -148,7 +149,6 @@ export default class GalleryItem {
 		let y = 0;
 
 		// animate the title + galleryCounter
-
 		this._animateElement('title', 0.15, 0.15);
 		this._animateElement('galleryCounter', 0.1, 0.1);
 
@@ -159,20 +159,27 @@ export default class GalleryItem {
 		if (this.distanceMouseToTrigger < this.triggerDistance) {
 			// console.log('im in');
 			// I want the magnetic effect here, following the cursor movement
-			x = (input.mousePixelXY.x + window.scrollX - (this.positions.left + this.positions.width / 2)) * 0.6;
-			y = (input.mousePixelXY.y + window.scrollY - (this.positions.top + this.positions.height / 2)) * 0.6;
+			x = (input.mousePixelXY.x + window.scrollX - (this.positions.left + this.positions.width / 2)) * 0.4;
+			y = (input.mousePixelXY.y + window.scrollY - (this.positions.top + this.positions.height / 2)) * 0.4;
+
+			this.active = true;
 		} else {
 			// console.log('im out');
 			// go back to where your position was
+
+			// x = (input.mousePixelXY.x + window.scrollX - (this.positions.left + this.positions.width / 2)) * 0.05;
+			// y = (input.mousePixelXY.y + window.scrollY - (this.positions.top + this.positions.height / 2)) * 0.05;
+
+			this.active = false;
 		}
 
+		this.animateProperties.tx.current = x;
+		this.animateProperties.ty.current = y;
+
+		this.animateProperties.tx.previous = math.lerp(this.animateProperties.tx.previous, this.animateProperties.tx.current, this.animateProperties.tx.amt);
+		this.animateProperties.ty.previous = math.lerp(this.animateProperties.ty.previous, this.animateProperties.ty.current, this.animateProperties.ty.amt);
+
 		if (this.hasFinishedIntroAnimation) {
-			this.animateProperties.tx.current = x;
-			this.animateProperties.ty.current = y;
-
-			this.animateProperties.tx.previous = math.lerp(this.animateProperties.tx.previous, this.animateProperties.tx.current, this.animateProperties.tx.amt);
-			this.animateProperties.ty.previous = math.lerp(this.animateProperties.ty.previous, this.animateProperties.ty.current, this.animateProperties.ty.amt);
-
 			gsap.set('.gallery-view_menuImage', {
 				x: this.animateProperties.tx.previous,
 				y: this.animateProperties.ty.previous,
@@ -183,8 +190,12 @@ export default class GalleryItem {
 					from: 'end',
 				},
 			});
-
-			// this.DOM.el.style.transform = `translate(-50%, -50%) translate3d(${this.animateProperties['tx'].previous}px, ${this.animateProperties['ty'].previous}px, 0)`;
+		} else if (this.hasFinishedIntroAnimation && !this.active) {
+			// gsap.to('.gallery-view_menuImage', {
+			// 	x: this.animateProperties.tx.previous,
+			// 	ease: Power1.easeInOut,
+			// 	duration: 0.8,
+			// });
 		}
 	}
 }

@@ -7,8 +7,8 @@ class Gallery {
 	domGalleryItems;
 	galleryItems = [];
 	animateProperties = {
-		tx: { previous: 0, current: 0, amt: 0.01 },
-		ty: { previous: 0, current: 0, amt: 0.01 },
+		tx: { previous: 0, current: 0, amt: 0.05 },
+		ty: { previous: 0, current: 0, amt: 0.05 },
 		rotation: { previous: 0, current: 0, amt: 0.04 },
 		opacity: { previous: 0, current: 0, amt: 0.05 },
 	};
