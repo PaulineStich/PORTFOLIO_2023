@@ -1,14 +1,14 @@
 import properties from '@core/properties';
 import settings from '@core/settings';
-import {STATUS} from '../constants';
+import { STATUS } from '../constants';
 
-import {gsap} from 'gsap';
+import { gsap } from 'gsap';
 
 class About {
 	_about;
 
-	_tlFadeOut = gsap.timeline({paused: true});
-	_tlFadeIn = gsap.timeline({paused: true})
+	_tlFadeOut = gsap.timeline({ paused: true });
+	_tlFadeIn = gsap.timeline({ paused: true });
 
 	preInit() {
 		this._about = document.querySelector('#about');
@@ -34,35 +34,33 @@ class About {
 		this._about.style.pointerEvents = 'auto';
 
 		this.isActive = true;
-		this.fadeInAnimation();
-		this._tlFadeIn.play()
+		this._fadeInAnimation();
+		this._tlFadeIn.play();
 	}
-	
+
 	hide() {
 		clearTimeout(this._hiddenTimeout);
 		this._about.style.pointerEvents = 'none';
 
 		this.isActive = false;
-		this.fadeOutAnimation();
-		this._tlFadeOut.play()
+		this._fadeOutAnimation();
+		this._tlFadeOut.play();
 
 		this._hiddenTimeout = setTimeout(() => {
 			this._about.style.display = 'none';
-		}, 2000);
-	}
-    
-	fadeInAnimation() {
-		this._tlFadeIn
-			.to(this._about, {
-				opacity: 1
-			})
+		}, 0);
 	}
 
-	fadeOutAnimation() {
-		this._tlFadeOut
-			.to(this._about, {
-				opacity: 0
-			})
+	_fadeInAnimation() {
+		this._tlFadeIn.to(this._about, {
+			opacity: 1,
+		});
+	}
+
+	_fadeOutAnimation() {
+		this._tlFadeOut.to(this._about, {
+			opacity: 0,
+		});
 	}
 
 	delete() {}

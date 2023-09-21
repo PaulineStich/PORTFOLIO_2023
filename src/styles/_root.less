@@ -1,14 +1,19 @@
 html,
 body {
-	.template--no-select;
+	// .template--no-select;
 	// .template--fixed-full-screen;
 
-	overflow: hidden;
+	// overflow: hidden;
 	overscroll-behavior: none;
 	touch-action: none;
+	overflow-x: hidden;
 
 	color: var(--color-white);
 	margin: 0;
+
+	/* Hide the scrollbar but keep scroll functionality for WebKit browsers */
+	scrollbar-width: thin; /* For Firefox */
+	scrollbar-color: transparent transparent; /* For Firefox */
 }
 
 html.no-js {
@@ -44,4 +49,18 @@ html.no-js {
 	.is-ready & {
 		pointer-events: auto;
 	}
+}
+
+/* Hide scrollbar for WebKit browsers */
+body::-webkit-scrollbar {
+	width: 0.1rem; /* Adjust as needed to hide the scrollbar width */
+}
+
+/* Optionally style the thumb and track (scrollbar) color */
+body::-webkit-scrollbar-thumb {
+	background-color: transparent; /* Thumb color */
+}
+
+body::-webkit-scrollbar-track {
+	background-color: transparent; /* Track (scrollbar) color */
 }
