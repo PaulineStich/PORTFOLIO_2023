@@ -16,6 +16,20 @@ body {
 	scrollbar-color: transparent transparent; /* For Firefox */
 }
 
+/* Hide scrollbar for WebKit browsers */
+body::-webkit-scrollbar {
+	width: 0.1rem; /* Adjust as needed to hide the scrollbar width */
+}
+
+/* Optionally style the thumb and track (scrollbar) color */
+body::-webkit-scrollbar-thumb {
+	background-color: transparent; /* Thumb color */
+}
+
+body::-webkit-scrollbar-track {
+	background-color: transparent; /* Track (scrollbar) color */
+}
+
 html.no-js {
 	body {
 		display: none;
@@ -49,18 +63,4 @@ html.no-js {
 	.is-ready & {
 		pointer-events: auto;
 	}
-}
-
-/* Hide scrollbar for WebKit browsers */
-body::-webkit-scrollbar {
-	width: 0.1rem; /* Adjust as needed to hide the scrollbar width */
-}
-
-/* Optionally style the thumb and track (scrollbar) color */
-body::-webkit-scrollbar-thumb {
-	background-color: transparent; /* Thumb color */
-}
-
-body::-webkit-scrollbar-track {
-	background-color: transparent; /* Track (scrollbar) color */
 }

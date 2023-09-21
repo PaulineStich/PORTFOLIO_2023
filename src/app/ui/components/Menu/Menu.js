@@ -39,10 +39,10 @@ class Menu {
 			menuItem.dataset.img = item.img;
 			menuItem.dataset.text = item.id;
 
-			let h2 = document.createElement('h2');
-			h2.textContent = item.id;
+			let h1 = document.createElement('h1');
+			h1.textContent = item.id;
 
-			menuItem.appendChild(h2);
+			menuItem.appendChild(h1);
 			this.domMenu.appendChild(menuItem);
 		});
 	}

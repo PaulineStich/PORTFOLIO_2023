@@ -7,7 +7,7 @@
 	flex-direction: column;
 	justify-content: center;
 	background-color: #e5e5e5;
-	// overflow-y: scroll !important;
+	color: #3e3e3e;
 
 	scroll-behavior: smooth;
 
@@ -20,126 +20,200 @@
 		padding: 0;
 		margin: 0;
 
+		h3 {
+			text-transform: uppercase;
+		}
+
+		span {
+			padding: 0 5px;
+		}
+
 		.about-container_title {
+			.template--is-center;
 			height: 100vh;
-			// border: 5px solid red;
+			border: 5px solid rgb(166, 255, 0);
 
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			flex-direction: column;
-			text-align: center;
+			.first-sentence {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: row;
+				gap: 15px;
 
-			h2 {
-				&:nth-of-type(1) {
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					flex-direction: row;
-					gap: 15px;
-				}
-				&:nth-of-type(2) {
-					color: #3e3e3e;
-				}
-			}
-
-			span {
-				padding: 0 5px;
-				&:nth-of-type(1) {
-					color: #3e3e3e;
+				h2 {
+					&:nth-of-type(1) {
+						span:nth-of-type(2) {
+							color: white;
+						}
+					}
+					&:nth-of-type(2) {
+						span:nth-of-type(1) {
+							color: white;
+						}
+					}
 				}
 			}
 		}
 
 		.about-container_skills {
+			.template--is-center;
 			height: 100vh;
+
 			border: 5px solid rgb(166, 255, 0);
 		}
 
 		.about-container_cta {
-		}
+			.template--is-center;
+			height: 100vh;
+			padding: 0rem 10rem 0 10rem;
+			border: 5px solid rgb(166, 255, 0);
 
-		footer {
-			.footer-social {
+			section {
+				width: 100%;
+				.template--is-center;
+				gap: 4.5rem;
+
+				.gradientBackground {
+					margin: 0;
+					padding: 0;
+					position: relative;
+					width: 100%;
+					height: 480px;
+					display: inline-block;
+					background: #c8d2e6;
+					background: -webkit-linear-gradient(to bottom, #c8d2e6, #f5eded);
+					background: -webkit-gradient(linear, left top, left bottom, from(#c8d2e6), to(#f5eded));
+					background: -webkit-linear-gradient(top, #c8d2e6, #f5eded);
+					background: linear-gradient(to bottom, #c8d2e6, #f5eded);
+					border-radius: 2px;
+					.template--is-center;
+					@media screen and (max-width: 380px) {
+						height: 195px;
+					}
+
+					section {
+						gap: 0;
+
+						// second sentence
+						div {
+							display: flex;
+							align-items: center;
+							gap: 2rem;
+
+							form {
+								// background-color: white;
+								// border-radius: 45px;
+								position: relative;
+
+								input[type='email'] {
+									width: 100%;
+									height: 45px;
+									padding: 10px;
+									margin: 10px 0;
+									border: none;
+									border-radius: 45px;
+									outline: none;
+									min-width: 280px;
+									padding: 0 25px;
+									color: #333;
+									font-size: 17px;
+									font-family: 'nunitoextralight';
+									font-weight: 600;
+
+									transition: all 0.3s ease-in-out;
+
+									&:focus {
+										box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+									}
+
+									&::placeholder {
+										color: #333;
+										opacity: 0.7;
+
+										transition: opacity 0.3s ease-in-out;
+									}
+
+									&:focus::placeholder {
+										opacity: 1;
+									}
+								}
+
+								button[type='submit'] {
+									position: absolute;
+									top: 50%;
+									right: 0;
+									transform: translateY(-50%);
+
+									background-color: #0d3143;
+									color: white;
+									border: none;
+									border-radius: 50%;
+									width: 45px;
+									height: 45px;
+									cursor: pointer;
+								}
+							}
+						}
+					}
+				}
+
+				.about-container_cta-social {
+					display: flex;
+
+					ul {
+						padding: 0;
+						margin: 0;
+						li {
+							float: left;
+							margin: 10px 20px 10px 0;
+							padding: 3px 0 3px 0;
+							overflow: hidden;
+							&::before {
+								content: none;
+							}
+							@media only screen and (max-width: 460px) {
+								margin: 5px 10px 5px 0;
+							}
+
+							a {
+								@media only screen and (max-width: 460px) {
+									font-size: 10px;
+								}
+								&:after {
+									content: '';
+									display: block;
+									position: relative;
+									top: 0;
+									left: 0;
+									right: 0;
+									width: 100%;
+									height: 2px;
+									transform: translateX(0%);
+									background-color: white;
+									transform-origin: bottom left;
+									transition: transform 0.3s ease-in-out;
+									@media only screen and (max-width: 460px) {
+										top: -3px;
+									}
+								}
+
+								&:hover {
+									&:after {
+										animation: 0.8s animateLine cubic-bezier(0.165, 0.84, 0.44, 1);
+										animation-fill-mode: both;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			footer {
+				position: absolute;
+				bottom: 10vh;
+				.template--is-center;
 			}
 		}
 	}
 }
-
-// .gradientBackground {
-//     position: relative;
-//     margin-top: 80px;
-//     width: 100%;
-//     height: 480px;
-//     display: inline-block;
-//     background: #c8d2e6;
-//     background: -webkit-linear-gradient(to bottom, #c8d2e6, #f5eded);
-//     background: -webkit-gradient(
-//         linear,
-//         left top,
-//         left bottom,
-//         from(#c8d2e6),
-//         to(#f5eded)
-//     );
-//     background: -webkit-linear-gradient(top, #c8d2e6, #f5eded);
-//     background: linear-gradient(to bottom, #c8d2e6, #f5eded);
-//     border-radius: 2px;
-//     @media screen and (max-width: 380px) {
-//         height: 195px;
-//         margin-top: 10px;
-//     }
-// }
-
-// .about-social {
-// 		display: flex;
-
-// 		ul {
-// 			padding: 0;
-// 			margin: 0;
-// 			li {
-// 				float: left;
-// 				margin: 10px 20px 10px 0;
-// 				padding: 3px 0 3px 0;
-// 				&::before {
-// 					content: none;
-// 				}
-// 				@media only screen and (max-width: 460px) {
-// 					margin: 5px 10px 5px 0;
-// 				}
-
-// 				p {
-// 					overflow: hidden;
-// 				}
-
-// 				a {
-// 					@media only screen and (max-width: 460px) {
-// 						font-size: 10px;
-// 					}
-// 					&:after {
-// 						content: '';
-// 						display: block;
-// 						position: relative;
-// 						top: 0;
-// 						left: 0;
-// 						right: 0;
-// 						width: 100%;
-// 						height: 2px;
-// 						transform: translateX(0%);
-// 						background-color: rgba(227, 224, 198s, 0.8);
-// 						transform-origin: bottom left;
-// 						transition: transform 0.3s ease-in-out;
-// 						@media only screen and (max-width: 460px) {
-// 							top: -3px;
-// 						}
-// 					}
-
-// 					&:hover {
-// 						&:after {
-// 							animation: 0.8s animateLine cubic-bezier(0.165, 0.84, 0.44, 1);
-// 							animation-fill-mode: both;
-// 						}
-// 					}
-// 				}
-// 			}
-// 		}
-// 	}

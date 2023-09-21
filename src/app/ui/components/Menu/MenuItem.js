@@ -12,7 +12,7 @@ export default class MenuItem {
 	constructor(el, index, animateProperties, project, projectItem) {
 		this.DOM = {
 			el: el,
-			title: el.querySelector('h2').innerText,
+			title: el.querySelector('h1').innerText,
 		};
 		this.data = data[index];
 		this.index = index;
