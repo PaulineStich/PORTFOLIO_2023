@@ -136,6 +136,10 @@ class MathUtils {
 		return 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 	}
 
+	getAngle = (x, y) => {
+		return (Math.atan2(y, x) * 180) / Math.PI;
+	};
+
 	cubicBezier(p0, p1, p2, p3, t) {
 		let c = (p1 - p0) * 3;
 		let b = (p2 - p1) * 3 - c;
