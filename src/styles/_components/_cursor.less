@@ -1,11 +1,38 @@
 #custom-cursor {
 	z-index: 1;
-	position: relative;
-	.cursor_text {
-		position: absolute;
-		left: 0px;
-		top: 0;
-		text-transform: uppercase;
-		font-size: 12px;
+	position: absolute;
+
+	.cursor {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		.cursor_sphere {
+			background-color: white;
+			border-radius: 50%;
+			width: 25px;
+			height: 25px;
+
+			position: absolute;
+			z-index: -1;
+		}
+
+		.cursor_container {
+			display: flex;
+			justify-content: center;
+			flex-direction: row;
+			align-items: center;
+			gap: 10px;
+
+			opacity: 1;
+			&-text {
+				color: black;
+				text-transform: uppercase;
+				font-size: 12px;
+			}
+			&-arrow {
+				fill: black;
+			}
+		}
 	}
 }

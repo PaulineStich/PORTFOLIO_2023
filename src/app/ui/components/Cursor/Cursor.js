@@ -6,7 +6,9 @@ import { HOVER_STATE } from '../../constants';
 class Cursor {
 	constructor() {
 		this.cursor = document.querySelector('.cursor');
-		this.cursorText = document.querySelector('.cursor_text');
+		this.cursorSphere = document.querySelector('.cursor_sphere');
+		this.cursorContent = document.querySelector('.cursor_container');
+		this.cursorContentText = this.cursorContent.querySelector('p');
 
 		this.active = false;
 		this.allowAnimation = false;
@@ -14,11 +16,10 @@ class Cursor {
 		this.state = {
 			position: {
 				cursor: {},
-				cursorText: {},
 			}, // position of dom cursor
 			x: { previous: 0, current: 0 }, // position of mouse
 			y: { previous: 0, current: 0 }, // position of mouse
-			scale: { previous: 1, current: 2 },
+			scale: { previous: 1, current: 1 },
 			opacityCursor: { previous: 0, current: 0.4 },
 			opacityText: { previous: 0, current: 0 },
 			angle: { previous: 0, current: 0 },
@@ -31,8 +32,10 @@ class Cursor {
 		this.getPosition();
 
 		properties.onHover.add((hoverState) => {
-			if (hoverState === HOVER_STATE.OPEN) {
-				this.enter();
+			if (hoverState === HOVER_STATE.HI) {
+				this.enter(3, 1, 'hi', 5);
+			} else if (hoverState === HOVER_STATE.OPEN) {
+				this.enter(4, 1, 'open', 5);
 			} else if (hoverState === HOVER_STATE.DEFAULT) {
 				this.leave();
 			}
@@ -52,24 +55,18 @@ class Cursor {
 		this.active = false;
 	}
 
-	hi() {}
-
-	enter() {
-		console.log('hi');
-		this.state.scale.current = 5;
-		this.state.opacityCursor.current = 1;
-		this.state.opacityText.current = 1;
-		this.state.force = 5;
-
+	enter(scale, opacity, textContent, force) {
 		// console.log('mouseenter');
-		// this.state.scale.current = 8;
-		// this.state.opacity.current = 1;
-		// this.state.force = 5;
+		this.state.scale.current = scale;
+		this.state.opacityCursor.current = opacity;
+		this.state.opacityText.current = opacity;
+		this.cursorContentText.textContent = textContent;
+		this.state.force = force;
 	}
 
 	leave() {
-		console.log('mouseleave');
-		this.state.scale.current = 2;
+		// console.log('mouseleave');
+		this.state.scale.current = 1;
 		this.state.opacityCursor.current = 0.4;
 		this.state.opacityText.current = 0;
 		this.state.force = 20;
@@ -77,7 +74,6 @@ class Cursor {
 
 	getPosition() {
 		this.state.position.cursor = this.cursor.getBoundingClientRect();
-		this.state.position.cursorText = this.cursorText.getBoundingClientRect();
 	}
 
 	getSqueeze(diffX, diffY) {
@@ -117,13 +113,12 @@ class Cursor {
 		const squeeze = `scale(${1 + this.state.squeeze.current}, ${1 - this.state.squeeze.current * 0.25})`;
 		const rotate = `rotate(${this.state.angle.current}deg)`;
 		const translate = `translateX(${this.state.x.previous}px) translateY(${this.state.y.previous}px) `;
-		const centerText = `translate(${this.state.position.cursorText.width / 2}px, ${-this.state.position.cursorText.height / 4}px)`;
 
 		if (this.allowAnimation) {
-			this.cursor.style.transform = translate + scale + rotate + squeeze;
+			this.cursor.style.transform = translate;
 			this.cursor.style.opacity = this.state.opacityCursor.previous;
-			this.cursorText.style.transform = translate + centerText;
-			this.cursorText.style.opacity = this.state.opacityText.previous;
+			this.cursorSphere.style.transform = scale + rotate + squeeze;
+			this.cursorContent.style.opacity = this.state.opacityText.previous;
 		}
 	}
 }
