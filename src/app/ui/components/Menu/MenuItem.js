@@ -1,7 +1,7 @@
 import properties from '@core/properties';
 import settings from '@core/settings';
 // const images = Object.entries(require('../../img/demo2/*.jpg'));
-import { STATUS } from '../../constants';
+import { STATUS, HOVER_STATE } from '../../constants';
 
 import { gsap, Power3, Expo } from 'gsap';
 import math from '@app/utils/math';
@@ -59,10 +59,12 @@ export default class MenuItem {
 			this.show();
 			this.firstRAF = true;
 			this.loopRender();
+			properties.onHover.dispatch(HOVER_STATE.OPEN);
 		};
 		this.mouseleaveFn = () => {
 			this.stopRendering();
 			this.hide();
+			properties.onHover.dispatch(HOVER_STATE.DEFAULT);
 		};
 
 		this.mouseOnClick = () => {

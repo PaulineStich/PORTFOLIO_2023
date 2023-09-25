@@ -129,6 +129,7 @@ class Properties {
 
 	onFirstClicked = new MinSignal();
 	onTransition = new MinSignal();
+	onHover = new MinSignal();
 
 	// ###########################################
 

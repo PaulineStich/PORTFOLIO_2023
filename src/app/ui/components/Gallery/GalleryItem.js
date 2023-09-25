@@ -4,6 +4,8 @@ import properties from '@app/core/properties';
 import input from '@input/input';
 import math from '@app/utils/math';
 
+import { HOVER_STATE } from '../../constants';
+
 export default class GalleryItem {
 	static counter = 1; // Add this static variable
 
@@ -22,7 +24,7 @@ export default class GalleryItem {
 		this.animateProperties = gallery.animateProperties;
 		this.positions;
 		this.triggerDistance;
-		this.active = false;
+		this.onHover = false;
 
 		// parrallax effect for title and gallery
 		this.state = {
@@ -92,6 +94,14 @@ export default class GalleryItem {
 		);
 	}
 
+	_mouseEnter() {
+		properties.onHover.dispatch(HOVER_STATE.OPEN);
+	}
+
+	_mouseLeave() {
+		properties.onHover.dispatch(HOVER_STATE.DEFAULT);
+	}
+
 	_startGalleryTimer() {
 		const delayStep = 3000;
 		const delay = (this.totalImages - 1 - this.index) * delayStep;
@@ -148,7 +158,7 @@ export default class GalleryItem {
 		let x = 0;
 		let y = 0;
 
-		// animate the title + galleryCounter
+		// parallax the title + galleryCounter
 		this._animateElement('title', 0.15, 0.15);
 		this._animateElement('galleryCounter', 0.1, 0.1);
 
@@ -162,7 +172,10 @@ export default class GalleryItem {
 			x = (input.mousePixelXY.x + window.scrollX - (this.positions.left + this.positions.width / 2)) * 0.4;
 			y = (input.mousePixelXY.y + window.scrollY - (this.positions.top + this.positions.height / 2)) * 0.4;
 
-			this.active = true;
+			if (!this.onHover) {
+				this._mouseEnter();
+				this.onHover = true;
+			}
 		} else {
 			// console.log('im out');
 			// go back to where your position was
@@ -170,7 +183,10 @@ export default class GalleryItem {
 			// x = (input.mousePixelXY.x + window.scrollX - (this.positions.left + this.positions.width / 2)) * 0.05;
 			// y = (input.mousePixelXY.y + window.scrollY - (this.positions.top + this.positions.height / 2)) * 0.05;
 
-			this.active = false;
+			if (this.onHover) {
+				this._mouseLeave();
+				this.onHover = false;
+			}
 		}
 
 		this.animateProperties.tx.current = x;
@@ -190,7 +206,7 @@ export default class GalleryItem {
 					from: 'end',
 				},
 			});
-		} else if (this.hasFinishedIntroAnimation && !this.active) {
+		} else if (this.hasFinishedIntroAnimation && !this.onHover) {
 			// gsap.to('.gallery-view_menuImage', {
 			// 	x: this.animateProperties.tx.previous,
 			// 	ease: Power1.easeInOut,
