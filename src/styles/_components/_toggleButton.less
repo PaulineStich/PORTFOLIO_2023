@@ -2,7 +2,7 @@
 	position: fixed;
 	bottom: 0;
 	right: 0;
-	margin: 30px 50px;
+	margin: 35px 7vw;
 	z-index: 3;
 
 	display: flex;
@@ -10,6 +10,10 @@
 	justify-content: center;
 	align-items: center;
 	grid-gap: 10px;
+
+	@media only screen and (max-width: @size-mobile-l) {
+		margin: 20px 7vw;
+	}
 
 	#gallery-toggle_button {
 		position: relative;

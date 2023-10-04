@@ -19,6 +19,10 @@
 				left: 50%;
 				width: 100%;
 				transform: translateX(-50%);
+
+				@media only screen and (max-width: @size-mobile-l) {
+					font-size: 4.8rem;
+				}
 			}
 			#gallery-view_menuImages {
 				.gallery-view_menuImage {
@@ -26,7 +30,7 @@
 					left: 50%;
 					top: 50%;
 					transform: translate(-50%, -50%);
-					max-width: 50%;
+					width: min(550px, 70%);
 					border: 15px solid white;
 				}
 			}
@@ -98,10 +102,14 @@
 					opacity: 0;
 					width: 100%;
 
-					font-size: 3.5em;
-					letter-spacing: 2px;
+					font-size: 4.9rem;
 					font-family: 'lustriaregular';
+					letter-spacing: 2px;
 					text-transform: uppercase;
+
+					@media only screen and (max-width: @size-mobile-l) {
+						font-size: 4rem;
+					}
 				}
 
 				&:hover::after {
@@ -139,5 +147,5 @@
 .hover-reveal_img {
 	background-size: cover;
 	background-position: 50% 50%;
-	background-color: red;
+	// background-color: red;
 }

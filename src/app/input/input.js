@@ -174,7 +174,7 @@ class Input {
 
 	_getTouchBound(context, fn, usePreventDefault) {
 		return function (event) {
-			if (usePreventDefault && event.preventDefault) event.preventDefault();
+			// if (usePreventDefault && event.preventDefault) event.preventDefault();
 			fn.call(context, event.changedTouches[0] || event.touches[0]);
 		};
 	}

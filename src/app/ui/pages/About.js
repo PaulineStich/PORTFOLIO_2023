@@ -6,7 +6,7 @@ import { gsap } from 'gsap';
 
 class About {
 	_about;
-	_speed = 0.04;
+	_speed = 0.08;
 	_offset = 0;
 
 	_tlFadeOut = gsap.timeline({ paused: true });
@@ -64,7 +64,7 @@ class About {
 	}
 
 	_smoothScroll() {
-		this._offset += (window.scrollY - this._offset) * this._speed;
+		this._offset += Math.round((window.scrollY - this._offset) * this._speed);
 
 		let scroll = 'translateY(-' + this._offset + 'px) translateZ(0)';
 		this._about.style.transform = scroll;
@@ -73,6 +73,8 @@ class About {
 	delete() {}
 
 	update(dt) {
+		if (!this.isActive) return;
+
 		this._smoothScroll();
 	}
 }

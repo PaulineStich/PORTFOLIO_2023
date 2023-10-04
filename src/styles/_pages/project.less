@@ -28,6 +28,11 @@
 		&:hover {
 			transform: rotate(180deg);
 		}
+
+		@media only screen and (max-width: @size-mobile-l) {
+			top: 20px;
+			right: 20px;
+		}
 	}
 	.project-container {
 		// max-width: 90vw;
@@ -37,6 +42,10 @@
 		gap: 30px;
 		position: relative;
 		padding: 200px 0;
+
+		@media only screen and (max-width: @size-mobile-l) {
+			padding: 70px 0;
+		}
 
 		.project-container_title {
 			width: fit-content;
@@ -56,42 +65,33 @@
 			margin: 0 auto;
 			padding-top: 50px;
 			display: grid;
-			grid-template-areas:
-				'hero hero hero hero'
-				'left left right right';
 			gap: 10px;
 			padding: 10px;
 
+			@media (min-width: @size-desktop-xs) {
+				grid-template-areas:
+					'hero hero hero hero'
+					'left left right right';
+			}
+
 			.project-container__image {
-				&.hero {
-					height: 700px;
-					width: 100%;
-					grid-area: hero;
-					background-color: red;
-					background-image: url('../../../public/assets/images/test.png');
-					background-size: cover;
-					background-position: center;
-					background-repeat: no-repeat;
-				}
-				&.left {
-					height: 430px;
-					width: 100%;
-					grid-area: left;
-					background-color: red;
-					background-image: url('../../../public/assets/images/test.png');
-					background-size: cover;
-					background-position: center;
-					background-repeat: no-repeat;
-				}
-				&.right {
-					height: 430px;
-					width: 100%;
-					grid-area: right;
-					background-color: red;
-					background-image: url('../../../public/assets/images/test.png');
-					background-size: cover;
-					background-position: center;
-					background-repeat: no-repeat;
+				height: 430px;
+				width: 100%;
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
+
+				@media (min-width: @size-desktop-xs) {
+					&.hero {
+						height: 700px;
+						grid-area: hero;
+					}
+					&.left {
+						grid-area: left;
+					}
+					&.right {
+						grid-area: right;
+					}
 				}
 			}
 		}

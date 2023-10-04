@@ -26,6 +26,9 @@
 
 		span {
 			padding: 0 5px;
+			@media screen and (max-width: @size-mobile-l) {
+				padding: 0 2.5px;
+			}
 		}
 
 		.about-container_title {
@@ -68,10 +71,18 @@
 			padding: 0rem 10rem 0 10rem;
 			border: 5px solid rgb(166, 255, 0);
 
+			@media screen and (max-width: @size-mobile-l) {
+				padding: 0rem 2rem 0 2rem;
+			}
+
 			section {
 				width: 100%;
 				.template--is-center;
 				gap: 4.5rem;
+
+				@media only screen and (max-width: @size-mobile-l) {
+					gap: 1.5rem;
+				}
 
 				.gradientBackground {
 					margin: 0;
@@ -87,9 +98,6 @@
 					background: linear-gradient(to bottom, #c8d2e6, #f5eded);
 					border-radius: 2px;
 					.template--is-center;
-					@media screen and (max-width: 380px) {
-						height: 195px;
-					}
 
 					section {
 						gap: 0;
@@ -100,9 +108,11 @@
 							align-items: center;
 							gap: 2rem;
 
+							@media only screen and (max-width: @size-mobile-l) {
+								flex-direction: column-reverse;
+							}
+
 							form {
-								// background-color: white;
-								// border-radius: 45px;
 								position: relative;
 
 								input[type='email'] {
@@ -154,6 +164,12 @@
 								}
 							}
 						}
+
+						h2:nth-of-type(2) {
+							@media only screen and (max-width: @size-mobile-l) {
+								display: none;
+							}
+						}
 					}
 				}
 
@@ -168,17 +184,16 @@
 							margin: 10px 20px 10px 0;
 							padding: 3px 0 3px 0;
 							overflow: hidden;
+
 							&::before {
 								content: none;
 							}
-							@media only screen and (max-width: 460px) {
-								margin: 5px 10px 5px 0;
+
+							@media only screen and (max-width: @size-mobile-l) {
+								margin: 5px 20px 5px 0;
 							}
 
 							a {
-								@media only screen and (max-width: 460px) {
-									font-size: 10px;
-								}
 								&:after {
 									content: '';
 									display: block;
@@ -192,9 +207,6 @@
 									background-color: white;
 									transform-origin: bottom left;
 									transition: transform 0.3s ease-in-out;
-									@media only screen and (max-width: 460px) {
-										top: -3px;
-									}
 								}
 
 								&:hover {
@@ -213,6 +225,10 @@
 				position: absolute;
 				bottom: 10vh;
 				.template--is-center;
+
+				@media only screen and (max-width: @size-mobile-l) {
+					bottom: 4vh;
+				}
 			}
 		}
 	}

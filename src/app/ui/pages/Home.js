@@ -124,6 +124,8 @@ class Home {
 	}
 
 	update(dt) {
+		if (!this.isActive) return;
+
 		this.components.forEach((component) => component.update(dt));
 	}
 }
