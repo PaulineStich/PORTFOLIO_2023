@@ -6,13 +6,14 @@ import { gsap } from 'gsap';
 
 import Menu from '@app/ui/components/Menu/Menu';
 import Gallery from '../components/Gallery/Gallery';
+import Header from '../components/Header/Header';
 
 class Home {
 	_home;
 	_galleryView;
 	_galleryList;
 	_toggleMenuBtn;
-	components = [Menu, Gallery];
+	components = [Menu, Gallery, Header];
 
 	_tlFadeOut = gsap.timeline({ paused: true });
 	_tlFadeIn = gsap.timeline({ paused: true });
@@ -68,7 +69,6 @@ class Home {
 		clearTimeout(this._hiddenTimeout);
 		this.isActive = true;
 		this._fadeInAnimation();
-		this._tlFadeIn.play();
 
 		// when preloader is finished, start gallery animations
 		properties.onTransition.add((transition) => {
@@ -93,7 +93,6 @@ class Home {
 		this.isActive = false;
 
 		this._fadeOutAnimation();
-		this._tlFadeOut.play();
 
 		this._hiddenTimeout = setTimeout(() => {
 			this._home.style.display = 'none';
@@ -106,6 +105,8 @@ class Home {
 		this._tlFadeIn.to(this._home, {
 			opacity: 1,
 		});
+
+		this._tlFadeIn.play();
 	}
 
 	_fadeOutAnimation() {
@@ -113,6 +114,7 @@ class Home {
 		this._tlFadeOut.to(this._home, {
 			opacity: 0,
 		});
+		this._tlFadeOut.play();
 	}
 
 	resize(width, height) {

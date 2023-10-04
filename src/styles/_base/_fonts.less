@@ -105,32 +105,29 @@ p {
 	color: #5c5c5c;
 }
 
-/*
-// adaptative typography
-@font-size-min: 14;
-@font-size-max: 22;
-@font-range-min: 812;
-@font-range-max: 2800;
+//fade in animation
+h1,
+h2,
+h3,
+p {
+	span {
+		display: inline-block;
+		white-space: break-spaces;
 
-@font-size-min-px: @font-size-min * 1px;
-@font-size-max-px: @font-size-max * 1px;
-@font-range-min-px: @font-range-min * 1px;
-@font-range-max-px: @font-range-max * 1px;
-@media screen and (max-width: @font-range-min-px) {
-	html {
-		font-size: 16px;
+		// animation: fadeInByWord 1.6s cubic-bezier(0.42, 0, 0, 0.99) both;
+		// animation-delay: calc(var(--index) * 25 * 1ms);
+		transition: transition 2s cubic-bezier(0.65, 0.05, 0.36, 1), opacity 3s cubic-bezier(0.65, 0.05, 0.36, 1), color 1s linear;
+		transform-origin: left center;
 	}
 }
 
-@media screen and (min-width: @font-range-min-px) {
-	html {
-		font-size: calc(@font-size-min-px + (@font-size-max - @font-size-min) * ((100vw - @font-range-min-px) / (@font-range-max - @font-range-min)));
-	}
-}
-
-@media screen and (min-width: @font-range-max-px) {
-	html {
-		font-size: @font-size-max-px;
-	}
-}
-*/
+// @keyframes fadeInByWord {
+// 	from {
+// 		transform: translateY(30px) scaleY(0.9) rotate(3deg);
+// 		opacity: 0;
+// 	}
+// 	to {
+// 		transform: translateY(0px) scaleY(1) rotate(0deg);
+// 		opacity: 1;
+// 	}
+// }

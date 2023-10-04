@@ -17,6 +17,7 @@ export default class GalleryItem {
 			galleryCounterIndex: document.querySelector('.gallery-view-counter_currentIndex'),
 			galleryCounterTotal: document.querySelector('.gallery-view-counter_totalIndex'),
 			galleryTitle: document.querySelector('.gallery-view_menuTitle'),
+			galleryTitleSpans: document.querySelectorAll('.gallery-view_menuTitle span'),
 		};
 		this.index = index;
 		this.totalImages = data.length;
@@ -25,6 +26,8 @@ export default class GalleryItem {
 		this.positions;
 		this.triggerDistance;
 		this.onHover = false;
+
+		this.tlFadeIn = gsap.timeline({ paused: true });
 
 		// parrallax effect for title and gallery
 		this.state = {
@@ -54,21 +57,53 @@ export default class GalleryItem {
 	hide() {}
 
 	_fadeIn() {
-		gsap.to('.gallery-view_menuImage', {
-			y: 0,
-			opacity: 1,
-			duration: 1.5,
-			ease: Power3.easeInOut,
-			stagger: {
-				amount: 0.5,
-				grid: [Math.floor(window.innerWidth / 200), Math.floor(window.innerHeight / 200)],
-				from: 'start',
-			},
-			onComplete: () => {
-				// this._startGalleryTimer();
-				this.hasFinishedIntroAnimation = true;
-			},
-		});
+		this.tlFadeIn
+			.to('.gallery-view_menuImage', {
+				y: 0,
+				opacity: 1,
+				duration: 1.5,
+				ease: Power3.easeInOut,
+				stagger: {
+					amount: 0.5,
+					grid: [Math.floor(window.innerWidth / 200), Math.floor(window.innerHeight / 200)],
+					from: 'start',
+				},
+				onComplete: () => {
+					// this._startGalleryTimer();
+					this.hasFinishedIntroAnimation = true;
+				},
+			})
+			.to(
+				this.DOM.galleryTitle,
+				{
+					opacity: 1,
+				},
+				0.15,
+			)
+			.fromTo(
+				this.DOM.galleryTitleSpans,
+				{
+					willChange: 'transform, opacity',
+					transformOrigin: '50% 100%',
+					opacity: 0,
+					rotationX: 90,
+					translateY: 100,
+				},
+				{
+					duration: 1.7,
+					ease: 'expo',
+					opacity: 1,
+					rotationX: 0,
+					translateY: 0,
+					stagger: {
+						each: 0.015,
+						from: 'start',
+					},
+				},
+				0.15,
+			);
+
+		this.tlFadeIn.play();
 	}
 
 	_fadeOut() {
@@ -77,8 +112,7 @@ export default class GalleryItem {
 			this.DOM.el,
 			{
 				opacity: 1,
-				duration: 1.5,
-				ease: Power3.easeInOut,
+				duration: 1,
 			},
 			{
 				opacity: 0,

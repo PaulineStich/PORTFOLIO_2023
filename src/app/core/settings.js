@@ -26,7 +26,7 @@ class Settings {
 
 	// queries
 	LOG = false;
-	SKIP_ANIMATION = true;
+	SKIP_ANIMATION = false;
 	LOOK_DEV_MODE = false;
 
 	constructor() {

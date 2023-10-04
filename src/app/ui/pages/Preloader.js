@@ -19,10 +19,12 @@ class Preloader {
 	PERCENT_BETWEEN_INIT_AND_START = 0.15;
 	MIN_DURATION_BETWEEN_INIT_AND_START = 0.25;
 	HIDE_DURATION = 0.5;
+
 	tlLoaded = gsap.timeline({ paused: true });
 
 	preInit() {
 		this._preloader = document.querySelector('#preloader');
+		this._preloaderTitle = document.querySelectorAll('#preloader-title span');
 		this._percetage = document.querySelector('#preloader-percentage');
 		this._title = document.querySelector('#preloader-title');
 		this._text = document.querySelector('#preloader-text');
@@ -69,6 +71,24 @@ class Preloader {
 				duration: 3,
 				delay: 0.5,
 			})
+			.fromTo(
+				this._preloaderTitle,
+				{
+					willChange: 'transform, opacity',
+					transformOrigin: '50% 100%',
+					opacity: 1,
+				},
+				{
+					duration: 0.7,
+					ease: Power3.easeIn,
+					opacity: 0,
+					stagger: {
+						each: 0.01,
+						from: 'start',
+					},
+				},
+				0.6,
+			)
 			.to(this._preloader, {
 				opacity: 0,
 				duration: 1,
