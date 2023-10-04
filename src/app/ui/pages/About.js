@@ -6,6 +6,8 @@ import { gsap } from 'gsap';
 
 class About {
 	_about;
+	_speed = 0.04;
+	_offset = 0;
 
 	_tlFadeOut = gsap.timeline({ paused: true });
 	_tlFadeIn = gsap.timeline({ paused: true });
@@ -22,9 +24,7 @@ class About {
 		});
 	}
 
-	init() {
-		return;
-	}
+	init() {}
 
 	resize(width, height) {}
 
@@ -63,9 +63,18 @@ class About {
 		});
 	}
 
+	_smoothScroll() {
+		this._offset += (window.scrollY - this._offset) * this._speed;
+
+		let scroll = 'translateY(-' + this._offset + 'px) translateZ(0)';
+		this._about.style.transform = scroll;
+	}
+
 	delete() {}
 
-	update(dt) {}
+	update(dt) {
+		this._smoothScroll();
+	}
 }
 
 export default new About();
