@@ -99,6 +99,10 @@
 					border-radius: 2px;
 					.template--is-center;
 
+					@media screen and (max-height: @size-height-s) {
+						height: 300px;
+					}
+
 					section {
 						gap: 0;
 
@@ -227,7 +231,7 @@
 				.template--is-center;
 
 				@media only screen and (max-width: @size-mobile-l) {
-					bottom: 4vh;
+					bottom: 3vh;
 				}
 			}
 		}
