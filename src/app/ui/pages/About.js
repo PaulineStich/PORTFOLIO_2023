@@ -2,7 +2,10 @@ import properties from '@core/properties';
 import settings from '@core/settings';
 import { STATUS } from '../constants';
 
-import { gsap } from 'gsap';
+import { gsap, Power3 } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 class About {
 	_about;
@@ -11,9 +14,13 @@ class About {
 
 	_tlFadeOut = gsap.timeline({ paused: true });
 	_tlFadeIn = gsap.timeline({ paused: true });
+	_tlTextAnimation = gsap.timeline();
 
 	preInit() {
 		this._about = document.querySelector('#about');
+		this._aboutTitle = document.querySelectorAll('.about-container_title span');
+		this._sections = gsap.utils.toArray('.about-container_fullscreen');
+		this._sectionsTitle = document.querySelectorAll('.about-container_titleSection span');
 
 		properties.statusSignal.add((status) => {
 			if (status === STATUS.ABOUT) {
@@ -35,7 +42,6 @@ class About {
 
 		this.isActive = true;
 		this._fadeInAnimation();
-		this._tlFadeIn.play();
 	}
 
 	hide() {
@@ -44,7 +50,6 @@ class About {
 
 		this.isActive = false;
 		this._fadeOutAnimation();
-		this._tlFadeOut.play();
 
 		this._hiddenTimeout = setTimeout(() => {
 			this._about.style.display = 'none';
@@ -55,12 +60,43 @@ class About {
 		this._tlFadeIn.to(this._about, {
 			opacity: 1,
 		});
+
+		this._sections.forEach((section, i) => {
+			gsap.set(this._sectionsTitle, {
+				y: 100,
+			});
+
+			this._tlTextAnimation.to(this._sectionsTitle, {
+				y: 0,
+				willChange: 'transform, opacity',
+				transformOrigin: '50% 100%',
+				opacity: 1,
+				duration: 1.7,
+				ease: 'expo',
+				rotationX: 0,
+				stagger: {
+					each: 0.15,
+					from: 'start',
+				},
+			});
+
+			ScrollTrigger.create({
+				trigger: section,
+				start: 'top 40%',
+				toggleActions: 'play none none none', //https://codepen.io/GreenSock/pen/LYVKWGo
+				animation: this._tlTextAnimation,
+				markers: true,
+			});
+		});
+
+		this._tlFadeIn.play();
 	}
 
 	_fadeOutAnimation() {
 		this._tlFadeOut.to(this._about, {
 			opacity: 0,
 		});
+		this._tlFadeOut.play();
 	}
 
 	_smoothScroll() {
@@ -75,7 +111,7 @@ class About {
 	update(dt) {
 		if (!this.isActive) return;
 
-		this._smoothScroll();
+		// this._smoothScroll();
 	}
 }
 

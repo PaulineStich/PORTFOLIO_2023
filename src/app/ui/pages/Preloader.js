@@ -62,14 +62,13 @@ class Preloader {
 					left: '50%',
 					top: '50%',
 					ease: Expo.easeInOut,
-					duration: 1.5,
+					duration: 1.4,
 				},
 			)
 			.to(this._circle, {
 				scale: 10,
 				ease: Power3.easeInOut,
 				duration: 3,
-				delay: 0.5,
 			})
 			.fromTo(
 				this._preloaderTitle,
