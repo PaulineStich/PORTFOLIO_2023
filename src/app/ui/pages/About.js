@@ -63,7 +63,7 @@ class About {
 		this._tlFadeIn.play();
 
 		this._sections.forEach((section, i) => {
-			console.log(section);
+			// console.log(section);
 			gsap.set(this._sectionsTitle, {
 				y: 100,
 			});
@@ -114,7 +114,7 @@ class About {
 	update(dt) {
 		if (!this.isActive) return;
 
-		// this._smoothScroll();
+		this._smoothScroll();
 	}
 }
 
