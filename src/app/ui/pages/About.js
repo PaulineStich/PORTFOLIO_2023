@@ -60,19 +60,20 @@ class About {
 		this._tlFadeIn.to(this._about, {
 			opacity: 1,
 		});
+		this._tlFadeIn.play();
 
 		this._sections.forEach((section, i) => {
+			console.log(section);
 			gsap.set(this._sectionsTitle, {
 				y: 100,
 			});
 
-			this._tlTextAnimation.to(this._sectionsTitle, {
+			let animation = gsap.to(this._sectionsTitle, {
 				y: 0,
-				willChange: 'transform, opacity',
 				transformOrigin: '50% 100%',
 				opacity: 1,
 				duration: 1.7,
-				ease: 'expo',
+				ease: 'expo.out',
 				rotationX: 0,
 				stagger: {
 					each: 0.15,
@@ -83,13 +84,15 @@ class About {
 			ScrollTrigger.create({
 				trigger: section,
 				start: 'top 40%',
-				toggleActions: 'play none none none', //https://codepen.io/GreenSock/pen/LYVKWGo
-				animation: this._tlTextAnimation,
+				end: 'bottom 45%',
+				toggleActions: 'play none none restart', //https://codepen.io/GreenSock/pen/LYVKWGo
+				animation: animation,
 				markers: true,
+				// onUpdate: (self) => {
+				// 	console.log('progress:', self.progress.toFixed(3), 'direction:', self.direction, 'velocity', self.getVelocity());
+				// },
 			});
 		});
-
-		this._tlFadeIn.play();
 	}
 
 	_fadeOutAnimation() {
