@@ -87,7 +87,7 @@ class About {
 				end: 'bottom 45%',
 				toggleActions: 'play none none restart', //https://codepen.io/GreenSock/pen/LYVKWGo
 				animation: animation,
-				markers: true,
+				// markers: true,
 				// onUpdate: (self) => {
 				// 	console.log('progress:', self.progress.toFixed(3), 'direction:', self.direction, 'velocity', self.getVelocity());
 				// },
