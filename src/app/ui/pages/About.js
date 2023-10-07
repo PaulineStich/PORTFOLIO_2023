@@ -81,17 +81,17 @@ class About {
 				},
 			});
 
-			ScrollTrigger.create({
-				trigger: section,
-				start: 'top 40%',
-				end: 'bottom 45%',
-				toggleActions: 'play none none restart', //https://codepen.io/GreenSock/pen/LYVKWGo
-				animation: animation,
-				// markers: true,
-				// onUpdate: (self) => {
-				// 	console.log('progress:', self.progress.toFixed(3), 'direction:', self.direction, 'velocity', self.getVelocity());
-				// },
-			});
+			// ScrollTrigger.create({
+			// 	trigger: section,
+			// 	start: 'top 40%',
+			// 	end: 'bottom 45%',
+			// 	toggleActions: 'play none none restart', //https://codepen.io/GreenSock/pen/LYVKWGo
+			// 	animation: animation,
+			// 	// markers: true,
+			// 	// onUpdate: (self) => {
+			// 	// 	console.log('progress:', self.progress.toFixed(3), 'direction:', self.direction, 'velocity', self.getVelocity());
+			// 	// },
+			// });
 		});
 	}
 
