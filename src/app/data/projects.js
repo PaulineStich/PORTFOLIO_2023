@@ -54,6 +54,7 @@ const data = [
 		imgLeft: myLittleStorybookImage2,
 		imgRight: myLittleStorybookImage3,
 		tags: ['3d, three.js, web'],
+		link: 'https://exp-my-little-storybook.lusion.co/',
 	},
 	{
 		id: 'CHOO CHOO WORLD',
@@ -63,6 +64,7 @@ const data = [
 		imgLeft: chooChooWorldImage2,
 		imgRight: chooChooWorldImage3,
 		tags: ['3d, three.js, web'],
+		link: 'https://choochooworld.com/?DATA=DFFBHFIJB/0/D',
 	},
 	{
 		id: 'DJELI',
@@ -72,6 +74,7 @@ const data = [
 		imgLeft: djeliImage2,
 		imgRight: djeliImage3,
 		tags: ['3d, unity, game'],
+		link: '',
 	},
 	{
 		id: 'FEUX DE FOREST',
@@ -79,6 +82,7 @@ const data = [
 		description: 'Data visualisation of worlds most dangerous fire forests.',
 		imgHero: feuxDeForestImage1,
 		tags: ['3d, three.js, web'],
+		link: 'https://fireforest.netlify.app/',
 	},
 	{
 		id: 'ORIGINES',
@@ -88,6 +92,7 @@ const data = [
 		imgLeft: originesImage2,
 		imgRight: originesImage3,
 		tags: ['3d, motion design'],
+		link: 'https://vimeo.com/234210156',
 	},
 
 	// More projects...

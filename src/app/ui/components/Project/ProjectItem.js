@@ -28,12 +28,15 @@ class ProjectItem {
 		this.project.imgHero = itemData.imgHero;
 		this.project.imgLeft = itemData.imgLeft;
 		this.project.imgRight = itemData.imgRight;
+		this.project.link = itemData.link;
 
 		this.domTitle = document.getElementById('project-title');
 		this.domDescription = document.getElementById('project-description');
 		this.domHeroImage = document.getElementById('project-hero');
 		this.domLeftImage = document.getElementById('project-left');
 		this.domRightImage = document.getElementById('project-right');
+		this.domLinkContainer = document.querySelector('.project-container__links');
+		this.domLink = document.getElementById('project-link');
 	}
 
 	preInit() {}
@@ -47,13 +50,30 @@ class ProjectItem {
 	refreshPageContent() {
 		this.domTitle.textContent = this.project.title;
 		this.domDescription.textContent = this.project.description;
-		this.domHeroImage.style.backgroundImage = `url(${this.project.imgHero})`;
-		this.domLeftImage.style.backgroundImage = `url(${this.project.imgLeft})`;
-		this.domRightImage.style.backgroundImage = `url(${this.project.imgRight})`;
+		if (this.project.link) {
+			this.domLink.href = this.project.link;
+			this.domLinkContainer.style.display = 'flex';
+		} else {
+			this.domLinkContainer.style.display = 'none';
+		}
+
+		this._setBackgroundImageOrHide(this.domHeroImage, this.project.imgHero);
+		this._setBackgroundImageOrHide(this.domLeftImage, this.project.imgLeft);
+		this._setBackgroundImageOrHide(this.domRightImage, this.project.imgRight);
 
 		// console.log('Title: ', this.project.title);
 		// console.log('Description: ', this.project.description);
 		// console.log('Tags: ', this.project.tags);
+	}
+
+	_setBackgroundImageOrHide(el, imageUrl) {
+		// check if image is available, if not hide it
+		if (imageUrl) {
+			el.style.backgroundImage = `url(${imageUrl})`;
+			el.style.display = 'block';
+		} else {
+			el.style.display = 'none';
+		}
 	}
 
 	show() {
