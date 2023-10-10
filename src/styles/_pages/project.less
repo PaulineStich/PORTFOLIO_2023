@@ -62,7 +62,7 @@
 			text-align: center;
 
 			p {
-				width: 55vw;
+				width: 600px;
 				@media only screen and (max-width: @size-mobile-l) {
 					width: 100%;
 					padding: 0 30px;
@@ -81,6 +81,18 @@
 				grid-template-areas:
 					'hero hero hero hero'
 					'left left right right';
+			}
+
+			@media (min-width: @size-desktop-m) {
+				max-width: 80vw;
+			}
+
+			@media (min-width: @size-desktop-xl) {
+				max-width: 70vw;
+			}
+
+			@media (min-width: @size-desktop-xxl) {
+				max-width: 60%;
 			}
 
 			.project-container__image {
