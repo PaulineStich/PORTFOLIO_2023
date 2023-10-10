@@ -12,17 +12,18 @@ import ease from '@utils/ease';
 import preloader from '@app/ui/pages/Preloader';
 import home from '@app/ui/pages/Home';
 import about from '@app/ui/pages/About';
-import cursor from './components/Cursor/Cursor';
+// import cursor from './components/Cursor/Cursor';
 
 import { splitText } from '../utils/splitting';
 
 export class UI {
 	components = [preloader, home, about];
-	components = [preloader, home, about, cursor];
 
 	preInit() {
 		this.headerAbout = document.getElementById('header-about');
 		this.headerHome = document.getElementById('header-projects');
+		// this.cursor = cursor;
+
 		splitText();
 
 		document.documentElement.classList.add('is-ready');
@@ -48,7 +49,7 @@ export class UI {
 		}
 		this.showPage(STATUS.GALLERY);
 		this.headerHome.classList.add('active');
-		this.cursor.show();
+		// this.cursor.show();
 	}
 
 	showPage(pageName) {
