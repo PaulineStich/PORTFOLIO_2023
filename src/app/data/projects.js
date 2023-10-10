@@ -1,20 +1,20 @@
-import myLittleStorybookImage1 from '../../../public/assets/images/my_little_storybook/image10.webp';
-import myLittleStorybookImage2 from '../../../public/assets/images/my_little_storybook/image9.webp';
-import myLittleStorybookImage3 from '../../../public/assets/images/my_little_storybook/image11.webp';
+import myLittleStorybookImage1 from '../../../public/assets/images/my_little_storybook/my_little_storybook_hero.webp';
+import myLittleStorybookImage2 from '../../../public/assets/images/my_little_storybook/my_little_storybook_left.webp';
+import myLittleStorybookImage3 from '../../../public/assets/images/my_little_storybook/my_little_storybook_right.webp';
 
-import chooChooWorldImage1 from '../../../public/assets/images/choo_choo/LOW/choochoo1.png';
-import chooChooWorldImage2 from '../../../public/assets/images/choo_choo/choochoo3.webp';
-import chooChooWorldImage3 from '../../../public/assets/images/choo_choo/clay.webp';
+import chooChooWorldImage1 from '../../../public/assets/images/choo_choo/choochoo_hero.png';
+import chooChooWorldImage2 from '../../../public/assets/images/choo_choo/choochoo_left.webp';
+import chooChooWorldImage3 from '../../../public/assets/images/choo_choo/choochoo_right.webp';
 
-import feuxDeForestImage1 from '../../../public/assets/images/feux_de_forest/screencapture-fireforest.webp';
+import feuxDeForestImage1 from '../../../public/assets/images/feux_de_forest/feux_de_forest_hero.webp';
 
-import djeliImage1 from '../../../public/assets/images/djeli/image1.webp';
-import djeliImage2 from '../../../public/assets/images/djeli/image2.webp';
-import djeliImage3 from '../../../public/assets/images/djeli/image3.webp';
+import djeliImage1 from '../../../public/assets/images/djeli/djeli_hero.webp';
+import djeliImage2 from '../../../public/assets/images/djeli/djeli_left.webp';
+import djeliImage3 from '../../../public/assets/images/djeli/djeli_right.webp';
 
-import originesImage1 from '../../../public/assets/images/origines/LOW/origines6.png';
-import originesImage2 from '../../../public/assets/images/origines/origines2.webp';
-import originesImage3 from '../../../public/assets/images/origines/origines3.webp';
+import originesImage1 from '../../../public/assets/images/origines/origines_hero.png';
+import originesImage2 from '../../../public/assets/images/origines/origines_left.webp';
+import originesImage3 from '../../../public/assets/images/origines/origines_right.webp';
 
 const data = [
 	// {
