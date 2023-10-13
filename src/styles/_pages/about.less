@@ -250,3 +250,24 @@
 		}
 	}
 }
+
+@media (prefers-reduced-motion: no-preference) {
+	.in-view {
+		animation: fade 3s 1s both cubic-bezier(0.09, 1.17, 0.7, 1.01);
+	}
+
+	.not-in-view {
+		opacity: 0;
+	}
+}
+
+@keyframes fade {
+	0% {
+		opacity: 0;
+		transform: translate(0, 3rem);
+	}
+	100% {
+		opacity: 1;
+		transform: translate(0, 0);
+	}
+}

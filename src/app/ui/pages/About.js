@@ -3,9 +3,6 @@ import settings from '@core/settings';
 import { STATUS } from '../constants';
 
 import { gsap, Power3 } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 class About {
 	_about;
@@ -62,37 +59,48 @@ class About {
 		});
 		this._tlFadeIn.play();
 
-		this._sections.forEach((section, i) => {
-			// console.log(section);
-			gsap.set(this._sectionsTitle, {
-				y: 100,
-			});
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					const target = entry.target;
+					const pElement = target.querySelector('p');
+					const gradientBackground = target.querySelector('.gradientBackground');
+					const title = target.querySelectorAll('span');
+					const socialList = target.querySelector('.about-container_cta-social');
+					const socialLinks = socialList.querySelectorAll('li');
 
-			let animation = gsap.to(this._sectionsTitle, {
-				y: 0,
-				transformOrigin: '50% 100%',
-				opacity: 1,
-				duration: 1.7,
-				ease: 'expo.out',
-				rotationX: 0,
-				stagger: {
-					each: 0.15,
-					from: 'start',
-				},
-			});
+					if (entry.isIntersecting) {
+						gsap.fromTo(pElement, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.inOut', delay: 0.9 });
+						gsap.fromTo(gradientBackground, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.inOut', delay: 0.8 });
+						gsap.fromTo(
+							title,
+							{ y: 100 },
+							{
+								y: 0,
+								transformOrigin: '50% 100%',
+								opacity: 1,
+								duration: 1.7,
+								ease: 'expo.out',
+								rotationX: 0,
+								delay: 1,
+								stagger: {
+									each: 0.15,
+									from: 'start',
+								},
+							},
+						);
+						gsap.fromTo(socialLinks, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'expo.inOut', stagger: 0.15, delay: 1.2 });
+					}
+				});
+			},
+			{
+				rootMargin: '0px',
+				threshold: 0.2,
+			},
+		);
 
-			// ScrollTrigger.create({
-			// 	trigger: section,
-			// 	start: 'top 40%',
-			// 	end: 'bottom 45%',
-			// 	toggleActions: 'play none none restart', //https://codepen.io/GreenSock/pen/LYVKWGo
-			// 	animation: animation,
-			// 	// markers: true,
-			// 	// onUpdate: (self) => {
-			// 	// 	console.log('progress:', self.progress.toFixed(3), 'direction:', self.direction, 'velocity', self.getVelocity());
-			// 	// },
-			// });
-		});
+		const aboutCta = document.querySelector('.about-container_cta');
+		observer.observe(aboutCta);
 	}
 
 	_fadeOutAnimation() {
