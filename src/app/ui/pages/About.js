@@ -59,37 +59,49 @@ class About {
 		});
 		this._tlFadeIn.play();
 
+		// Define a common animation function to be reused for different sections.
+		const animateSection = (section, delay = 0) => {
+			const target = section.target;
+			const pElement = target.querySelector('p');
+			const gradientBackground = target.querySelector('.gradientBackground');
+			const title = target.querySelectorAll('span');
+			const socialList = target.querySelectorAll('.about-container_cta-social li');
+
+			if (pElement && gradientBackground) {
+				gsap.fromTo(pElement, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.inOut', delay: 0.9 + delay });
+				gsap.fromTo(gradientBackground, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.inOut', delay: 0.8 + delay });
+			}
+			if (title) {
+				gsap.fromTo(
+					title,
+					{ y: 100 },
+					{
+						y: 0,
+						transformOrigin: '50% 100%',
+						opacity: 1,
+						duration: 1.7,
+						ease: 'expo.out',
+						rotationX: 0,
+						delay: 1 + delay,
+						stagger: {
+							each: 0.15,
+							from: 'start',
+						},
+					},
+				);
+			}
+			if (socialList) {
+				gsap.fromTo(socialList, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'expo.inOut', stagger: 0.15, delay: 1.2 + delay });
+			}
+		};
+
+		const sections = document.querySelectorAll('.about-container_fullscreen');
+
 		const observer = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
-					const target = entry.target;
-					const pElement = target.querySelector('p');
-					const gradientBackground = target.querySelector('.gradientBackground');
-					const title = target.querySelectorAll('span');
-					const socialList = target.querySelector('.about-container_cta-social');
-					const socialLinks = socialList.querySelectorAll('li');
-
 					if (entry.isIntersecting) {
-						gsap.fromTo(pElement, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.inOut', delay: 0.9 });
-						gsap.fromTo(gradientBackground, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.inOut', delay: 0.8 });
-						gsap.fromTo(
-							title,
-							{ y: 100 },
-							{
-								y: 0,
-								transformOrigin: '50% 100%',
-								opacity: 1,
-								duration: 1.7,
-								ease: 'expo.out',
-								rotationX: 0,
-								delay: 1,
-								stagger: {
-									each: 0.15,
-									from: 'start',
-								},
-							},
-						);
-						gsap.fromTo(socialLinks, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'expo.inOut', stagger: 0.15, delay: 1.2 });
+						animateSection(entry);
 					}
 				});
 			},
@@ -99,8 +111,9 @@ class About {
 			},
 		);
 
-		const aboutCta = document.querySelector('.about-container_cta');
-		observer.observe(aboutCta);
+		sections.forEach((section) => {
+			observer.observe(section);
+		});
 	}
 
 	_fadeOutAnimation() {
