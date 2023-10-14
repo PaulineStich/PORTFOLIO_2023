@@ -67,11 +67,15 @@ class About {
 			const title = target.querySelectorAll('span');
 			const socialList = target.querySelectorAll('.about-container_cta-social li');
 
-			if (pElement && gradientBackground) {
+			if (pElement) {
 				gsap.fromTo(pElement, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.inOut', delay: 0.9 + delay });
+			}
+
+			if (gradientBackground) {
 				gsap.fromTo(gradientBackground, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.inOut', delay: 0.8 + delay });
 			}
-			if (title) {
+
+			if (title.length > 0) {
 				gsap.fromTo(
 					title,
 					{ y: 100 },
@@ -90,7 +94,8 @@ class About {
 					},
 				);
 			}
-			if (socialList) {
+
+			if (socialList.length > 0) {
 				gsap.fromTo(socialList, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'expo.inOut', stagger: 0.15, delay: 1.2 + delay });
 			}
 		};
