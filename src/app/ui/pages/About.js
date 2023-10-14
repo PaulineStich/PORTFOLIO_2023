@@ -68,11 +68,11 @@ class About {
 			const socialList = target.querySelectorAll('.about-container_cta-social li');
 
 			if (pElement) {
-				gsap.fromTo(pElement, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.inOut', delay: 0.9 + delay });
+				gsap.fromTo(pElement, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.inOut', delay: 0.7 + delay });
 			}
 
 			if (gradientBackground) {
-				gsap.fromTo(gradientBackground, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.inOut', delay: 0.8 + delay });
+				gsap.fromTo(gradientBackground, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.inOut', delay: 0.6 + delay });
 			}
 
 			if (title.length > 0) {
@@ -83,12 +83,12 @@ class About {
 						y: 0,
 						transformOrigin: '50% 100%',
 						opacity: 1,
-						duration: 1.7,
+						duration: 1.3,
 						ease: 'expo.out',
 						rotationX: 0,
-						delay: 1 + delay,
+						delay: 0.2 + delay,
 						stagger: {
-							each: 0.15,
+							each: 0.1,
 							from: 'start',
 						},
 					},
@@ -96,7 +96,7 @@ class About {
 			}
 
 			if (socialList.length > 0) {
-				gsap.fromTo(socialList, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'expo.inOut', stagger: 0.15, delay: 1.2 + delay });
+				gsap.fromTo(socialList, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'expo.inOut', stagger: 0.15, delay: 0.4 + delay });
 			}
 		};
 
