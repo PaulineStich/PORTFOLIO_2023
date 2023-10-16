@@ -110,6 +110,9 @@ class Preloader {
 
 	skip() {
 		this.delete();
+		gsap.to('#custom-cursor', {
+			opacity: 1,
+		});
 		document.getElementById('ui').classList.add('is-ready');
 	}
 
