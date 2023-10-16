@@ -91,8 +91,6 @@ class Cursor {
 		this.state.x.current = input.mousePixelXY.x - width / 2;
 		this.state.y.current = input.mousePixelXY.y - height / 2;
 
-		console.log(input.mousePixelXY.y);
-
 		// lerp old and current values
 		for (const el in this.state) {
 			if (Math.abs(this.state[el].previous - this.state[el].current) > 0.001) {

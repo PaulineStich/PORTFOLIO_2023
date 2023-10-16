@@ -70,6 +70,9 @@ class Preloader {
 				ease: Power3.easeInOut,
 				duration: 3,
 			})
+			.to('#custom-cursor', {
+				opacity: 1,
+			})
 			.fromTo(
 				this._preloaderTitle,
 				{
