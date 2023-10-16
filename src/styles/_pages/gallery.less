@@ -92,8 +92,6 @@
 				color: rgba(255, 255, 255, 0.5);
 				transition: all 0.2s ease;
 
-				z-index: 100;
-
 				&::after {
 					content: attr(data-text);
 					position: absolute;
@@ -110,6 +108,7 @@
 					font-family: 'lustriaregular';
 					letter-spacing: 2px;
 					text-transform: uppercase;
+					cursor: pointer;
 
 					@media only screen and (max-width: @size-mobile-l) {
 						font-size: 4rem;

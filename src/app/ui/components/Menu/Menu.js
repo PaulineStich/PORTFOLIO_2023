@@ -19,10 +19,10 @@ class Menu {
 
 	preInit() {
 		this._generateMenuItems();
-		let project = new Project(data);
+		this.project = new Project(data);
 		this.domMenuItems = document.querySelectorAll('.gallery-list_menu_item');
 		[...this.domMenuItems].forEach((el, i) => {
-			this.menuItems.push(new MenuItem(el, i, this.animateProperties, project, project.listItems[i]));
+			this.menuItems.push(new MenuItem(el, i, this.animateProperties, this.project, this.project.listItems[i]));
 		});
 	}
 
@@ -61,10 +61,10 @@ class Menu {
 	delete() {}
 
 	update(dt) {
-		// if (this.menuItems) {
-		//     console.log(this.menuItems)
-		//     // this.menuItems.forEach(el => el.update(dt))
-		// }
+		if (this.menuItems) {
+			// this.project.update(dt);
+			// this.menuItems.forEach(el => el.update(dt))
+		}
 	}
 }
 

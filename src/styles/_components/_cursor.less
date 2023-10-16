@@ -1,11 +1,14 @@
 #custom-cursor {
-	z-index: 1;
 	position: absolute;
+	z-index: 3;
 
 	.cursor {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		z-index: 2;
+		position: fixed;
+		pointer-events: none; /* This makes the cursor non-interactable */
 
 		.cursor_sphere {
 			background-color: white;

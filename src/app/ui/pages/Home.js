@@ -1,6 +1,6 @@
 import properties from '@core/properties';
 import settings from '@core/settings';
-import { STATUS, TRANSITIONS } from '../constants';
+import { STATUS, TRANSITIONS, HOVER_STATE } from '../constants';
 
 import { gsap } from 'gsap';
 
@@ -48,6 +48,15 @@ class Home {
 	_toggleToListView() {
 		this._galleryView.style.display = 'block';
 		this._galleryList.style.display = 'none';
+
+		// cursor ~ mouse
+		this._toggleMenuBtn.addEventListener('mouseenter', (e) => {
+			properties.onHover.dispatch(HOVER_STATE.HIDE);
+		});
+
+		this._toggleMenuBtn.addEventListener('mouseleave', (e) => {
+			properties.onHover.dispatch(HOVER_STATE.DEFAULT);
+		});
 
 		this._toggleMenuBtn.addEventListener('change', (e) => {
 			if (e.target.checked) {
