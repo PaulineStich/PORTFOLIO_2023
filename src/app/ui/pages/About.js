@@ -1,5 +1,6 @@
 import properties from '@core/properties';
 import settings from '@core/settings';
+import input from '@input/input';
 import { STATUS } from '../constants';
 
 import { gsap, Power3 } from 'gsap';
@@ -17,7 +18,9 @@ class About {
 		this._about = document.querySelector('#about');
 		this._aboutTitle = document.querySelectorAll('.about-container_title span');
 		this._sections = gsap.utils.toArray('.about-container_fullscreen');
-		this._sectionsTitle = document.querySelectorAll('.about-container_titleSection span');
+		this._chameleonSVG = document.getElementById('chameleon');
+		this._chameleonEye = document.querySelector('.eye');
+		this._chameleonPupils = document.querySelector('.pupils');
 
 		properties.statusSignal.add((status) => {
 			if (status === STATUS.ABOUT) {
@@ -135,12 +138,29 @@ class About {
 		this._about.style.transform = scroll;
 	}
 
+	_animateChameleon() {
+		const eyeBounds = this._chameleonEye.getBoundingClientRect();
+
+		// Get the center of the chameleon's eye
+		const centerX = eyeBounds.x + eyeBounds.width / 2;
+		const centerY = eyeBounds.y + eyeBounds.height / 2;
+
+		// Calculate the angle between the cursor and the center of the eye
+		const deltaX = input.mousePixelXY.x - centerX;
+		const deltaY = input.mousePixelXY.y - centerY;
+		const angle = Math.atan2(deltaY, deltaX);
+
+		// Convert the angle from radians to degrees and rotate the pupils within the eye
+		this._chameleonPupils.style.transform = `rotate(${(angle * 180) / Math.PI}deg)`;
+	}
+
 	delete() {}
 
 	update(dt) {
 		if (!this.isActive) return;
 
 		this._smoothScroll();
+		this._animateChameleon();
 	}
 }
 
