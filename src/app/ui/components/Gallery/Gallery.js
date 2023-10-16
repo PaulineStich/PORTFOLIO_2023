@@ -15,10 +15,11 @@ class Gallery {
 
 	preInit() {
 		this._generateGalleryItems();
-		let project = new Project(data);
+		this.project = new Project(data);
 		this.domGalleryItems = document.querySelectorAll('.gallery-view_menuImage');
 		[...this.domGalleryItems].forEach((el, i) => {
-			this.galleryItems.push(new GalleryItem(el, i, this));
+			// console.log(this.project);
+			this.galleryItems.push(new GalleryItem(el, i, this, this.project, this.project.listItems[i]));
 			this.index = i;
 		});
 	}

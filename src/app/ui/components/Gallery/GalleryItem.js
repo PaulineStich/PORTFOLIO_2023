@@ -9,7 +9,7 @@ import { HOVER_STATE } from '../../constants';
 export default class GalleryItem {
 	static counter = 1; // Add this static variable
 
-	constructor(el, index, gallery) {
+	constructor(el, index, gallery, project, projectItem) {
 		this.DOM = {
 			el: el,
 			gallery: gallery,
@@ -26,6 +26,8 @@ export default class GalleryItem {
 		this.positions;
 		this.triggerDistance;
 		this.onHover = false;
+		this.projectPage = project;
+		this.projectPageItem = projectItem;
 
 		this.tlFadeIn = gsap.timeline({ paused: true });
 
@@ -48,6 +50,7 @@ export default class GalleryItem {
 			y: window.innerHeight,
 			opacity: 0,
 		});
+		this._initEvents();
 	}
 
 	show() {
@@ -134,6 +137,16 @@ export default class GalleryItem {
 
 	_mouseLeave() {
 		properties.onHover.dispatch(HOVER_STATE.DEFAULT);
+	}
+
+	_mouseOnClick() {
+		// console.log('clicked');
+		this.projectPage.show();
+		this.projectPageItem.refreshPageContent();
+	}
+
+	_initEvents() {
+		this.DOM.el.addEventListener('click', () => this._mouseOnClick());
 	}
 
 	_startGalleryTimer() {
