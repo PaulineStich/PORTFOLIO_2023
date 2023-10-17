@@ -1,7 +1,7 @@
 import properties from '@core/properties';
 import settings from '@core/settings';
 import input from '@input/input';
-import { STATUS } from '../constants';
+import { STATUS, HOVER_STATE } from '../constants';
 
 import { gsap, Power3 } from 'gsap';
 
@@ -17,6 +17,7 @@ class About {
 	preInit() {
 		this._about = document.querySelector('#about');
 		this._aboutTitle = document.querySelectorAll('.about-container_title span');
+		this._aboutTitleFirstSentence = document.querySelector('.first-sentence--soul');
 		this._sections = gsap.utils.toArray('.about-container_fullscreen');
 		this._chameleonSVG = document.getElementById('chameleon');
 		this._chameleonEye = document.querySelector('.eye');
@@ -31,7 +32,25 @@ class About {
 		});
 	}
 
-	init() {}
+	init() {
+		this.initEvents();
+	}
+
+	initEvents() {
+		this.mouseenterFn = (e) => {
+			properties.onHover.dispatch(HOVER_STATE.HI);
+		};
+		this.mouseleaveFn = () => {
+			properties.onHover.dispatch(HOVER_STATE.DEFAULT);
+		};
+		this.mouseOnClick = () => {
+			// console.log('clicked');
+		};
+
+		this._aboutTitleFirstSentence.addEventListener('mouseenter', this.mouseenterFn);
+		this._aboutTitleFirstSentence.addEventListener('mouseleave', this.mouseleaveFn);
+		this._aboutTitleFirstSentence.addEventListener('click', this.mouseOnClick);
+	}
 
 	resize(width, height) {}
 

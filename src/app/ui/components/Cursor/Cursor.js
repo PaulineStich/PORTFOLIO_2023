@@ -8,7 +8,8 @@ class Cursor {
 		this.cursor = document.querySelector('.cursor');
 		this.cursorSphere = document.querySelector('.cursor_sphere');
 		this.cursorContent = document.querySelector('.cursor_container');
-		this.cursorContentText = this.cursorContent.querySelector('p');
+		this.cursorContentText = document.querySelector('.cursor_container-text');
+		this.cursorArrow = document.querySelector('.cursor_container-arrow');
 
 		this.active = false;
 		this.allowAnimation = false;
@@ -30,7 +31,6 @@ class Cursor {
 
 	preInit() {
 		this.getPosition();
-
 		properties.onHover.add((hoverState) => {
 			if (hoverState === HOVER_STATE.HI) {
 				this.enter(3, 1, 'hi', 5);
