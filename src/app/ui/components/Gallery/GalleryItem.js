@@ -4,7 +4,7 @@ import properties from '@app/core/properties';
 import input from '@input/input';
 import math from '@app/utils/math';
 
-import { HOVER_STATE } from '../../constants';
+import { TRANSITIONS, HOVER_STATE, STATUS } from '../../constants';
 
 export default class GalleryItem {
 	static counter = 1; // Add this static variable
@@ -17,7 +17,7 @@ export default class GalleryItem {
 			galleryCounterIndex: document.querySelector('.gallery-view-counter_currentIndex'),
 			galleryCounterTotal: document.querySelector('.gallery-view-counter_totalIndex'),
 			galleryTitle: document.querySelector('.gallery-view_menuTitle'),
-			galleryTitleSpans: document.querySelectorAll('.gallery-view_menuTitle span'),
+			galleryTitleSpans: '',
 		};
 		this.index = index;
 		this.totalImages = data.length;
@@ -30,6 +30,7 @@ export default class GalleryItem {
 		this.projectPageItem = projectItem;
 
 		this.tlFadeIn = gsap.timeline({ paused: true });
+		this.tlFadeOut = gsap.timeline({ paused: true });
 
 		// parrallax effect for title and gallery
 		this.state = {
@@ -45,11 +46,9 @@ export default class GalleryItem {
 	}
 
 	init() {
-		// hide gallery at the bottom of the page
-		gsap.set(this.DOM.el, {
-			y: window.innerHeight,
-			opacity: 0,
-		});
+		this._setTitle();
+		this._setGallery();
+		this._setCounter();
 		this._initEvents();
 	}
 
@@ -57,10 +56,15 @@ export default class GalleryItem {
 		this._fadeIn();
 	}
 
-	hide() {}
+	hide() {
+		this._fadeOut();
+	}
 
 	_fadeIn() {
 		this.tlFadeIn
+			.to('#gallery', {
+				display: 'block',
+			})
 			.to('.gallery-view_menuImage', {
 				y: 0,
 				opacity: 1,
@@ -84,7 +88,7 @@ export default class GalleryItem {
 				0.15,
 			)
 			.fromTo(
-				this.DOM.galleryTitleSpans,
+				'.gallery-view_menuTitle span',
 				{
 					willChange: 'transform, opacity',
 					transformOrigin: '50% 100%',
@@ -107,28 +111,42 @@ export default class GalleryItem {
 			);
 
 		this.tlFadeIn.play();
+
+		// console.log('fade in gallery');
 	}
 
 	_fadeOut() {
+		// console.log('fade out gallery');
+
+		this.tlFadeOut.to('#gallery', {
+			display: 'none',
+		});
+
+		this.tlFadeOut.play();
+
 		// fade out first visible element in the gallery and put it back in the stack
-		gsap.fromTo(
-			this.DOM.el,
-			{
-				opacity: 1,
-				duration: 1,
-			},
-			{
-				opacity: 0,
-				duration: 1.5,
-				ease: Power3.easeInOut,
-				onComplete: () => {
-					this.DOM.el.style.opacity = 1; // Reset opacity
-					this.DOM.gallery.domGallery.insertBefore(this.DOM.el, this.DOM.gallery.domGallery.firstChild); // Move to the front of the queue
-					this._updateCounter();
-					GalleryItem.counter = (GalleryItem.counter % this.totalImages) + 1; // Increment and reset when reaching the total number of images
-				},
-			},
-		);
+		// gsap.fromTo(
+		// 	this.DOM.el,
+		// 	{
+		// 		opacity: 1,
+		// 		duration: 1,
+		// 	},
+		// 	{
+		// 		opacity: 0,
+		// 		duration: 1.5,
+		// 		ease: Power3.easeInOut,
+		// 		onComplete: () => {
+		// 			this.DOM.el.style.opacity = 1; // Reset opacity
+		// 			this.DOM.gallery.domGallery.insertBefore(this.DOM.el, this.DOM.gallery.domGallery.firstChild); // Move to the front of the queue
+		// 			this._updateCounter();
+		// 			GalleryItem.counter = (GalleryItem.counter % this.totalImages) + 1; // Increment and reset when reaching the total number of images
+		// 		},
+		// 	},
+		// );
+	}
+
+	_initEvents() {
+		this.DOM.el.addEventListener('click', () => this._mouseOnClick());
 	}
 
 	_mouseEnter() {
@@ -143,10 +161,15 @@ export default class GalleryItem {
 		// console.log('clicked');
 		this.projectPage.show();
 		this.projectPageItem.refreshPageContent();
+		properties.statusSignal.dispatch(STATUS.PROJECT);
 	}
 
-	_initEvents() {
-		this.DOM.el.addEventListener('click', () => this._mouseOnClick());
+	_setGallery() {
+		// hide gallery at the bottom of the page
+		gsap.set(this.DOM.el, {
+			y: window.innerHeight,
+			opacity: 0,
+		});
 	}
 
 	_startGalleryTimer() {
@@ -166,10 +189,28 @@ export default class GalleryItem {
 		}, this.totalImages * 3000);
 	}
 
+	_setCounter() {
+		// set counter
+		this.DOM.galleryCounterTotal.textContent = data.length < 10 ? '0' + data.length : data.length;
+	}
+
 	_updateCounter() {
 		const currentIndex = GalleryItem.counter;
 		this.DOM.galleryCounterIndex.textContent = currentIndex.toString().padStart(2, '0');
 	}
+
+	_setTitle() {
+		// set title
+		this.DOM.galleryTitle.textContent = data[this.index].title;
+		this.DOM.galleryTitleSpans = document.querySelectorAll('.gallery-view_menuTitle span');
+	}
+
+	_parallaxTitle = (element, factorX, factorY) => {
+		this._normalize();
+		const { aimX, aimY, current } = this.state;
+		current[element].x += this._ease(aimX, current[element].x, factorX);
+		current[element].y += this._ease(aimY, current[element].y, factorY);
+	};
 
 	_getPosition() {
 		this.positions = this.DOM.el.getBoundingClientRect();
@@ -189,13 +230,6 @@ export default class GalleryItem {
 		this.state.aimY = (input.mousePixelXY.y * 2) / window.innerHeight - 1;
 	};
 
-	_animateElement = (element, factorX, factorY) => {
-		this._normalize();
-		const { aimX, aimY, current } = this.state;
-		current[element].x += this._ease(aimX, current[element].x, factorX);
-		current[element].y += this._ease(aimY, current[element].y, factorY);
-	};
-
 	update(dt) {
 		// get position of elements
 		this._getPosition();
@@ -206,8 +240,8 @@ export default class GalleryItem {
 		let y = 0;
 
 		// parallax the title + galleryCounter
-		this._animateElement('title', 0.15, 0.15);
-		this._animateElement('galleryCounter', 0.1, 0.1);
+		this._parallaxTitle('title', 0.15, 0.15);
+		this._parallaxTitle('galleryCounter', 0.1, 0.1);
 
 		this.DOM.galleryTitle.style.transform = `translate(-50%, -50%) translate(${2 * this.state.current.title.x}rem, ${2 * this.state.current.title.y}rem)`;
 		this.DOM.galleryCounter.style.transform = `translate(-50%, -50%) translate(${1 * this.state.current.title.x}rem, ${1 * this.state.current.title.y}rem)`;
