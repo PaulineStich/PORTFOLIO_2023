@@ -27,18 +27,7 @@ class Header {
 		this._tlFadeIn.play();
 	}
 
-	hide() {
-		this.active = false;
-
-		this._tlFadeOut.to(this._home, {
-			opacity: 0,
-			onComplete: () => {
-				this._header.style.display = 'none';
-			},
-		});
-
-		this._tlFadeOut.play();
-	}
+	hide() {}
 
 	resize(width, height) {}
 
