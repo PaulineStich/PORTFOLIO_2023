@@ -4,7 +4,7 @@ import { gsap, Power3, Expo } from 'gsap';
 
 import MenuItem from './MenuItem';
 import data from '../../../data/projects';
-import Project from '../Project/Project';
+import Project from '../../pages/Project/Project';
 
 class Menu {
 	domMenu;

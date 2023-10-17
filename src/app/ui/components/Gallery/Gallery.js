@@ -1,6 +1,6 @@
 import GalleryItem from './GalleryItem';
 import data from '../../../data/projects';
-import Project from '../Project/Project';
+import Project from '../../pages/Project/Project';
 
 class Gallery {
 	domGallery;
