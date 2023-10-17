@@ -75,7 +75,7 @@ class About {
 			}
 
 			if (gradientBackground) {
-				gsap.fromTo(gradientBackground, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.inOut', delay: 0.6 + delay });
+				gsap.fromTo(gradientBackground, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.inOut', delay: 0.1 + delay });
 			}
 
 			if (title.length > 0) {
@@ -89,7 +89,7 @@ class About {
 						duration: 1.3,
 						ease: 'expo.out',
 						rotationX: 0,
-						delay: 0.2 + delay,
+						delay: 0.1 + delay,
 						stagger: {
 							each: 0.1,
 							from: 'start',
