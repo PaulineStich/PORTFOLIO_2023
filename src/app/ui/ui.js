@@ -24,8 +24,6 @@ export class UI {
 		this.headerHome = document.getElementById('header-projects');
 		this.cursor = cursor;
 
-		splitText();
-
 		document.documentElement.classList.add('is-ready');
 		this.components.forEach((component) => component.preInit());
 	}
@@ -36,6 +34,8 @@ export class UI {
 
 	init() {
 		this.components.forEach((component) => component.init());
+
+		splitText();
 
 		this.headerAbout.addEventListener('mousedown', () => this.showPage(STATUS.ABOUT));
 		this.headerHome.addEventListener('mousedown', () => this.showPage(STATUS.GALLERY));

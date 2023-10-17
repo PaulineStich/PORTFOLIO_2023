@@ -71,6 +71,7 @@ export default class MenuItem {
 			// console.log('clicked');
 			this.projectPage.show();
 			this.projectPageItem.refreshPageContent();
+			properties.statusSignal.dispatch(STATUS.PROJECT);
 		};
 
 		this.DOM.el.addEventListener('mouseenter', this.mouseenterFn);

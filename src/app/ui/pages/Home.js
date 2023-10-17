@@ -31,10 +31,12 @@ class Home {
 			if (status === STATUS.GALLERY) {
 				// console.log('show gallery page');
 				this._show();
-			} else {
+			} else if (status === STATUS.PROJECT) {
+				// console.log('show project page');
+			} else if (status === STATUS.ABOUT) {
+				// console.log('show about page');
 				// add a fade out transition of the gallery
 				properties.onTransition.dispatch(TRANSITIONS.HIDE_GALLERY);
-				// console.log('hide gallery page');
 				this._hide();
 			}
 		});
@@ -89,13 +91,14 @@ class Home {
 	}
 
 	_hide() {
-		// don't forget to stop the animation of the gallery
 		properties.onTransition.add((transition) => {
 			if (transition === TRANSITIONS.HIDE_GALLERY) {
 				// start the fade out animation of the gallery here
 				this.components.forEach((component) => component.hide());
 			}
 		});
+
+		// console.log('hide ');
 
 		// then we change the pages (menu)
 		clearTimeout(this._hiddenTimeout);

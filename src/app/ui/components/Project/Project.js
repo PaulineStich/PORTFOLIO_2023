@@ -33,10 +33,15 @@ class Project {
 	}
 
 	show() {
-		// console.log('show project');
+		// console.log('fade in project');
 
 		this.domProject.style.display = 'block';
 		this.domHeader.style.pointerEvents = 'none';
+
+		// to be updated
+		gsap.to('#gallery', {
+			display: 'none',
+		});
 
 		this.tlFadeIn = gsap
 			.timeline()
@@ -59,7 +64,12 @@ class Project {
 	}
 
 	hide() {
-		// console.log('hide project');
+		// console.log('fade out project');
+
+		// to be improved
+		gsap.to('#gallery', {
+			display: 'block',
+		});
 
 		this.tlFadeOut = gsap
 			.timeline()
