@@ -38,12 +38,13 @@ class About {
 
 	initEvents() {
 		this.mouseenterFn = (e) => {
-			properties.onHover.dispatch(HOVER_STATE.HI);
+			properties.onHover.dispatch(HOVER_STATE.CLICK);
 		};
 		this.mouseleaveFn = () => {
 			properties.onHover.dispatch(HOVER_STATE.DEFAULT);
 		};
 		this.mouseOnClick = () => {
+			this._updateTitleText();
 			// console.log('clicked');
 		};
 
@@ -171,6 +172,38 @@ class About {
 
 		// Convert the angle from radians to degrees and rotate the pupils within the eye
 		this._chameleonPupils.style.transform = `rotate(${(angle * 180) / Math.PI}deg)`;
+	}
+
+	_updateTitleText() {
+		gsap.fromTo(
+			this._aboutTitleFirstSentence,
+			{ y: 100 },
+			{
+				y: 0,
+				transformOrigin: '50% 100%',
+				opacity: 1,
+				duration: 1.3,
+				ease: 'expo.out',
+				rotationX: 0,
+				delay: 0.1,
+				stagger: {
+					each: 0.1,
+					from: 'start',
+				},
+				onStart: () => {
+					const words = ['3d weirdo', 'devigner', 'chameleon', 'soul'];
+
+					// Ensure the new word is not the same as the current word
+					let newWord;
+					do {
+						newWord = words[Math.floor(Math.random() * words.length)];
+					} while (newWord === this._aboutTitleFirstSentence.textContent);
+
+					// Update the text content with the new word
+					this._aboutTitleFirstSentence.textContent = newWord;
+				},
+			},
+		);
 	}
 
 	delete() {}
