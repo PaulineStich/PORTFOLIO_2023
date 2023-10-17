@@ -24,7 +24,6 @@ class Preloader {
 
 	preInit() {
 		this._preloader = document.querySelector('#preloader');
-		this._preloaderTitle = document.querySelectorAll('#preloader-title span');
 		this._percetage = document.querySelector('#preloader-percentage');
 		this._title = document.querySelector('#preloader-title');
 		this._text = document.querySelector('#preloader-text');
@@ -74,7 +73,7 @@ class Preloader {
 				opacity: 1,
 			})
 			.fromTo(
-				this._preloaderTitle,
+				'#preloader-title span',
 				{
 					willChange: 'transform, opacity',
 					transformOrigin: '50% 100%',
