@@ -30,6 +30,8 @@ class Home {
 		properties.statusSignal.add((status) => {
 			if (status === STATUS.GALLERY) {
 				// console.log('show gallery page');
+				properties.onTransition.dispatch(TRANSITIONS.SHOW_GALLERY);
+
 				this._show();
 			} else if (status === STATUS.PROJECT) {
 				// console.log('show project page');
