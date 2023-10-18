@@ -1,12 +1,12 @@
 import properties from '@core/properties';
 import settings from '@core/settings';
-import { STATUS, TRANSITIONS, HOVER_STATE } from '../constants';
-
 import { gsap } from 'gsap';
 
 import Menu from '@app/ui/components/Menu/Menu';
 import Gallery from '../components/Gallery/Gallery';
 import Header from '../components/Header/Header';
+
+import { STATUS, TRANSITIONS, HOVER_STATE } from '../constants';
 
 class Home {
 	_home;
@@ -64,14 +64,44 @@ class Home {
 
 		this._toggleMenuBtn.addEventListener('change', (e) => {
 			if (e.target.checked) {
-				this._galleryView.style.display = 'none';
 				this._galleryList.style.display = 'block';
-				this._toggleMenuBtnText.style.opacity = 1;
+				gsap.timeline()
+					.to(this._galleryView, {
+						opacity: 0,
+					})
+					.to(this._galleryList, {
+						opacity: 1,
+						onComplete: () => {
+							this._galleryView.style.display = 'none';
+						},
+					})
+					.to(
+						this._toggleMenuBtnText,
+						{
+							opacity: 1,
+						},
+						0,
+					);
 				// properties.statusSignal.dispatch(STATUS.MENU);
 			} else {
 				this._galleryView.style.display = 'block';
-				this._galleryList.style.display = 'none';
-				this._toggleMenuBtnText.style.opacity = 0.2;
+				gsap.timeline()
+					.to(this._galleryList, {
+						opacity: 0,
+					})
+					.to(this._galleryView, {
+						opacity: 1,
+						onComplete: () => {
+							this._galleryList.style.display = 'none';
+						},
+					})
+					.to(
+						this._toggleMenuBtnText,
+						{
+							opacity: 0.2,
+						},
+						0,
+					);
 				// properties.statusSignal.dispatch(STATUS.GALLERY);
 			}
 		});
