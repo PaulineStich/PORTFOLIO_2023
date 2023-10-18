@@ -13,7 +13,7 @@ export const TRANSITIONS = {
 
 export const HOVER_STATE = {
 	DEFAULT: 0,
-	HI: 1,
+	CLICK: 1,
 	OPEN: 2,
 	HIDE: 3,
 };

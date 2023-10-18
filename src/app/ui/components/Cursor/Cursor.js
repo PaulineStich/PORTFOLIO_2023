@@ -33,7 +33,7 @@ class Cursor {
 		this.getPosition();
 		properties.onHover.add((hoverState) => {
 			if (hoverState === HOVER_STATE.CLICK) {
-				this.enter(3, 1, '	click', 5);
+				this.enter(3, 1, 'click', 5);
 			} else if (hoverState === HOVER_STATE.OPEN) {
 				this.enter(4, 1, 'open', 5);
 			} else if (hoverState === HOVER_STATE.HIDE) {
