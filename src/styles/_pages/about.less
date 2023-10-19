@@ -192,6 +192,21 @@
 									width: 45px;
 									height: 45px;
 									cursor: pointer;
+									overflow: hidden;
+
+									transition: all 0.3s ease-in-out;
+
+									svg {
+										transform: translateX(0px);
+									}
+
+									&:hover {
+										opacity: 0.9;
+										svg {
+											animation: 1.8s arrow cubic-bezier(0.6, 0.57, 0, 0.96);
+											animation-fill-mode: both;
+										}
+									}
 								}
 							}
 						}
@@ -285,3 +300,19 @@
 		transform: translate(0, 0);
 	}
 }
+
+@keyframes arrow {
+	0% {
+		transform: translateX(0);
+	}
+	29% {
+		transform: translateX(50px);
+	}
+	30% {
+		transform: translateX(-50px);
+	}
+	100% {
+		transform: translateX(0px);
+	}
+}
+
