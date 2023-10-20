@@ -92,6 +92,7 @@ class Gallery {
 			.to(
 				this.domGalleryItems,
 				{
+					// transform: 'translate(-50%, -50%)',
 					y: 0,
 					opacity: 1,
 					duration: 1.5,
@@ -148,18 +149,31 @@ class Gallery {
 	}
 
 	_animateGallery() {
-		gsap.set(this.domGalleryItems, {
-			x: this.animateProperties.tx.previous,
-			y: this.animateProperties.ty.previous,
-			ease: Power1.easeInOut,
-			duration: 0.8,
-			stagger: {
-				amount: 0.5,
-				from: 'end',
-			},
-			onStart: () => {
-				// console.log('update');
-			},
+		// console.log(this.animateProperties.ty.previous)
+		// gsap.set(this.domGalleryItems, {
+		// 	x: this.animateProperties.tx.previous,
+		// 	y: this.animateProperties.ty.previous,
+		// 	ease: Sine.easeInOut,
+		// 	duration: 0.8,
+		// 	stagger: {
+		// 		amount: 0.05,
+		// 		from: 'end',
+		// 	},
+		// 	onStart: () => {
+		// 		// console.log('update');
+		// 	},
+		// });
+		this.domGalleryItems.forEach((el, index) => {
+			gsap.set(el, {
+				x: this.animateProperties.tx.previous,
+				y: this.animateProperties.ty.previous,
+				ease: Power3.easeInOut,
+				duration: 0.8,
+				delay: index * 0.05, // Apply a custom delay based on the index
+				onStart: () => {
+					// Animation start code here
+				},
+			});
 		});
 	}
 

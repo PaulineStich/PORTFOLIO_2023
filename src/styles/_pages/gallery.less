@@ -35,8 +35,14 @@
 					left: 50%;
 					top: 50%;
 					transform: translate(-50%, -50%);
-					width: min(550px, 70%);
+					width: min(650px, 70%);
 					border: 15px solid white;
+					@media only screen and (min-width: @size-desktop-s) {
+						width: min(950px, 90%);
+					}
+					&:nth-child(1) {
+						// transform: translate(-50%, -50%) !important;
+					}
 				}
 			}
 			.gallery-view-counter {
@@ -140,6 +146,11 @@
 	opacity: 0;
 	will-change: transform, filter;
 	border: 15px solid white;
+
+	@media only screen and (min-width: @size-desktop-s) {
+		width: 525px;
+		height: 360px;
+	}
 }
 
 .hover-reveal_inner {
