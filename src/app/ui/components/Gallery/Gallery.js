@@ -1,3 +1,5 @@
+import { gsap } from 'gsap';
+
 import GalleryItem from './GalleryItem';
 import data from '../../../data/projects';
 import Project from '../../pages/Project/Project';
@@ -41,7 +43,41 @@ class Gallery {
 		this.isActive = true;
 		// console.log('show the gallery component now');
 
+		// fade in title
+		gsap.timeline()
+			.to(
+				'.gallery-view_menuTitle',
+				{
+					opacity: 1,
+				},
+				0.15,
+			)
+			.fromTo(
+				'.gallery-view_menuTitle span',
+				{
+					willChange: 'transform, opacity',
+					transformOrigin: '50% 100%',
+					opacity: 0,
+					rotationX: 90,
+					translateY: 100,
+				},
+				{
+					duration: 1.7,
+					ease: 'expo',
+					opacity: 1,
+					rotationX: 0,
+					translateY: 0,
+					stagger: {
+						each: 0.015,
+						from: 'start',
+					},
+				},
+				0.15,
+			);
+
+		// fade in images from gallery
 		this.galleryItems.forEach((galleryItem) => galleryItem.show());
+
 		return;
 	}
 

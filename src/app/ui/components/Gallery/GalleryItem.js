@@ -61,53 +61,29 @@ export default class GalleryItem {
 	}
 
 	_fadeIn() {
+		console.log('fadein');
 		this.tlFadeIn
 			.to('#gallery', {
 				display: 'block',
 			})
-			.to('.gallery-view_menuImage', {
-				y: 0,
-				opacity: 1,
-				duration: 1.5,
-				ease: Power3.easeInOut,
-				stagger: {
-					amount: 0.5,
-					grid: [Math.floor(window.innerWidth / 200), Math.floor(window.innerHeight / 200)],
-					from: 'start',
-				},
-				onComplete: () => {
-					// this._startGalleryTimer();
-					this.hasFinishedIntroAnimation = true;
-				},
-			})
 			.to(
-				this.DOM.galleryTitle,
+				'.gallery-view_menuImage',
 				{
+					y: 0,
 					opacity: 1,
-				},
-				0.15,
-			)
-			.fromTo(
-				'.gallery-view_menuTitle span',
-				{
-					willChange: 'transform, opacity',
-					transformOrigin: '50% 100%',
-					opacity: 0,
-					rotationX: 90,
-					translateY: 100,
-				},
-				{
-					duration: 1.7,
-					ease: 'expo',
-					opacity: 1,
-					rotationX: 0,
-					translateY: 0,
+					duration: 1.5,
+					ease: Power3.easeInOut,
 					stagger: {
-						each: 0.015,
+						amount: 0.5,
+						grid: [Math.floor(window.innerWidth / 200), Math.floor(window.innerHeight / 200)],
 						from: 'start',
 					},
+					onComplete: () => {
+						// this._startGalleryTimer();
+						this.hasFinishedIntroAnimation = true;
+					},
 				},
-				0.15,
+				0,
 			);
 
 		this.tlFadeIn.play();
