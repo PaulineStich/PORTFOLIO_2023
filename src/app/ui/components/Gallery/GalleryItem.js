@@ -61,7 +61,6 @@ export default class GalleryItem {
 	}
 
 	_fadeIn() {
-		console.log('fadein');
 		this.tlFadeIn
 			.to('#gallery', {
 				display: 'block',
