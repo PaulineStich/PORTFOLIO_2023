@@ -32,16 +32,6 @@ export default class GalleryItem {
 		this.tlFadeIn = gsap.timeline({ paused: true });
 		this.tlFadeOut = gsap.timeline({ paused: true });
 
-		// parrallax effect for title and gallery
-		this.state = {
-			aimX: 0,
-			aimY: 0,
-			current: {
-				title: { x: 0, y: 0 },
-				galleryCounter: { x: 0, y: 0 },
-			},
-		};
-
 		this.init();
 	}
 
@@ -61,29 +51,9 @@ export default class GalleryItem {
 	}
 
 	_fadeIn() {
-		this.tlFadeIn
-			.to('#gallery', {
-				display: 'block',
-			})
-			.to(
-				'.gallery-view_menuImage',
-				{
-					y: 0,
-					opacity: 1,
-					duration: 1.5,
-					ease: Power3.easeInOut,
-					stagger: {
-						amount: 0.5,
-						grid: [Math.floor(window.innerWidth / 200), Math.floor(window.innerHeight / 200)],
-						from: 'start',
-					},
-					onComplete: () => {
-						// this._startGalleryTimer();
-						this.hasFinishedIntroAnimation = true;
-					},
-				},
-				0,
-			);
+		this.tlFadeIn.to('#gallery', {
+			display: 'block',
+		});
 
 		this.tlFadeIn.play();
 
@@ -180,13 +150,6 @@ export default class GalleryItem {
 		this.DOM.galleryTitleSpans = document.querySelectorAll('.gallery-view_menuTitle span');
 	}
 
-	_parallaxTitle = (element, factorX, factorY) => {
-		this._normalize();
-		const { aimX, aimY, current } = this.state;
-		current[element].x += this._ease(aimX, current[element].x, factorX);
-		current[element].y += this._ease(aimY, current[element].y, factorY);
-	};
-
 	_getPosition() {
 		this.positions = this.DOM.el.getBoundingClientRect();
 		this.triggerDistance = (window.innerWidth / 2) * 0.6;
@@ -197,14 +160,6 @@ export default class GalleryItem {
 		this.distanceMouseToTrigger = math.distance(input.mousePixelXY.x + window.scrollX, input.mousePixelXY.y + window.scrollY, left + width / 2, top + height / 2);
 	}
 
-	_ease = (target, current, factor) => (target - current) * factor;
-
-	_normalize = () => {
-		// normalize from -1.-1 / 0.0 / 1.1
-		this.state.aimX = (input.mousePixelXY.x * 2) / window.innerWidth - 1;
-		this.state.aimY = (input.mousePixelXY.y * 2) / window.innerHeight - 1;
-	};
-
 	update(dt) {
 		// get position of elements
 		this._getPosition();
@@ -213,13 +168,6 @@ export default class GalleryItem {
 
 		let x = 0;
 		let y = 0;
-
-		// parallax the title + galleryCounter
-		this._parallaxTitle('title', 0.15, 0.15);
-		this._parallaxTitle('galleryCounter', 0.1, 0.1);
-
-		this.DOM.galleryTitle.style.transform = `translate(-50%, -50%) translate(${2 * this.state.current.title.x}rem, ${2 * this.state.current.title.y}rem)`;
-		this.DOM.galleryCounter.style.transform = `translate(-50%, -50%) translate(${1 * this.state.current.title.x}rem, ${1 * this.state.current.title.y}rem)`;
 
 		// animate the Gallery
 		if (this.distanceMouseToTrigger < this.triggerDistance) {
@@ -250,24 +198,5 @@ export default class GalleryItem {
 
 		this.animateProperties.tx.previous = math.lerp(this.animateProperties.tx.previous, this.animateProperties.tx.current, this.animateProperties.tx.amt);
 		this.animateProperties.ty.previous = math.lerp(this.animateProperties.ty.previous, this.animateProperties.ty.current, this.animateProperties.ty.amt);
-
-		if (this.hasFinishedIntroAnimation) {
-			gsap.set('.gallery-view_menuImage', {
-				x: this.animateProperties.tx.previous,
-				y: this.animateProperties.ty.previous,
-				ease: Power1.easeInOut,
-				duration: 0.8,
-				stagger: {
-					amount: 0.5,
-					from: 'end',
-				},
-			});
-		} else if (this.hasFinishedIntroAnimation && !this.onHover) {
-			// gsap.to('.gallery-view_menuImage', {
-			// 	x: this.animateProperties.tx.previous,
-			// 	ease: Power1.easeInOut,
-			// 	duration: 0.8,
-			// });
-		}
 	}
 }

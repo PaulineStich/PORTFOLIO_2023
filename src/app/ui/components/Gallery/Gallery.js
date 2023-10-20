@@ -1,18 +1,33 @@
-import { gsap } from 'gsap';
+import { gsap, Power3, Power1 } from 'gsap';
+import input from '@input/input';
 
 import GalleryItem from './GalleryItem';
 import data from '../../../data/projects';
 import Project from '../../pages/Project/Project';
 
 class Gallery {
-	domGallery;
+	domGallery = document.getElementById('gallery-view_menuImages');
 	domGalleryItems;
+	domGalleryCounter = document.querySelector('.gallery-view-counter');
+	domGalleryTitle = document.querySelector('.gallery-view_menuTitle');
 	galleryItems = [];
+	hasFinishedIntroAnimation = false;
+
 	animateProperties = {
 		tx: { previous: 0, current: 0, amt: 0.05 },
 		ty: { previous: 0, current: 0, amt: 0.05 },
 		rotation: { previous: 0, current: 0, amt: 0.04 },
 		opacity: { previous: 0, current: 0, amt: 0.05 },
+	};
+
+	// parrallax effect for title and gallery
+	state = {
+		aimX: 0,
+		aimY: 0,
+		current: {
+			title: { x: 0, y: 0 },
+			galleryCounter: { x: 0, y: 0 },
+		},
 	};
 
 	preInit() {
@@ -29,7 +44,6 @@ class Gallery {
 	init() {}
 
 	_generateGalleryItems() {
-		this.domGallery = document.getElementById('gallery-view_menuImages');
 		data.forEach((item) => {
 			let galleryItem = document.createElement('img');
 			galleryItem.className = 'gallery-view_menuImage';
@@ -73,6 +87,26 @@ class Gallery {
 					},
 				},
 				0.15,
+			)
+			// fade in gallery
+			.to(
+				this.domGalleryItems,
+				{
+					y: 0,
+					opacity: 1,
+					duration: 1.5,
+					ease: Power3.easeInOut,
+					stagger: {
+						amount: 0.5,
+						grid: [Math.floor(window.innerWidth / 200), Math.floor(window.innerHeight / 200)],
+						from: 'start',
+					},
+					onComplete: () => {
+						// this._startGalleryTimer();
+						this.hasFinishedIntroAnimation = true;
+					},
+				},
+				0,
 			);
 
 		// fade in images from gallery
@@ -89,6 +123,30 @@ class Gallery {
 		return;
 	}
 
+	_normalize = () => {
+		// normalize from -1.-1 / 0.0 / 1.1
+		this.state.aimX = (input.mousePixelXY.x * 2) / window.innerWidth - 1;
+		this.state.aimY = (input.mousePixelXY.y * 2) / window.innerHeight - 1;
+	};
+
+	_ease = (target, current, factor) => (target - current) * factor;
+
+	_parallaxTitle = (element, factorX, factorY) => {
+		this._normalize();
+		const { aimX, aimY, current } = this.state;
+		current[element].x += this._ease(aimX, current[element].x, factorX);
+		current[element].y += this._ease(aimY, current[element].y, factorY);
+	};
+
+	_animateParallax() {
+		// parallax the title + galleryCounter
+		this._parallaxTitle('title', 0.15, 0.15);
+		this._parallaxTitle('galleryCounter', 0.1, 0.1);
+
+		this.domGalleryTitle.style.transform = `translate(-50%, -50%) translate(${2 * this.state.current.title.x}rem, ${2 * this.state.current.title.y}rem)`;
+		this.domGalleryCounter.style.transform = `translate(-50%, -50%) translate(${1 * this.state.current.title.x}rem, ${1 * this.state.current.title.y}rem)`;
+	}
+
 	resize(width, height) {}
 
 	delete() {}
@@ -96,6 +154,26 @@ class Gallery {
 	update(dt) {
 		// Update gallery items
 		this.galleryItems.forEach((galleryItem) => galleryItem.update());
+
+		// update parallax
+		this._animateParallax();
+
+		// animate the gallery on mouse move
+		if (this.hasFinishedIntroAnimation) {
+			gsap.set(this.domGalleryItems, {
+				x: this.animateProperties.tx.previous,
+				y: this.animateProperties.ty.previous,
+				ease: Power1.easeInOut,
+				duration: 0.8,
+				stagger: {
+					amount: 0.5,
+					from: 'end',
+				},
+				onStart: () => {
+					// console.log('update');
+				},
+			});
+		}
 	}
 }
 
