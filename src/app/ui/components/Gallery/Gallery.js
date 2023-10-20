@@ -147,6 +147,22 @@ class Gallery {
 		this.domGalleryCounter.style.transform = `translate(-50%, -50%) translate(${1 * this.state.current.title.x}rem, ${1 * this.state.current.title.y}rem)`;
 	}
 
+	_animateGallery() {
+		gsap.set(this.domGalleryItems, {
+			x: this.animateProperties.tx.previous,
+			y: this.animateProperties.ty.previous,
+			ease: Power1.easeInOut,
+			duration: 0.8,
+			stagger: {
+				amount: 0.5,
+				from: 'end',
+			},
+			onStart: () => {
+				// console.log('update');
+			},
+		});
+	}
+
 	resize(width, height) {}
 
 	delete() {}
@@ -158,21 +174,16 @@ class Gallery {
 		// update parallax
 		this._animateParallax();
 
-		// animate the gallery on mouse move
-		if (this.hasFinishedIntroAnimation) {
-			gsap.set(this.domGalleryItems, {
-				x: this.animateProperties.tx.previous,
-				y: this.animateProperties.ty.previous,
-				ease: Power1.easeInOut,
-				duration: 0.8,
-				stagger: {
-					amount: 0.5,
-					from: 'end',
-				},
-				onStart: () => {
-					// console.log('update');
-				},
-			});
+		// check if is moving
+		for (const el in this.animateProperties) {
+			if (Math.abs(this.animateProperties[el].current - this.animateProperties[el].previous) > 0.001) {
+				this.allowAnimation = true;
+				// no need to update the animation if nothing is happening, so adding this allowAnimation
+			}
+		}
+
+		if (this.allowAnimation && this.hasFinishedIntroAnimation) {
+			this._animateGallery();
 		}
 	}
 }

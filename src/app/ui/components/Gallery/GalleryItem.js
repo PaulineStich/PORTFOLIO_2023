@@ -117,22 +117,22 @@ export default class GalleryItem {
 		});
 	}
 
-	_startGalleryTimer() {
-		const delayStep = 3000;
-		const delay = (this.totalImages - 1 - this.index) * delayStep;
-		this.DOM.galleryCounterTotal.textContent = this.totalImages.toString().padStart(2, '0');
+	// _startGalleryTimer() {
+	// 	const delayStep = 3000;
+	// 	const delay = (this.totalImages - 1 - this.index) * delayStep;
+	// 	this.DOM.galleryCounterTotal.textContent = this.totalImages.toString().padStart(2, '0');
 
-		setTimeout(() => {
-			this._startGalleryAnimations();
-		}, delay);
-	}
+	// 	setTimeout(() => {
+	// 		this._startGalleryAnimations();
+	// 	}, delay);
+	// }
 
-	_startGalleryAnimations() {
-		this._fadeOut();
-		this.timer = setInterval(() => {
-			this._fadeOut();
-		}, this.totalImages * 3000);
-	}
+	// _startGalleryAnimations() {
+	// 	this._fadeOut();
+	// 	this.timer = setInterval(() => {
+	// 		this._fadeOut();
+	// 	}, this.totalImages * 3000);
+	// }
 
 	_setCounter() {
 		// set counter
