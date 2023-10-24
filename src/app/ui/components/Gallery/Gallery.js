@@ -200,6 +200,21 @@ class Gallery {
 			// Add the 'lead-image' class for styling or any other purposes
 			lead.classList.add('lead-image');
 
+			// Use GSAP to animate the lead image
+			gsap.fromTo(
+				lead,
+				{
+					opacity: 0,
+				},
+				{
+					zIndex: startingZIndex + (this.globalIndex % this.domGalleryItems.length),
+					duration: 0.5,
+					delay: 5,
+					opacity: 1,
+					ease: 'Sine.easeInOut',
+				},
+			);
+
 			this.globalIndex += 1;
 			this._updateCounter();
 		}, 5000);
