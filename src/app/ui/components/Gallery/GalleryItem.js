@@ -21,11 +21,8 @@ export default class GalleryItem {
 		};
 		this.index = index;
 		this.totalImages = data.length;
-		this.hasFinishedIntroAnimation = false;
 		this.animateProperties = gallery.animateProperties;
 		this.positions;
-		this.triggerDistance;
-		this.onHover = false;
 		this.projectPage = project;
 		this.projectPageItem = projectItem;
 
@@ -37,8 +34,8 @@ export default class GalleryItem {
 
 	init() {
 		this._setTitle();
-		this._setGallery();
 		this._setCounter();
+		this._setGallery();
 		this._initEvents();
 	}
 
@@ -68,26 +65,6 @@ export default class GalleryItem {
 		});
 
 		this.tlFadeOut.play();
-
-		// fade out first visible element in the gallery and put it back in the stack
-		// gsap.fromTo(
-		// 	this.DOM.el,
-		// 	{
-		// 		opacity: 1,
-		// 		duration: 1,
-		// 	},
-		// 	{
-		// 		opacity: 0,
-		// 		duration: 1.5,
-		// 		ease: Power3.easeInOut,
-		// 		onComplete: () => {
-		// 			this.DOM.el.style.opacity = 1; // Reset opacity
-		// 			this.DOM.gallery.domGallery.insertBefore(this.DOM.el, this.DOM.gallery.domGallery.firstChild); // Move to the front of the queue
-		// 			this._updateCounter();
-		// 			GalleryItem.counter = (GalleryItem.counter % this.totalImages) + 1; // Increment and reset when reaching the total number of images
-		// 		},
-		// 	},
-		// );
 	}
 
 	_initEvents() {
@@ -109,6 +86,11 @@ export default class GalleryItem {
 		properties.statusSignal.dispatch(STATUS.PROJECT);
 	}
 
+	_setCounter() {
+		// set counter
+		this.DOM.galleryCounterTotal.textContent = data.length < 10 ? '0' + data.length : data.length;
+	}
+
 	_setGallery() {
 		// hide gallery at the bottom of the page
 		gsap.set(this.DOM.el, {
@@ -117,32 +99,7 @@ export default class GalleryItem {
 		});
 	}
 
-	// _startGalleryTimer() {
-	// 	const delayStep = 3000;
-	// 	const delay = (this.totalImages - 1 - this.index) * delayStep;
-	// 	this.DOM.galleryCounterTotal.textContent = this.totalImages.toString().padStart(2, '0');
-
-	// 	setTimeout(() => {
-	// 		this._startGalleryAnimations();
-	// 	}, delay);
-	// }
-
-	// _startGalleryAnimations() {
-	// 	this._fadeOut();
-	// 	this.timer = setInterval(() => {
-	// 		this._fadeOut();
-	// 	}, this.totalImages * 3000);
-	// }
-
-	_setCounter() {
-		// set counter
-		this.DOM.galleryCounterTotal.textContent = data.length < 10 ? '0' + data.length : data.length;
-	}
-
-	_updateCounter() {
-		const currentIndex = GalleryItem.counter;
-		this.DOM.galleryCounterIndex.textContent = currentIndex.toString().padStart(2, '0');
-	}
+	_updateCounter() {}
 
 	_setTitle() {
 		// set title
@@ -193,10 +150,10 @@ export default class GalleryItem {
 			}
 		}
 
-		this.animateProperties.tx.current = x;
-		this.animateProperties.ty.current = y;
+		// this.animateProperties.tx.current = x;
+		// this.animateProperties.ty.current = y;
 
-		this.animateProperties.tx.previous = math.lerp(this.animateProperties.tx.previous, this.animateProperties.tx.current, this.animateProperties.tx.amt);
-		this.animateProperties.ty.previous = math.lerp(this.animateProperties.ty.previous, this.animateProperties.ty.current, this.animateProperties.ty.amt);
+		// this.animateProperties.tx.previous = math.lerp(this.animateProperties.tx.previous, this.animateProperties.tx.current, this.animateProperties.tx.amt);
+		// this.animateProperties.ty.previous = math.lerp(this.animateProperties.ty.previous, this.animateProperties.ty.current, this.animateProperties.ty.amt);
 	}
 }

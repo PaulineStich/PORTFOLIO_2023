@@ -30,6 +30,10 @@ class Gallery {
 		},
 	};
 
+	// gallery follow
+	globalIndex = 0;
+	last = { x: 0, y: 0 };
+
 	preInit() {
 		this._generateGalleryItems();
 		this.project = new Project(data);
@@ -41,7 +45,13 @@ class Gallery {
 		});
 	}
 
-	init() {}
+	init() {
+		this._initEvents();
+	}
+
+	_initEvents() {
+		// window.onmousemove = (e) => this._handleOnMove();
+	}
 
 	_generateGalleryItems() {
 		data.forEach((item) => {
@@ -124,6 +134,54 @@ class Gallery {
 		return;
 	}
 
+	// gallery follow
+	_activate = (image, x, y) => {
+		// image.style.left = `${x}px`;
+		// image.style.top = `${y}px`;
+		image.style.zIndex = this.globalIndex;
+
+		gsap.fromTo(
+			image,
+			{
+				opacity: 0,
+				scale: 0.8,
+				transformOrigin: 'center center',
+			},
+			{
+				left: x,
+				top: y,
+				transform: 'translate(-50%, -50%)',
+				ease: 'Power3.easeInOut',
+				duration: 0.8,
+				opacity: 1,
+				scale: 1,
+			},
+		);
+
+		image.dataset.status = 'active';
+
+		this.last = { x, y };
+	};
+
+	// gallery follow
+	_distanceFromLast = (x, y) => {
+		return Math.hypot(x - this.last.x, y - this.last.y);
+	};
+
+	// gallery follow
+	_handleOnMove = (x, y) => {
+		if (this._distanceFromLast(input.mousePixelXY.x, input.mousePixelXY.y) > window.innerWidth / 15) {
+			const lead = this.domGalleryItems[this.globalIndex % this.domGalleryItems.length],
+				tail = this.domGalleryItems[(this.globalIndex - 5) % this.domGalleryItems.length];
+
+			this._activate(lead, x, y);
+
+			if (tail) tail.dataset.status = 'inactive';
+
+			this.globalIndex++;
+		}
+	};
+
 	_normalize = () => {
 		// normalize from -1.-1 / 0.0 / 1.1
 		this.state.aimX = (input.mousePixelXY.x * 2) / window.innerWidth - 1;
@@ -148,35 +206,6 @@ class Gallery {
 		this.domGalleryCounter.style.transform = `translate(-50%, -50%) translate(${1 * this.state.current.title.x}rem, ${1 * this.state.current.title.y}rem)`;
 	}
 
-	_animateGallery() {
-		// console.log(this.animateProperties.ty.previous)
-		// gsap.set(this.domGalleryItems, {
-		// 	x: this.animateProperties.tx.previous,
-		// 	y: this.animateProperties.ty.previous,
-		// 	ease: Sine.easeInOut,
-		// 	duration: 0.8,
-		// 	stagger: {
-		// 		amount: 0.05,
-		// 		from: 'end',
-		// 	},
-		// 	onStart: () => {
-		// 		// console.log('update');
-		// 	},
-		// });
-		this.domGalleryItems.forEach((el, index) => {
-			gsap.set(el, {
-				x: this.animateProperties.tx.previous,
-				y: this.animateProperties.ty.previous,
-				ease: Power3.easeInOut,
-				duration: 0.8,
-				delay: index * 0.05, // Apply a custom delay based on the index
-				onStart: () => {
-					// Animation start code here
-				},
-			});
-		});
-	}
-
 	resize(width, height) {}
 
 	delete() {}
@@ -188,17 +217,7 @@ class Gallery {
 		// update parallax
 		this._animateParallax();
 
-		// check if is moving
-		for (const el in this.animateProperties) {
-			if (Math.abs(this.animateProperties[el].current - this.animateProperties[el].previous) > 0.001) {
-				this.allowAnimation = true;
-				// no need to update the animation if nothing is happening, so adding this allowAnimation
-			}
-		}
-
-		if (this.allowAnimation && this.hasFinishedIntroAnimation) {
-			this._animateGallery();
-		}
+		this._handleOnMove(input.mousePixelXY.x, input.mousePixelXY.y);
 	}
 }
 
