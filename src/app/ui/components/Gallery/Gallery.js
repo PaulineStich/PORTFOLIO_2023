@@ -9,9 +9,14 @@ class Gallery {
 	domGallery = document.getElementById('gallery-view_menuImages');
 	domGalleryItems;
 	domGalleryCounter = document.querySelector('.gallery-view-counter');
+	domGalleryCounterCurrentIndex = document.querySelector('.gallery-view-counter_currentIndex');
+	domGalleryCounterLine = document.querySelector('.gallery-view-counter_barFiller');
 	domGalleryTitle = document.querySelector('.gallery-view_menuTitle');
 	galleryItems = [];
 	hasFinishedIntroAnimation = false;
+	// animation
+	globalIndex = 0;
+	intervalId = null;
 
 	animateProperties = {
 		tx: { previous: 0, current: 0, amt: 0.05 },
@@ -41,7 +46,9 @@ class Gallery {
 		});
 	}
 
-	init() {}
+	init() {
+		this._startGallery();
+	}
 
 	_generateGalleryItems() {
 		data.forEach((item) => {
@@ -56,6 +63,8 @@ class Gallery {
 	show() {
 		this.isActive = true;
 		// console.log('show the gallery component now');
+
+		this.domGalleryCounterLine.style.transform = `scaleX(0)`;
 
 		// fade in title
 		gsap.timeline()
@@ -103,7 +112,6 @@ class Gallery {
 						from: 'start',
 					},
 					onComplete: () => {
-						// this._startGalleryTimer();
 						this.hasFinishedIntroAnimation = true;
 					},
 				},
@@ -148,33 +156,93 @@ class Gallery {
 		this.domGalleryCounter.style.transform = `translate(-50%, -50%) translate(${1 * this.state.current.title.x}rem, ${1 * this.state.current.title.y}rem)`;
 	}
 
-	_animateGallery() {
-		// console.log(this.animateProperties.ty.previous)
-		// gsap.set(this.domGalleryItems, {
-		// 	x: this.animateProperties.tx.previous,
-		// 	y: this.animateProperties.ty.previous,
-		// 	ease: Sine.easeInOut,
-		// 	duration: 0.8,
-		// 	stagger: {
-		// 		amount: 0.05,
-		// 		from: 'end',
-		// 	},
-		// 	onStart: () => {
-		// 		// console.log('update');
-		// 	},
-		// });
+	_animateGallery(lead) {
 		this.domGalleryItems.forEach((el, index) => {
+			let positions = el.getBoundingClientRect();
+			let { left, top, width, height } = positions;
 			gsap.set(el, {
 				x: this.animateProperties.tx.previous,
 				y: this.animateProperties.ty.previous,
+				// x: (input.mousePixelXY.x + window.scrollX - (left + width / 2)) * 0.4,
+				// y: (input.mousePixelXY.y + window.scrollY - (top + height / 2)) * 0.4,
 				ease: Power3.easeInOut,
 				duration: 0.8,
-				delay: index * 0.05, // Apply a custom delay based on the index
+				delay: index * 0.09,
 				onStart: () => {
 					// Animation start code here
 				},
 			});
 		});
+	}
+
+	_startGallery = (e) => {
+		// Clear any existing interval
+		if (this.intervalId) {
+			clearInterval(this.intervalId);
+		}
+
+		// Store the starting z-index and reset it
+		const startingZIndex = 1;
+
+		// Start a new interval to increase zIndex and reset when needed
+		this.intervalId = setInterval(() => {
+			// Reset zIndex for all images
+			this.domGalleryItems.forEach((item) => {
+				item.style.zIndex = '';
+			});
+
+			// Find the lead image
+			const lead = this.domGalleryItems[this.globalIndex % this.domGalleryItems.length];
+
+			// Set the zIndex for the lead image
+			lead.style.zIndex = startingZIndex + (this.globalIndex % this.domGalleryItems.length);
+
+			// Add the 'lead-image' class for styling or any other purposes
+			lead.classList.add('lead-image');
+
+			this.globalIndex += 1;
+			this._updateCounter();
+		}, 5000);
+	};
+
+	_updateCounter() {
+		// Calculate the actual index based on the global index and the number of gallery items
+		const numItems = this.domGalleryItems.length;
+		let actualIndex = this.globalIndex % numItems;
+
+		// Ensure the index starts from 1
+		if (actualIndex === 0) {
+			actualIndex = numItems;
+		}
+
+		// Update the counter
+		this.domGalleryCounterCurrentIndex.textContent = actualIndex < 10 ? '0' + actualIndex : actualIndex;
+
+		// Reset the index if it reaches the end
+		if (actualIndex === numItems) {
+			this.globalIndex = 0;
+		}
+
+		gsap.timeline().fromTo(
+			this.domGalleryCounterLine,
+			{
+				scaleX: 0,
+			},
+			{
+				scaleX: 1,
+				duration: 5,
+				ease: 'Linear.easeNone',
+			},
+			0,
+		);
+	}
+
+	_pauseCounter() {
+		// Clear the interval
+		if (this.intervalId) {
+			clearInterval(this.intervalId);
+			this.intervalId = null;
+		}
 	}
 
 	resize(width, height) {}
