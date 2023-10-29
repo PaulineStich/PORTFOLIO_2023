@@ -1,9 +1,9 @@
-import * as THREE from 'three';
+// import * as THREE from 'three';
 
 import browser from '@core/browser';
 import properties from '@core/properties';
 import settings from '@core/settings';
-import { STATUS } from './constants';
+import { STATUS, HOVER_STATE } from './constants';
 
 import input from '@input/input';
 import math from '@utils/math';
@@ -20,6 +20,7 @@ export class UI {
 	components = [preloader, home, about, cursor];
 
 	preInit() {
+		this.headerElements = document.querySelectorAll('.header-element');
 		this.headerAbout = document.getElementById('header-about');
 		this.headerHome = document.getElementById('header-projects');
 		this.cursor = cursor;
@@ -39,6 +40,8 @@ export class UI {
 
 		this.headerAbout.addEventListener('mousedown', () => this.showPage(STATUS.ABOUT));
 		this.headerHome.addEventListener('mousedown', () => this.showPage(STATUS.GALLERY));
+
+		this._initEvents();
 	}
 
 	start() {
@@ -54,6 +57,21 @@ export class UI {
 
 	showPage(pageName) {
 		properties.statusSignal.dispatch(pageName);
+	}
+
+	_initEvents() {
+		this.headerElements.forEach(el => {
+			el.addEventListener('mouseenter', this._mouseEnter);
+			el.addEventListener('mouseleave', this._mouseLeave);
+		});
+	}
+
+	_mouseEnter() {
+		properties.onHover.dispatch(HOVER_STATE.HOVER);
+	}
+
+	_mouseLeave() {
+		properties.onHover.dispatch(HOVER_STATE.DEFAULT);
 	}
 
 	resize(width, height) {

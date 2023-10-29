@@ -16,4 +16,5 @@ export const HOVER_STATE = {
 	CLICK: 1,
 	OPEN: 2,
 	HIDE: 3,
+	HOVER: 4
 };

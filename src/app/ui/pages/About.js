@@ -22,6 +22,7 @@ class About {
 		this._chameleonSVG = document.getElementById('chameleon');
 		this._chameleonEye = document.querySelector('.eye');
 		this._chameleonPupils = document.querySelector('.pupils');
+		this._aboutSocialList = document.querySelectorAll('.about-container_cta-social a');
 
 		properties.statusSignal.add((status) => {
 			if (status === STATUS.ABOUT) {
@@ -51,9 +52,13 @@ class About {
 		this._aboutTitleFirstSentence.addEventListener('mouseenter', this.mouseenterFn);
 		this._aboutTitleFirstSentence.addEventListener('mouseleave', this.mouseleaveFn);
 		this._aboutTitleFirstSentence.addEventListener('click', this.mouseOnClick);
+		this._aboutSocialList.forEach(el => {
+			el.addEventListener('mouseenter', this._mouseEnter);
+			el.addEventListener('mouseleave', this._mouseLeave);
+		});
 	}
 
-	resize(width, height) {}
+	resize(width, height) { }
 
 	show() {
 		clearTimeout(this._hiddenTimeout);
@@ -206,7 +211,15 @@ class About {
 		);
 	}
 
-	delete() {}
+	_mouseEnter() {
+		properties.onHover.dispatch(HOVER_STATE.HOVER);
+	}
+
+	_mouseLeave() {
+		properties.onHover.dispatch(HOVER_STATE.DEFAULT);
+	}
+
+	delete() { }
 
 	update(dt) {
 		if (!this.isActive) return;

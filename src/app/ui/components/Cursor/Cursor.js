@@ -36,6 +36,8 @@ class Cursor {
 				this.enter(3, 1, 'click', 5);
 			} else if (hoverState === HOVER_STATE.OPEN) {
 				this.enter(4, 1, 'open', 5);
+			} else if (hoverState === HOVER_STATE.HOVER) {
+				this.enter(1.5, 0.5, '', 5);
 			} else if (hoverState === HOVER_STATE.HIDE) {
 				this.hide();
 			} else if (hoverState === HOVER_STATE.DEFAULT) {
@@ -44,7 +46,7 @@ class Cursor {
 		});
 	}
 
-	init() {}
+	init() { }
 
 	show() {
 		this.cursor.style.display = 'flex';
@@ -67,6 +69,11 @@ class Cursor {
 		this.state.opacityText.current = opacity;
 		this.cursorContentText.textContent = textContent;
 		this.state.force = force;
+		if (textContent === '') {
+			this.cursorArrow.style.opacity = 0;
+		} else {
+			this.cursorArrow.style.opacity = 1;
+		}
 	}
 
 	getPosition() {
@@ -80,9 +87,9 @@ class Cursor {
 		return Math.min(distance / accelerator, maxSqueeze) * this.state.force;
 	}
 
-	resize(width, height) {}
+	resize(width, height) { }
 
-	delete() {}
+	delete() { }
 
 	update(dt) {
 		if (!this.active) return;
