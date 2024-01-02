@@ -1,5 +1,7 @@
-import { gsap, Power3, Power1 } from 'gsap';
 import input from '@input/input';
+import properties from '@app/core/properties';
+import { STATUS } from '../../constants';
+import { gsap, Power3, Power1 } from 'gsap';
 
 import GalleryItem from './GalleryItem';
 import data from '../../../data/projects';
@@ -17,6 +19,8 @@ class Gallery {
 	// animation
 	globalIndex = 0;
 	intervalId = null;
+
+	mainTimeline = gsap.timeline();
 
 	animateProperties = {
 		tx: { previous: 0, current: 0, amt: 0.05 },
@@ -48,6 +52,14 @@ class Gallery {
 
 	init() {
 		this._startGallery();
+
+		properties.statusSignal.add((status) => {
+			if (status === STATUS.PROJECT) {
+				// this._pauseGallery();
+			} else if (status === STATUS.GALLERY) {
+				// this._rePlayGallery();
+			}
+		});
 	}
 
 	_generateGalleryItems() {
@@ -67,7 +79,7 @@ class Gallery {
 		this.domGalleryCounterLine.style.transform = `scaleX(0)`;
 
 		// fade in title
-		gsap.timeline()
+		this.mainTimeline
 			.to(
 				'.gallery-view_menuTitle',
 				{
@@ -186,57 +198,74 @@ class Gallery {
 
 		// Start a new interval to increase zIndex and reset when needed
 		this.intervalId = setInterval(() => {
-			// Reset zIndex for all images
 			this.domGalleryItems.forEach((item) => {
-				item.style.zIndex = '';
+				// Remove the 'lead-image' class from all items
+				item.classList.remove('lead-image');
+				// maybe not ideal but to force last image to remove the zindex
+				this.domGalleryItems[this.domGalleryItems.length - 1].style.zIndex = '';
 			});
 
 			// Find the lead image
 			const lead = this.domGalleryItems[this.globalIndex % this.domGalleryItems.length];
 
-			// Set the zIndex for the lead image
-			lead.style.zIndex = startingZIndex + (this.globalIndex % this.domGalleryItems.length);
-
 			// Add the 'lead-image' class for styling or any other purposes
 			lead.classList.add('lead-image');
 
-			// Use GSAP to animate the lead image
+			// Determine the zIndex based on the globalIndex
+			const zIndex = startingZIndex + (this.globalIndex % this.domGalleryItems.length);
+
 			gsap.fromTo(
 				lead,
 				{
 					opacity: 0,
 				},
 				{
-					zIndex: startingZIndex + (this.globalIndex % this.domGalleryItems.length),
+					zIndex: zIndex, //startingZIndex + (this.globalIndex % this.domGalleryItems.length),
 					duration: 0.5,
-					delay: 5,
 					opacity: 1,
 					ease: 'Sine.easeInOut',
 				},
 			);
 
 			this.globalIndex += 1;
+
+			// if reached the end
+			if (zIndex === this.domGalleryItems.length) {
+				// Reset the z-index values for all items
+				this.domGalleryItems.forEach((item, index) => {
+					item.style.zIndex = ''; // Remove the zIndex style
+				});
+			}
+
 			this._updateCounter();
-		}, 5000);
+		}, 4500);
 	};
 
+	_pauseGallery() {
+		// Pause the gallery-specific animations
+		this.mainTimeline.pause();
+		this._pauseCounter();
+
+		console.log('pause gallery');
+	}
+
+	_rePlayGallery() {
+		// Play the gallery-specific animations
+		this.mainTimeline.play();
+		this._startGallery();
+
+		console.log('re play gallery after pause');
+	}
+
 	_updateCounter() {
+		const startingZIndex = 1;
+
 		// Calculate the actual index based on the global index and the number of gallery items
 		const numItems = this.domGalleryItems.length;
-		let actualIndex = this.globalIndex % numItems;
-
-		// Ensure the index starts from 1
-		if (actualIndex === 0) {
-			actualIndex = numItems;
-		}
+		let actualIndex = startingZIndex + (this.globalIndex % numItems);
 
 		// Update the counter
 		this.domGalleryCounterCurrentIndex.textContent = actualIndex < 10 ? '0' + actualIndex : actualIndex;
-
-		// Reset the index if it reaches the end
-		if (actualIndex === numItems) {
-			this.globalIndex = 0;
-		}
 
 		gsap.timeline().fromTo(
 			this.domGalleryCounterLine,
