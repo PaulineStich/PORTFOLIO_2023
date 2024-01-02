@@ -102,7 +102,7 @@ export default class GalleryItem {
 
 	_setTitle() {
 		// set title
-		this.DOM.galleryTitle.textContent = data[this.index].title;
+		this.DOM.galleryTitle.textContent = 'projects'; //data[this.index].title;
 		this.DOM.galleryTitleSpans = document.querySelectorAll('.gallery-view_menuTitle span');
 	}
 
