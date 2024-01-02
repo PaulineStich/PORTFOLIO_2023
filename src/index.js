@@ -14,8 +14,13 @@ let dateTime = performance.now();
 let raf;
 
 function run() {
-	for (const [domain, value] of Object.entries(settings.CROSS_ORIGINS)) {
-		properties.loader.setCrossOrigin(domain, value);
+	// Check if properties.loader and properties.loader.setCrossOrigin are defined
+	if (properties.loader && typeof properties.loader.setCrossOrigin === 'function') {
+		for (const [domain, value] of Object.entries(settings.CROSS_ORIGINS)) {
+			properties.loader.setCrossOrigin(domain, value);
+		}
+	} else {
+		// console.error('setCrossOrigin is not a function for the loader');
 	}
 
 	properties.viewportResolution = new THREE.Vector2(window.innerWidth, window.innerHeight);
