@@ -51,8 +51,6 @@ class Gallery {
 	}
 
 	init() {
-		this._startGallery();
-
 		properties.statusSignal.add((status) => {
 			if (status === STATUS.PROJECT) {
 				this._pauseGallery();
@@ -73,6 +71,7 @@ class Gallery {
 	}
 
 	show() {
+		// console.log('show gallery');
 		this.isActive = true;
 		// console.log('show the gallery component now');
 
@@ -109,6 +108,18 @@ class Gallery {
 				},
 				0.15,
 			)
+			.fromTo(
+				this.domGalleryCounterLine,
+				{
+					scaleX: 0,
+				},
+				{
+					scaleX: 1,
+					duration: 5,
+					ease: 'Linear.easeNone',
+				},
+				0,
+			)
 			// fade in gallery
 			.to(
 				this.domGalleryItems,
@@ -125,19 +136,8 @@ class Gallery {
 					},
 					onComplete: () => {
 						this.hasFinishedIntroAnimation = true;
+						this._startGallery();
 					},
-				},
-				0,
-			)
-			.fromTo(
-				this.domGalleryCounterLine,
-				{
-					scaleX: 0,
-				},
-				{
-					scaleX: 1,
-					duration: 4.5,
-					ease: 'Linear.easeNone',
 				},
 				0,
 			);
@@ -262,7 +262,9 @@ class Gallery {
 	_rePlayGallery() {
 		// Play the gallery-specific animations
 		this.mainTimeline.play();
-		this._startGallery();
+		if (this.hasFinishedIntroAnimation) {
+			this._startGallery();
+		}
 	}
 
 	_updateCounter() {

@@ -67,7 +67,7 @@ class Preloader {
 			.to(this._circle, {
 				scale: 10,
 				ease: Power3.easeInOut,
-				duration: 3,
+				duration: 2,
 			})
 			.to('#custom-cursor', {
 				opacity: 1,
@@ -80,7 +80,7 @@ class Preloader {
 					opacity: 1,
 				},
 				{
-					duration: 0.7,
+					duration: 0.3,
 					ease: Power3.easeIn,
 					opacity: 0,
 					stagger: {
@@ -88,11 +88,11 @@ class Preloader {
 						from: 'start',
 					},
 				},
-				0.6,
+				0.55,
 			)
 			.to(this._preloader, {
 				opacity: 0,
-				duration: 1,
+				duration: 0.3,
 				onComplete: () => {
 					properties.onTransition.dispatch(TRANSITIONS.SHOW_GALLERY);
 					this.skip();
