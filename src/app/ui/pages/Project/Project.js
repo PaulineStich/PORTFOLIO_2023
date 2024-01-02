@@ -1,5 +1,6 @@
 import properties from '@core/properties';
 import settings from '@core/settings';
+import { STATUS } from '../../constants';
 import { gsap, Power3, Expo } from 'gsap';
 
 import ProjectItem from './ProjectItem';
@@ -64,6 +65,8 @@ class Project {
 	}
 
 	hide() {
+		properties.statusSignal.dispatch(STATUS.GALLERY);
+
 		// console.log('fade out project');
 
 		// to be improved

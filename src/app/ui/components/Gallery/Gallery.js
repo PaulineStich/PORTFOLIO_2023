@@ -55,9 +55,9 @@ class Gallery {
 
 		properties.statusSignal.add((status) => {
 			if (status === STATUS.PROJECT) {
-				// this._pauseGallery();
+				this._pauseGallery();
 			} else if (status === STATUS.GALLERY) {
-				// this._rePlayGallery();
+				this._rePlayGallery();
 			}
 		});
 	}
@@ -245,16 +245,12 @@ class Gallery {
 		// Pause the gallery-specific animations
 		this.mainTimeline.pause();
 		this._pauseCounter();
-
-		console.log('pause gallery');
 	}
 
 	_rePlayGallery() {
 		// Play the gallery-specific animations
 		this.mainTimeline.play();
 		this._startGallery();
-
-		console.log('re play gallery after pause');
 	}
 
 	_updateCounter() {
