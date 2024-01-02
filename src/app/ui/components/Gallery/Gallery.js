@@ -128,6 +128,18 @@ class Gallery {
 					},
 				},
 				0,
+			)
+			.fromTo(
+				this.domGalleryCounterLine,
+				{
+					scaleX: 0,
+				},
+				{
+					scaleX: 1,
+					duration: 4.5,
+					ease: 'Linear.easeNone',
+				},
+				0,
 			);
 
 		// fade in images from gallery
