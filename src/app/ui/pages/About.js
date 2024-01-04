@@ -236,7 +236,9 @@ class About {
 	update(dt) {
 		if (!this.isActive) return;
 
-		this._smoothScroll();
+		if (browser.isDesktop) {
+			this._smoothScroll();
+		}
 		this._animateChameleon();
 	}
 }
