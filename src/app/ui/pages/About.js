@@ -1,5 +1,6 @@
 import properties from '@core/properties';
 import settings from '@core/settings';
+import browser from '@core/browser';
 import input from '@input/input';
 import { STATUS, HOVER_STATE } from '../constants';
 
@@ -9,10 +10,11 @@ class About {
 	_about;
 	_speed = 0.08;
 	_offset = 0;
+	_touchStartY = 0;
+	_deltaMobileY = 0;
 
 	_tlFadeOut = gsap.timeline({ paused: true });
 	_tlFadeIn = gsap.timeline({ paused: true });
-	_tlTextAnimation = gsap.timeline();
 
 	preInit() {
 		this._about = document.querySelector('#about');
@@ -45,20 +47,26 @@ class About {
 			properties.onHover.dispatch(HOVER_STATE.DEFAULT);
 		};
 		this.mouseOnClick = () => {
-			this._updateTitleText();
-			// console.log('clicked');
+			this._onClickChangeText();
+		};
+		this.touchStartFn = (e) => {
+			this._touchStartY = e.touches[0].clientY;
+			this._deltaMobileY = this._touchStartY - e.touches[0].clientY;
 		};
 
 		this._aboutTitleFirstSentence.addEventListener('mouseenter', this.mouseenterFn);
 		this._aboutTitleFirstSentence.addEventListener('mouseleave', this.mouseleaveFn);
 		this._aboutTitleFirstSentence.addEventListener('click', this.mouseOnClick);
-		this._aboutSocialList.forEach(el => {
+		this._aboutSocialList.forEach((el) => {
 			el.addEventListener('mouseenter', this._mouseEnter);
 			el.addEventListener('mouseleave', this._mouseLeave);
 		});
+		// add mobile touch support
+		this._about.addEventListener('touchstart', this.touchStartFn);
+		this._about.addEventListener('touchmove', this.touchStartFn);
 	}
 
-	resize(width, height) { }
+	resize(width, height) {}
 
 	show() {
 		clearTimeout(this._hiddenTimeout);
@@ -100,7 +108,7 @@ class About {
 			}
 
 			if (gradientBackground) {
-				gsap.fromTo(gradientBackground, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.inOut', delay: 0.1 + delay });
+				gsap.fromTo(gradientBackground, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.8, ease: 'power3.inOut', delay: 0.1 + delay });
 			}
 
 			if (title.length > 0) {
@@ -114,7 +122,7 @@ class About {
 						duration: 1.3,
 						ease: 'expo.out',
 						rotationX: 0,
-						delay: 0.1 + delay,
+						delay: 0.05 + delay,
 						stagger: {
 							each: 0.1,
 							from: 'start',
@@ -124,7 +132,7 @@ class About {
 			}
 
 			if (socialList.length > 0) {
-				gsap.fromTo(socialList, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'expo.inOut', stagger: 0.15, delay: 0.4 + delay });
+				gsap.fromTo(socialList, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.8, ease: 'power3.inOut', stagger: 0.15, delay: 0.4 + delay });
 			}
 		};
 
@@ -157,7 +165,11 @@ class About {
 	}
 
 	_smoothScroll() {
-		this._offset += Math.round((window.scrollY - this._offset) * this._speed);
+		if (browser.isDesktop) {
+			this._offset += Math.round((window.scrollY - this._offset) * this._speed);
+		} else if (browser.isMobile) {
+			this._offset += this._deltaMobileY * this._speed;
+		}
 
 		let scroll = 'translateY(-' + this._offset + 'px) translateZ(0)';
 		this._about.style.transform = scroll;
@@ -179,7 +191,7 @@ class About {
 		this._chameleonPupils.style.transform = `rotate(${(angle * 180) / Math.PI}deg)`;
 	}
 
-	_updateTitleText() {
+	_onClickChangeText() {
 		gsap.fromTo(
 			this._aboutTitleFirstSentence,
 			{ y: 100 },
@@ -219,7 +231,7 @@ class About {
 		properties.onHover.dispatch(HOVER_STATE.DEFAULT);
 	}
 
-	delete() { }
+	delete() {}
 
 	update(dt) {
 		if (!this.isActive) return;
