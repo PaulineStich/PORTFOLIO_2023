@@ -54,13 +54,13 @@ class About {
 			this._deltaMobileY = this._touchStartY - e.touches[0].clientY;
 		};
 
-		this._aboutTitleFirstSentence.addEventListener('mouseenter', this.mouseenterFn);
-		this._aboutTitleFirstSentence.addEventListener('mouseleave', this.mouseleaveFn);
-		this._aboutTitleFirstSentence.addEventListener('click', this.mouseOnClick);
-		this._aboutSocialList.forEach((el) => {
-			el.addEventListener('mouseenter', this._mouseEnter);
-			el.addEventListener('mouseleave', this._mouseLeave);
-		});
+		// this._aboutTitleFirstSentence.addEventListener('mouseenter', this.mouseenterFn);
+		// this._aboutTitleFirstSentence.addEventListener('mouseleave', this.mouseleaveFn);
+		// this._aboutTitleFirstSentence.addEventListener('click', this.mouseOnClick);
+		// this._aboutSocialList.forEach((el) => {
+		// 	el.addEventListener('mouseenter', this._mouseEnter);
+		// 	el.addEventListener('mouseleave', this._mouseLeave);
+		// });
 		// add mobile touch support
 		this._about.addEventListener('touchstart', this.touchStartFn);
 		this._about.addEventListener('touchmove', this.touchStartFn);
@@ -96,65 +96,65 @@ class About {
 		this._tlFadeIn.play();
 
 		// Define a common animation function to be reused for different sections.
-		const animateSection = (section, delay = 0) => {
-			const target = section.target;
-			const pElement = target.querySelector('p');
-			const gradientBackground = target.querySelector('.gradientBackground');
-			const title = target.querySelectorAll('span');
-			const socialList = target.querySelectorAll('.about-container_cta-social li');
+		// const animateSection = (section, delay = 0) => {
+		// 	const target = section.target;
+		// 	const pElement = target.querySelector('p');
+		// 	const gradientBackground = target.querySelector('.gradientBackground');
+		// 	const title = target.querySelectorAll('span');
+		// 	const socialList = target.querySelectorAll('.about-container_cta-social li');
 
-			if (pElement) {
-				gsap.fromTo(pElement, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.inOut', delay: 0.7 + delay });
-			}
+		// 	if (pElement) {
+		// 		gsap.fromTo(pElement, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.inOut', delay: 0.7 + delay });
+		// 	}
 
-			if (gradientBackground) {
-				gsap.fromTo(gradientBackground, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.8, ease: 'power3.inOut', delay: 0.1 + delay });
-			}
+		// 	if (gradientBackground) {
+		// 		gsap.fromTo(gradientBackground, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.8, ease: 'power3.inOut', delay: 0.1 + delay });
+		// 	}
 
-			if (title.length > 0) {
-				gsap.fromTo(
-					title,
-					{ y: 100 },
-					{
-						y: 0,
-						transformOrigin: '50% 100%',
-						opacity: 1,
-						duration: 1.3,
-						ease: 'expo.out',
-						rotationX: 0,
-						delay: 0.05 + delay,
-						stagger: {
-							each: 0.1,
-							from: 'start',
-						},
-					},
-				);
-			}
+		// 	if (title.length > 0) {
+		// 		gsap.fromTo(
+		// 			title,
+		// 			{ y: 100 },
+		// 			{
+		// 				y: 0,
+		// 				transformOrigin: '50% 100%',
+		// 				opacity: 1,
+		// 				duration: 1.3,
+		// 				ease: 'expo.out',
+		// 				rotationX: 0,
+		// 				delay: 0.05 + delay,
+		// 				stagger: {
+		// 					each: 0.1,
+		// 					from: 'start',
+		// 				},
+		// 			},
+		// 		);
+		// 	}
 
-			if (socialList.length > 0) {
-				gsap.fromTo(socialList, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.8, ease: 'power3.inOut', stagger: 0.15, delay: 0.4 + delay });
-			}
-		};
+		// 	if (socialList.length > 0) {
+		// 		gsap.fromTo(socialList, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.8, ease: 'power3.inOut', stagger: 0.15, delay: 0.4 + delay });
+		// 	}
+		// };
 
-		const sections = document.querySelectorAll('.about-container_fullscreen');
+		// const sections = document.querySelectorAll('.about-container_fullscreen');
 
-		const observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						animateSection(entry);
-					}
-				});
-			},
-			{
-				rootMargin: '0px',
-				threshold: 0.05,
-			},
-		);
+		// const observer = new IntersectionObserver(
+		// 	(entries) => {
+		// 		entries.forEach((entry) => {
+		// 			if (entry.isIntersecting) {
+		// 				animateSection(entry);
+		// 			}
+		// 		});
+		// 	},
+		// 	{
+		// 		rootMargin: '0px',
+		// 		threshold: 0.05,
+		// 	},
+		// );
 
-		sections.forEach((section) => {
-			observer.observe(section);
-		});
+		// sections.forEach((section) => {
+		// 	observer.observe(section);
+		// });
 	}
 
 	_fadeOutAnimation() {
@@ -191,37 +191,37 @@ class About {
 		this._chameleonPupils.style.transform = `rotate(${(angle * 180) / Math.PI}deg)`;
 	}
 
-	_onClickChangeText() {
-		gsap.fromTo(
-			this._aboutTitleFirstSentence,
-			{ y: 100 },
-			{
-				y: 0,
-				transformOrigin: '50% 100%',
-				opacity: 1,
-				duration: 1.3,
-				ease: 'expo.out',
-				rotationX: 0,
-				delay: 0.1,
-				stagger: {
-					each: 0.1,
-					from: 'start',
-				},
-				onStart: () => {
-					const words = ['3d weirdo', 'devigner', 'chameleon', 'soul'];
+	// _onClickChangeText() {
+	// 	gsap.fromTo(
+	// 		this._aboutTitleFirstSentence,
+	// 		{ y: 100 },
+	// 		{
+	// 			y: 0,
+	// 			transformOrigin: '50% 100%',
+	// 			opacity: 1,
+	// 			duration: 1.3,
+	// 			ease: 'expo.out',
+	// 			rotationX: 0,
+	// 			delay: 0.1,
+	// 			stagger: {
+	// 				each: 0.1,
+	// 				from: 'start',
+	// 			},
+	// 			onStart: () => {
+	// 				const words = ['3d weirdo', 'devigner', 'chameleon', 'soul'];
 
-					// Ensure the new word is not the same as the current word
-					let newWord;
-					do {
-						newWord = words[Math.floor(Math.random() * words.length)];
-					} while (newWord === this._aboutTitleFirstSentence.textContent);
+	// 				// Ensure the new word is not the same as the current word
+	// 				let newWord;
+	// 				do {
+	// 					newWord = words[Math.floor(Math.random() * words.length)];
+	// 				} while (newWord === this._aboutTitleFirstSentence.textContent);
 
-					// Update the text content with the new word
-					this._aboutTitleFirstSentence.textContent = newWord;
-				},
-			},
-		);
-	}
+	// 				// Update the text content with the new word
+	// 				this._aboutTitleFirstSentence.textContent = newWord;
+	// 			},
+	// 		},
+	// 	);
+	// }
 
 	_mouseEnter() {
 		properties.onHover.dispatch(HOVER_STATE.HOVER);
@@ -239,7 +239,7 @@ class About {
 		if (browser.isDesktop) {
 			this._smoothScroll();
 		}
-		this._animateChameleon();
+		// this._animateChameleon();
 	}
 }
 
