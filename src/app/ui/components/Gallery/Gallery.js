@@ -82,7 +82,7 @@ class Gallery {
 			.to(
 				'.gallery-view_menuTitle',
 				{
-					opacity: 1,
+					opacity: 0.7,
 				},
 				0.15,
 			)
