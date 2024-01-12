@@ -239,7 +239,7 @@ class About {
 		if (browser.isDesktop) {
 			this._smoothScroll();
 		}
-		// this._animateChameleon();
+		this._animateChameleon();
 	}
 }
 
