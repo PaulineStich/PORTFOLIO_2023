@@ -169,10 +169,54 @@
 				padding: 50px 0;
 				justify-content: center;
 
+				// padding: 0;
+				margin: 0;
+
 				li {
 					text-transform: uppercase;
 					list-style: circle;
 					margin: 0 15px;
+
+					float: left;
+					margin: 10px 20px 10px 0;
+					padding: 3px 0 3px 0;
+					overflow: hidden;
+
+					&::before {
+						content: none;
+					}
+
+					@media only screen and (max-width: @size-mobile-l) {
+						margin: 5px 20px 5px 0;
+					}
+
+					a {
+						&:after {
+							content: '';
+							display: block;
+							position: relative;
+							top: 0;
+							left: 0;
+							right: 0;
+							width: 100%;
+							height: 1px;
+							transform: translateX(0%);
+							background-color: rgba(0, 0, 0, 0.4);
+							transform-origin: bottom left;
+							transition: transform 0.3s ease-in-out;
+						}
+
+						&:hover {
+							&:after {
+								animation: 0.8s animateLine cubic-bezier(0.165, 0.84, 0.44, 1);
+								animation-fill-mode: both;
+							}
+						}
+
+						p {
+							margin: 0;
+						}
+					}
 				}
 			}
 		}
