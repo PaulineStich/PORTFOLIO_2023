@@ -145,10 +145,11 @@
 			}
 		}
 		.about-container_chameleon {
+			position: relative;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			justify-content: space-around;
+			justify-content: space-between;
 			height: 226px;
 
 			&--quote {
@@ -157,6 +158,8 @@
 			}
 
 			#chameleon {
+				position: absolute;
+				top: 110px;
 				.pupils {
 					transform-origin: 24% 22%;
 				}

@@ -19,12 +19,12 @@ class About {
 	preInit() {
 		this._about = document.querySelector('#about');
 		this._aboutTitle = document.querySelectorAll('.about-container_title span');
-		this._aboutTitleFirstSentence = document.querySelector('.first-sentence--soul');
+		this._aboutQuote = document.querySelector('.about-container_chameleon--quote');
 		this._sections = gsap.utils.toArray('.about-container_fullscreen');
 		this._chameleonSVG = document.getElementById('chameleon');
 		this._chameleonEye = document.querySelector('.eye');
 		this._chameleonPupils = document.querySelector('.pupils');
-		this._aboutSocialList = document.querySelectorAll('.about-container_cta-social a');
+		this._aboutSocialList = document.querySelectorAll('.about-container_socials a');
 
 		properties.statusSignal.add((status) => {
 			if (status === STATUS.ABOUT) {
@@ -54,13 +54,17 @@ class About {
 			this._deltaMobileY = this._touchStartY - e.touches[0].clientY;
 		};
 
-		// this._aboutTitleFirstSentence.addEventListener('mouseenter', this.mouseenterFn);
-		// this._aboutTitleFirstSentence.addEventListener('mouseleave', this.mouseleaveFn);
-		// this._aboutTitleFirstSentence.addEventListener('click', this.mouseOnClick);
-		// this._aboutSocialList.forEach((el) => {
-		// 	el.addEventListener('mouseenter', this._mouseEnter);
-		// 	el.addEventListener('mouseleave', this._mouseLeave);
-		// });
+		// about quote
+		this._aboutQuote.addEventListener('mouseenter', this.mouseenterFn);
+		this._aboutQuote.addEventListener('mouseleave', this.mouseleaveFn);
+		this._aboutQuote.addEventListener('click', this.mouseOnClick);
+
+		// about social list, cursor change
+		this._aboutSocialList.forEach((el) => {
+			el.addEventListener('mouseenter', this._mouseEnter);
+			el.addEventListener('mouseleave', this._mouseLeave);
+		});
+
 		// add mobile touch support
 		this._about.addEventListener('touchstart', this.touchStartFn);
 		this._about.addEventListener('touchmove', this.touchStartFn);
@@ -191,37 +195,37 @@ class About {
 		this._chameleonPupils.style.transform = `rotate(${(angle * 180) / Math.PI}deg)`;
 	}
 
-	// _onClickChangeText() {
-	// 	gsap.fromTo(
-	// 		this._aboutTitleFirstSentence,
-	// 		{ y: 100 },
-	// 		{
-	// 			y: 0,
-	// 			transformOrigin: '50% 100%',
-	// 			opacity: 1,
-	// 			duration: 1.3,
-	// 			ease: 'expo.out',
-	// 			rotationX: 0,
-	// 			delay: 0.1,
-	// 			stagger: {
-	// 				each: 0.1,
-	// 				from: 'start',
-	// 			},
-	// 			onStart: () => {
-	// 				const words = ['3d weirdo', 'devigner', 'chameleon', 'soul'];
+	_onClickChangeText() {
+		gsap.fromTo(
+			this._aboutQuote,
+			{ y: 40, opacity: 0, rotationX: 40 },
+			{
+				y: 0,
+				transformOrigin: '50% 50%',
+				opacity: 1,
+				duration: 1.3,
+				ease: 'expo.out',
+				rotationX: 0,
+				delay: 0.1,
+				stagger: {
+					each: 0.1,
+					from: 'start',
+				},
+				onStart: () => {
+					const words = [`Passion doesn't come by itself, it's the large amount of practice that makes you so good at what you do.`, `Here’s my rule: Every week, I expose myself to something new about my field.`, `Don’t obsess over discovering your true calling. Instead, master rare and valuable skills.`, `Every month, I create a little bet, in the setting of mission exploration, a project small enough to be completed in less than a month.`];
 
-	// 				// Ensure the new word is not the same as the current word
-	// 				let newWord;
-	// 				do {
-	// 					newWord = words[Math.floor(Math.random() * words.length)];
-	// 				} while (newWord === this._aboutTitleFirstSentence.textContent);
+					// Ensure the new word is not the same as the current word
+					let newWord;
+					do {
+						newWord = words[Math.floor(Math.random() * words.length)];
+					} while (newWord === this._aboutQuote.textContent);
 
-	// 				// Update the text content with the new word
-	// 				this._aboutTitleFirstSentence.textContent = newWord;
-	// 			},
-	// 		},
-	// 	);
-	// }
+					// Update the text content with the new word
+					this._aboutQuote.textContent = newWord;
+				},
+			},
+		);
+	}
 
 	_mouseEnter() {
 		properties.onHover.dispatch(HOVER_STATE.HOVER);
