@@ -38,7 +38,7 @@ class Cursor {
 			} else if (hoverState === HOVER_STATE.OPEN) {
 				this.enter(4, 1, 'open', 5);
 			} else if (hoverState === HOVER_STATE.HOVER) {
-				this.enter(1.5, 0.5, '', 5);
+				this.enter(1.5, 0.5, 'hover', 5);
 			} else if (hoverState === HOVER_STATE.HIDE) {
 				this.hide();
 			} else if (hoverState === HOVER_STATE.DEFAULT) {
@@ -69,9 +69,10 @@ class Cursor {
 		this.state.scale.previous = scale;
 		this.state.opacityCursor.current = opacity;
 		this.state.opacityText.current = opacity;
-		// this.cursorContentText.textContent = textContent;
+		this.cursorContentText.textContent = textContent;
+
 		this.state.force = force;
-		if (textContent === '') {
+		if (textContent === 'hover') {
 			this.cursorArrow.style.opacity = 0;
 			this.cursorContentText.style.opacity = 0;
 		} else {
