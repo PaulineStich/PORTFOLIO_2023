@@ -32,6 +32,7 @@ class Cursor {
 	preInit() {
 		this.getPosition();
 		properties.onHover.add((hoverState) => {
+			console.log(hoverState);
 			if (hoverState === HOVER_STATE.CLICK) {
 				this.enter(3, 1, 'click', 5);
 			} else if (hoverState === HOVER_STATE.OPEN) {
@@ -46,7 +47,7 @@ class Cursor {
 		});
 	}
 
-	init() { }
+	init() {}
 
 	show() {
 		this.cursor.style.display = 'flex';
@@ -65,14 +66,17 @@ class Cursor {
 	enter(scale, opacity, textContent, force) {
 		// console.log('mouseenter');
 		this.state.scale.current = scale;
+		this.state.scale.previous = scale;
 		this.state.opacityCursor.current = opacity;
 		this.state.opacityText.current = opacity;
-		this.cursorContentText.textContent = textContent;
+		// this.cursorContentText.textContent = textContent;
 		this.state.force = force;
 		if (textContent === '') {
 			this.cursorArrow.style.opacity = 0;
+			this.cursorContentText.style.opacity = 0;
 		} else {
 			this.cursorArrow.style.opacity = 1;
+			this.cursorContentText.style.opacity = 1;
 		}
 	}
 
@@ -87,14 +91,15 @@ class Cursor {
 		return Math.min(distance / accelerator, maxSqueeze) * this.state.force;
 	}
 
-	resize(width, height) { }
+	resize(width, height) {}
 
-	delete() { }
+	delete() {}
 
 	update(dt) {
 		if (!this.active) return;
 
 		let { width, height } = this.state.position.cursor;
+
 		this.state.x.current = input.mousePixelXY.x - width / 2;
 		this.state.y.current = input.mousePixelXY.y - height / 2;
 
