@@ -30,6 +30,10 @@
 			.grid-container; // add grid
 			padding-top: 265px;
 
+			@media only screen and (max-width: @size-mobile-l) {
+				padding-top: 125px;
+			}
+
 			&--logo {
 				grid-column: 1 / 9;
 				font-size: 3.5rem;
@@ -37,12 +41,20 @@
 				// background: -webkit-linear-gradient(135deg, #100d15, rgba(16, 13, 21, 0.5));
 				// -webkit-background-clip: text;
 				// -webkit-text-fill-color: transparent;
+				@media only screen and (max-width: @size-mobile-l) {
+					font-size: 2.5rem;
+				}
 			}
 
 			&--info {
 				grid-column: 3 / 6;
 				padding: 50px 0;
 				padding-right: 50px;
+
+				@media only screen and (max-width: @size-mobile-l) {
+					grid-column: 1 / 9;
+					padding-right: 0px;
+				}
 
 				p {
 					margin: 0;
@@ -53,9 +65,17 @@
 				grid-column: 7 / 9;
 				padding: 50px 0;
 
+				@media only screen and (max-width: @size-mobile-l) {
+					grid-column: 1 / 9;
+					padding-top: 0;
+				}
+
 				ul {
 					padding: 0;
 					margin: 0;
+					@media only screen and (max-width: @size-mobile-l) {
+						padding-left: 10px;
+					}
 					li {
 						text-transform: uppercase;
 						list-style: circle;
@@ -81,6 +101,11 @@
 					&:hover {
 						border: 1px solid rgba(#010101, 1);
 					}
+					@media only screen and (max-width: @size-mobile-l) {
+						left: 50%;
+						transform: translateX(-50%);
+						top: 20px;
+					}
 				}
 			}
 
@@ -93,6 +118,10 @@
 				background-color: red;
 				background-image: url('../../../public/assets/images/about/about_bg.png');
 				background-size: cover;
+
+				@media only screen and (max-width: @size-mobile-l) {
+					display: none;
+				}
 			}
 		}
 		.about-container_sectionTitle {
@@ -101,6 +130,13 @@
 		}
 		.about-container_whatIDo {
 			.grid-container; // add grid
+
+			@media only screen and (max-width: @size-mobile-l) {
+				display: flex;
+				flex-direction: column;
+				gap: 20px;
+			}
+
 			grid-template-rows: repeat(6, 120px); /* Create 6 rows */
 
 			&--backgroundImage {
@@ -116,6 +152,10 @@
 				&.backgroundImage3D {
 					background-image: url('../../../public/assets/images/about/about_3D.png');
 				}
+				@media only screen and (max-width: @size-mobile-l) {
+					width: 100%;
+					height: 600px;
+				}
 			}
 			&--line {
 				grid-column: 1 / 7;
@@ -123,6 +163,9 @@
 				background-color: rgb(0, 0, 0);
 				height: 1px;
 				align-self: center;
+				@media only screen and (max-width: @size-mobile-l) {
+					display: none;
+				}
 			}
 			&--index {
 				grid-column: 1 / 2;
@@ -132,16 +175,26 @@
 				color: #636363;
 				font-family: 'senregular';
 				font-weight: 200;
+				@media only screen and (max-width: @size-mobile-l) {
+					align-self: start;
+				}
 			}
 			&--title {
 				grid-column: 1 / 5;
 				grid-row: 2 / 4;
 				align-self: center;
+				@media only screen and (max-width: @size-mobile-l) {
+					align-self: start;
+				}
 			}
 			&--description {
 				grid-column: 1 / 4;
 				grid-row: 4 / 5;
 				align-self: center;
+				@media only screen and (max-width: @size-mobile-l) {
+					align-self: start;
+					padding-bottom: 100px;
+				}
 			}
 		}
 		.about-container_chameleon {
@@ -171,6 +224,7 @@
 				flex-direction: row;
 				padding: 50px 0;
 				justify-content: center;
+				flex-wrap: wrap;
 
 				// padding: 0;
 				margin: 0;
